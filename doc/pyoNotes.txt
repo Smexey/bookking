@@ -321,3 +321,53 @@ Korisnik ne sme da bude blokiran od strane drugog korisnika pri slanju poruka.
 2.5.Posledice
 Akcije se beleze u bazi podataka.
 
+
+
+
+
+
+Verifikacija korisnika:
+
+1.Uvod
+
+1.1.Rezime
+Definisanje scenarija pri upotrebi sistema poruka.
+
+1.2.Namena
+Dokument će koristiti svi članovi projektnog tima u razvoju projekta i testiranju a može se koristiti i pri pisanju uputstva za upotrebu.
+
+1.3.Reference
+Projektni zadatak
+Uputstvo za pisanje specifikacije scenarija upotrebe funkcionalnosti.
+
+1.4.Otvorena pitanja
+Sistem prijavljivanja spam poruka.
+
+2.Scenario sistema poruka
+
+2.1.Kratak opis
+Sistem poruka je ubacen povodom komunikacije izmedju korisnika i eventualne licne razmene dobara. Korisnici mogu medjusobno da salju jedni drugima poruke.
+
+2.2.Tok dogadjaja
+
+2.2.1.Korisnik pravi zahtev za verifikaciju
+1.Korisnik bira dugme pravljenja zahteva za verifikaciju na svom profilu
+2.Na stranici se prikazuje forma koja se popunjava:
+-ime i prezime podnosioca
+-broj licne karte ili pib pravnog lica
+-padajuci meni tipa dokaza o verodostojnosti podataka
+-upload dugme slike dokaza
+3.Korisnik popunjava formu i pritiska dugme za podnosenje zahteva
+4.U bazi se pravi novi zahtev za verifikaciju
+5.Dugme za pravljenje novog zahteva je onemoguceno
+
+2.3.Posebni zahtevi
+Nema.
+
+2.4.Preduslovi
+Korisnik mora da bude prijavljen u sistem.
+Korisnik mora da ne bude vec verifikovan
+
+2.5.Posledice
+Akcije se beleze u bazi podataka.
+
