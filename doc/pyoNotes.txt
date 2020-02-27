@@ -162,10 +162,7 @@ Da li je potrebno praviti graficki interfejs za moderatora na stranicama kojima 
 2.Scenario moderacije
 
 2.1.Kratak opis
-Moderatoru je dozvoljeno da ukloni stetne oglase i da odobrava/odbija zahteve za verifikaciju. Moderator se loguje na sajt
-Neki od oglasa mogu biti maliciozni pa je moderatoru kao privilegovanom korisniku dozvoljeno da takve oglase ukloni sa sajta. 
-Korisnici mogu da se prijave na sistem za verifikaciju gde moderator moze da odobri ili odbije njihovu prijavu u zavisnosti od ponudjenih podataka i politike sajta.
-Moderator ima pristup moderacija sekciji gde moze da pregleda zahteve za verifikaciju i prijavljene oglase.
+Moderatoru je dozvoljeno da ukloni stetne oglase i da odobrava/odbija zahteve za verifikaciju. Moderator se loguje na sajt. Neki od oglasa mogu biti maliciozni pa je moderatoru kao privilegovanom korisniku dozvoljeno da takve oglase ukloni sa sajta. Korisnici mogu da se prijave na sistem za verifikaciju gde moderator moze da odobri ili odbije njihovu prijavu u zavisnosti od ponudjenih podataka i politike sajta. Moderator ima pristup moderacija sekciji gde moze da pregleda zahteve za verifikaciju i prijavljene oglase.
 
 2.2.Tok dogadjaja
 
@@ -338,7 +335,7 @@ Verifikacija korisnika:
 1.Uvod
 
 1.1.Rezime
-Definisanje scenarija pri upotrebi sistema poruka.
+Definisanje scenarija pri podnosenju zahteva za verifikaciju.
 
 1.2.Namena
 Dokument će koristiti svi članovi projektnog tima u razvoju projekta i testiranju a može se koristiti i pri pisanju uputstva za upotrebu.
@@ -348,7 +345,7 @@ Projektni zadatak
 Uputstvo za pisanje specifikacije scenarija upotrebe funkcionalnosti.
 
 1.4.Otvorena pitanja
-Sistem prijavljivanja spam poruka.
+Kojim sve dokumentima je moguce obaviti verifikaciju?
 
 2.Scenario sistema poruka
 
@@ -368,7 +365,6 @@ Sistem poruka je ubacen povodom komunikacije izmedju korisnika i eventualne licn
 4.U bazi se pravi novi zahtev za verifikaciju
 5.Dugme za pravljenje novog zahteva je onemoguceno
 
-?
 2.3.Posebni zahtevi
 Nema.
 
