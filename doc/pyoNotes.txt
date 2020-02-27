@@ -368,6 +368,7 @@ Sistem poruka je ubacen povodom komunikacije izmedju korisnika i eventualne licn
 4.U bazi se pravi novi zahtev za verifikaciju
 5.Dugme za pravljenje novog zahteva je onemoguceno
 
+?
 2.3.Posebni zahtevi
 Nema.
 
