@@ -1,3 +1,9 @@
+=======================
+---FAZA0---
+=======================
+
+
+
 --opis sistema:
 Bookking.com je internet portal za razmenu ili prodaju polovnih i novih knjiga.
 Aplikacija je namenjena za upotrebu kako pojedincima tako i knjizarama.
@@ -184,6 +190,7 @@ Moderator ima pristup moderacija sekciji gde moze da pregleda zahteve za verifik
 2.2.2.1.Moderator bira dugme za brisanje
 1.U bazi se invalidira odredjeni oglas.
 2.Na stranici se ispisuje poruka uspeha.
+3.Korisniku se salje poruka o obrisanom oglasu i korisnik sam se eventualno banuje.
 
 2.2.3.Moderator otvara sekciju verifikacije korisnika
 1.Iz baze se uzimaju trenutni zahtevi za verifikaciju.
