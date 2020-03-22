@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Obavestenja</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://kit.fontawesome.com/021abf950c.js" crossorigin="anonymous"></script>
+</head>
+
+<body onload="prikaz()">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="index.html"><img src="slike/logo.png" width="30" height="30"
+                class="d-inline-block align-top" alt=""></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse justify-content-end " id="navbarSupportedContent">
+            <!-- IGRAC -->
+            <div id="igrac-div" class="align-middle" style="display: none;">
+                <a class="ml-1" href="#"><i class="fas fa-chess-pawn fa-3x"></i></a>
+                <a class="ml-1" href="obavestenja.html"><i class="fas fa-envelope fa-3x"></i></a>
+                <a class="ml-1" href="profili.html"><i class="fas fa-user-cog fa-3x"></i></a>
+                <button class="btn btn-success my-2 my-sm-0 mr-2" type="button" onclick="logout()">izloguj se</button>
+            </div>
+            <!-- KLUB -->
+            <div id="klub-div" class="align-middle" style="display: none;">
+                <a class="ml-1" href="#"><i class="fas fa-chess-king fa-3x"></i></i></a>
+                <a class="ml-1" href="obavestenja.html"><i class="fas fa-envelope fa-3x"></i></a>
+                <a class="ml-1" href="profili.html"><i class="fas fa-users-cog fa-3x"></i></a>
+                <button class="btn btn-success my-2 my-sm-0 mr-2" type="button" onclick="logout()">izloguj se</button>
+            </div>
+            <!-- SUDIJA -->
+            <div id="sudija-div" class="align-middle" style="display: none;">
+                <a class="ml-1" href="obavestenja.html"><i class="fas fa-envelope fa-3x"></i></a>
+                <a class="ml-1" href="profili.html"><i class="fas fa-user-cog fa-3x"></i></a>
+                <button class="btn btn-success my-2 my-sm-0 mr-2" type="button" onclick="logout()">izloguj se</button>
+            </div>
+            <!-- ADMIN -->
+            <div id="admin-div" class="align-middle" style="display: none;">
+                <a class="ml-1" href="obavestenja.html"><i class="fas fa-envelope fa-3x"></i></a>
+                <a class="ml-1" href="profili.html"><i class="fa fa-cog fa-3x"></i></a>
+                <button class="btn btn-success my-2 my-sm-0 mr-2" type="button" onclick="logout()">izloguj se</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- KONTENT -->
+    <div class="container mt-5">
+
+        <div id="igrac-obavestenja" style="display:none">
+            <div class="alert alert-info" role="alert">
+                Trenutno nemate obavestenja!
+            </div>
+        </div>
+
+        <div id="klub-obavestenja" style="display:none">
+            <div class="alert alert-primary row" role="alert" id="zahtev" style="display:none;">
+                <div class="col-6-sm">
+                    Nikola Babic je poslao zahtev za uclanjenje u klub!
+                </div>
+                <div class="col-6-sm ml-auto">
+                    <button type="button" class="btn btn-success" onclick="zahtev();">Prihvati</button>
+                    <button type="button" class="btn btn-danger" onclick="zahtev();">Odbij</button>
+                </div>
+            </div>
+
+            <div class="alert alert-info" role="alert" id="nema" style="display:none;">
+                Trenutno nemate obavestenja!
+            </div>
+        </div>
+
+        <div id="sudija-obavestenja" style="display:none">
+            <div class="alert alert-info" role="alert">
+                Trenutno nemate obavestenja!
+            </div>
+        </div>
+
+        <div id="admin-obavestenja" style="display:none">
+            <div class="alert alert-info" role="alert">
+                Trenutno nemate obavestenja!
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function prikaz() {
+            let username = localStorage.getItem("korisnicko_ime");
+            if (username == "igrac") {
+                //Prikazi
+                document.getElementById("igrac-div").style.display = "";
+                document.getElementById("igrac-obavestenja").style.display = "";
+            }
+            else if (username == "klub") {
+                //Prikazi
+                document.getElementById("klub-div").style.display = "";
+                document.getElementById("klub-obavestenja").style.display = "";
+                if (localStorage.getItem("zahtev") != null) {
+                    document.getElementById("nema").style.display = "";
+                }
+                else {
+                    document.getElementById("zahtev").style.display = "";
+                }
+            }
+            else if (username == "sudija") {
+                //Prikazi
+                document.getElementById("sudija-div").style.display = "";
+                document.getElementById("sudija-obavestenja").style.display = "";
+            }
+            else if (username == "admin") {
+                //Prikazi
+                document.getElementById("admin-div").style.display = "";
+                document.getElementById("admin-obavestenja").style.display = "";
+            }
+            else {
+                location.href = 'index.html';
+            }
+        }
+        function logout() {
+            if (localStorage.getItem("korisnicko_ime") != null) {
+                localStorage.removeItem("korisnicko_ime");
+                localStorage.removeItem("lozinka");
+                if (localStorage.getItem("zahtev") != null) localStorage.removeItem("zahtev");
+                prikaz();
+            }
+
+        }
+
+
+        function zahtev() {
+            localStorage.setItem("zahtev", 1);
+            document.getElementById("zahtev").style.display = "none";
+            document.getElementById("nema").style.display = "";
+        }
+
+    </script>
+</body>
+
+
+</html>

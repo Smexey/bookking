@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+
+<head>
+	<title>Pocetna strana</title>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://kit.fontawesome.com/021abf950c.js" crossorigin="anonymous"></script>
+</head>
+
+<body onload="prikaz()">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="index.html"><img src="slike/logo.png" width="50" height="50"
+				class="d-inline-block align-top" alt=""></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse justify-content-end " id="navbarSupportedContent">
+			<!-- GOST -->
+			<form class="form-inline my-2 my-lg-0" id="login-forma">
+				<input class="form-control mr-sm-2" type="text" id="korisnicko_ime" placeholder="Korisnicko ime"
+					aria-label="Korisnicko ime">
+				<input class="form-control mr-sm-2" type="password" id="lozinka" placeholder="Lozinka"
+					aria-label="Lozinka">
+				<button class="btn btn-success my-2 my-sm-0 mr-2" type="button" id="loginBtn" onclick="login()">Uloguj
+					se</button>
+				<button class="btn btn-primary my-2 my-sm-0" type="button" onclick="window.location.href='registracija.html'">Registruj	se</button>
+
+			</form>
+
+			<!-- IGRAC -->
+			<div id="igrac-div" class="align-middle">
+				<a class="ml-1" href="#"><i class="fas fa-chess-pawn fa-3x"></i></a>
+				<a class="ml-1" href="obavestenja.html"><i class="fas fa-envelope fa-3x"></i></a>
+				<a class="ml-1" href="profili.html"><i class="fas fa-user-cog fa-3x"></i></a>
+				<button class="btn btn-success my-2 my-sm-0 mr-2" type="button" onclick="logout()">izloguj se</button>
+			</div>
+			<!-- KLUB -->
+			<div id="klub-div" class="align-middle">
+				<a class="ml-1" href="#"><i class="fas fa-chess-king fa-3x"></i></i></a>
+				<a class="ml-1" href="obavestenja.html"><i class="fas fa-envelope fa-3x"></i></a>
+				<a class="ml-1" href="profili.html"><i class="fas fa-users-cog fa-3x"></i></a>
+				<button class="btn btn-success my-2 my-sm-0 mr-2" type="button" onclick="logout()">izloguj se</button>
+			</div>
+			<!-- ADMIN -->
+			<div id="admin-div" class="align-middle">
+				<a class="ml-1" href="obavestenja.html"><i class="fas fa-envelope fa-3x"></i></a>
+				<a class="ml-1" href="profili.html"><i class="fas fa-cog fa-3x"></i></a>
+				<a class="ml-1" href="timeInterval.html"><i class="fas fa-clock fa-3x"></i></a>
+				<a class="ml-1" href="prihvatanjeRegistracija.html"><i class="fas fa-user fa-3x"></i></a>
+				<button class="btn btn-success my-2 my-sm-0 mr-2" type="button" onclick="logout()">izloguj se</button>
+			</div>
+			<!-- SUDIJA -->
+			<div id="sudija-div" class="align-middle">
+				<a class="ml-1" href="obavestenja.html"><i class="fas fa-envelope fa-3x"></i></a>
+				<a class="ml-1" href="profili.html"><i class="fas fa-user-cog fa-3x"></i></a>
+				<button class="btn btn-success my-2 my-sm-0 mr-2" type="button" onclick="logout()">izloguj se</button>
+			</div>
+		</div>
+	</nav>
+
+
+	<ul class="nav nav-tabs nav-fill mt-3" id="myTab" role="tablist">
+		<li class="nav-item">
+			<a class="nav-link active" id="igraci-tab" data-toggle="tab" href="#igraci" role="tab" aria-controls="igraci"
+				aria-selected="true">Igraci</a>
+		</li>
+		<li class="nav-item">
+			<a class="nav-link" id="klubovi-id" data-toggle="tab" href="#klubovi" role="tab" aria-controls="klubovi"
+				aria-selected="false">Klubovi</a>
+		</li>
+	</ul>
+	<div class="tab-content" id="myTabContent">
+		<div class="tab-pane fade show active p-5 w-50" id="igraci" role="tabpanel" aria-labelledby="igraci-tab">
+			<h1 class="h1">Registracija igraca</h1>
+			<form>
+				<div class="form-group row">
+					<label for="inputIme3" class="col-sm-2 col-form-label">Ime</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputIme3" placeholder="Naziv">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputPrezime3" class="col-sm-2 col-form-label">Prezime</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputPrezime3" placeholder="Prezime">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+					</div>
+				</div>
+		
+				<div class='form-group row' id='datetimepicker3'>
+					<label for="inputDate3" class="col-sm-2 col-form-label">Datum rodjenja</label>
+					<div class="col-sm-10">
+						<input type="date" class="form-control" id="inputDate3">
+					</div>
+				</div>
+				<fieldset class="form-group">
+					<div class="row">
+						<legend class="col-form-label col-sm-2 pt-0">Pol</legend>
+						<div class="col-sm-10">
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1"
+									checked>
+								<label class="form-check-label" for="gridRadios1">
+									Musko
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+								<label class="form-check-label" for="gridRadios2">
+									Zensko
+								</label>
+							</div>
+						</div>
+					</div>
+				</fieldset>
+		
+				<div class="form-group row">
+					<label for="inputAdresa3" class="col-sm-2 col-form-label">Adresa</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputAdresa3" placeholder="Adresa">
+					</div>
+				</div>
+		
+				<div class="form-group row">
+					<label for="inputTelefon3" class="col-sm-2 col-form-label">Telefon</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputTelefon3" placeholder="Telefon">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-10">
+						<button type="submit" class="btn btn-primary">Registracija</button>
+					</div>
+				</div>
+			</form>
+		</div>
+
+		<div class="tab-pane fade p-5 w-50" id="klubovi" role="tabpanel" aria-labelledby="klubovi-tab">
+			<h1 class="h1">Registracija kluba</h1>
+			<form>
+				<div class="form-group row">
+					<label for="inputIme3" class="col-sm-2 col-form-label">Naziv</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputIme3" placeholder="Ime">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputVlasnik3" class="col-sm-2 col-form-label">Ime vlasnika</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputVlasnik3" placeholder="Ime vlasnika">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputPassword3" class="col-sm-2 col-form-label">Password</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+					</div>
+				</div>
+		
+				<div class='form-group row' id='datetimepicker3'>
+					<label for="inputDate3" class="col-sm-2 col-form-label">Datum osnivanja</label>
+					<div class="col-sm-10">
+						<input type="date" class="form-control" id="inputDate3">
+					</div>
+				</div>
+		
+				<div class="form-group row">
+					<label for="inputAdresa3" class="col-sm-2 col-form-label">Adresa</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputAdresa3" placeholder="Adresa">
+					</div>
+				</div>
+		
+				<div class="form-group row">
+					<label for="inputTelefon3" class="col-sm-2 col-form-label">Telefon</label>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" id="inputTelefon3" placeholder="Telefon">
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-sm-10">
+						<button type="submit" class="btn btn-primary">Registracija</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		
+	</div>
+	
+
+	<script>
+		function login() {
+			let username = document.getElementById("korisnicko_ime").value;
+			let password = document.getElementById("lozinka").value;
+			if (username == "admin" || username == "igrac" || username == "klub" || username == "sudija") {
+				localStorage.setItem("korisnicko_ime", username);
+				localStorage.setItem("lozinka", password);
+				document.getElementById("korisnicko_ime").value = "";
+				document.getElementById("lozinka").value = "";
+				prikaz();
+			}
+			else {
+				alert("Pogresno korisnicko ime ili lozinka!");
+			}
+		}
+
+		var input = document.getElementById("korisnicko_ime");
+
+		input.addEventListener("keyup", function (event) {
+			if (event.keyCode === 13) {
+				event.preventDefault();
+				document.getElementById("loginBtn").click();
+			}
+		});
+
+		function logout() {
+			if (localStorage.getItem("korisnicko_ime") != null) {
+				localStorage.removeItem("korisnicko_ime");
+				localStorage.removeItem("lozinka");
+				prikaz();
+			}
+		}
+
+		$(".igrac").click(function () {
+			localStorage.setItem("pregled", this.className);
+		});
+
+		$(".klub").click(function () {
+			localStorage.setItem("pregled", this.className);
+		});
+
+		function prikaz() {
+			let username = localStorage.getItem("korisnicko_ime");
+
+			if (username == "klub") {
+				location.replace("klub.html")
+				return;
+			}
+
+			if (username == "igrac") {
+				//Sakrij 
+				document.getElementById("login-forma").style.display = "none";
+				let klub_tabla = document.getElementsByClassName("klub");
+				for (var i = 0; i < klub_tabla.length; i++) {
+					klub_tabla[i].style.display = "none";
+				}
+
+				let admin_tabla = document.getElementsByClassName("admin");
+				for (var i = 0; i < admin_tabla.length; i++) {
+					admin_tabla[i].style.display = "none";
+				}
+
+				let sudija_tabla = document.getElementsByClassName("sudija");
+				for (var i = 0; i < sudija_tabla.length; i++) {
+					sudija_tabla[i].style.display = "none";
+				}
+
+				document.getElementById("klub-div").style.display = "none";
+				document.getElementById("admin-div").style.display = "none";
+				document.getElementById("sudija-div").style.display = "none";
+
+				//Prikazi
+				document.getElementById("igrac-div").style.display = "";
+				let igrac_tabla = document.getElementsByClassName("igrac");
+				for (var i = 0; i < igrac_tabla.length; i++) {
+					igrac_tabla[i].style.display = "";
+				}
+
+			}
+			else if (username == "admin") {
+				//Sakrij 
+				document.getElementById("login-forma").style.display = "none";
+				let igrac_tabla = document.getElementsByClassName("igrac");
+				for (var i = 0; i < igrac_tabla.length; i++) {
+					igrac_tabla[i].style.display = "none";
+				}
+
+				let klub_tabla = document.getElementsByClassName("klub");
+				for (var i = 0; i < klub_tabla.length; i++) {
+					klub_tabla[i].style.display = "none";
+				}
+
+				let sudija_tabla = document.getElementsByClassName("sudija");
+				for (var i = 0; i < sudija_tabla.length; i++) {
+					sudija_tabla[i].style.display = "none";
+				}
+				document.getElementById("igrac-div").style.display = "none";
+				document.getElementById("klub-div").style.display = "none";
+				document.getElementById("sudija-div").style.display = "none";
+				//Prikazi
+				document.getElementById("admin-div").style.display = "";
+				let admin_tabla = document.getElementsByClassName("admin");
+				for (var i = 0; i < admin_tabla.length; i++) {
+					admin_tabla[i].style.display = "";
+				}
+
+			}
+			else if (username == "sudija") {
+				//Sakrij 
+				document.getElementById("login-forma").style.display = "none";
+				let igrac_tabla = document.getElementsByClassName("igrac");
+				for (var i = 0; i < igrac_tabla.length; i++) {
+					igrac_tabla[i].style.display = "none";
+				}
+
+				let klub_tabla = document.getElementsByClassName("klub");
+				for (var i = 0; i < klub_tabla.length; i++) {
+					klub_tabla[i].style.display = "none";
+				}
+
+				let admin_tabla = document.getElementsByClassName("admin");
+				for (var i = 0; i < admin_tabla.length; i++) {
+					admin_tabla[i].style.display = "none";
+				}
+				document.getElementById("igrac-div").style.display = "none";
+				document.getElementById("klub-div").style.display = "none";
+				document.getElementById("admin-div").style.display = "none";
+				//Prikazi
+				document.getElementById("sudija-div").style.display = "";
+				let sudija_tabla = document.getElementsByClassName("sudija");
+				for (var i = 0; i < sudija_tabla.length; i++) {
+					sudija_tabla[i].style.display = "";
+				}
+			}
+			else {
+				//Prikazi login
+				document.getElementById("login-forma").style.display = "";
+
+				//Sakrij sve ostalo
+				document.getElementById("igrac-div").style.display = "none";
+				document.getElementById("klub-div").style.display = "none";
+				document.getElementById("admin-div").style.display = "none";
+				document.getElementById("sudija-div").style.display = "none";
+
+				let igrac_tabla = document.getElementsByClassName("igrac");
+				for (var i = 0; i < igrac_tabla.length; i++) {
+					igrac_tabla[i].style.display = "none";
+				}
+
+				let klub_tabla = document.getElementsByClassName("klub");
+				for (var i = 0; i < klub_tabla.length; i++) {
+					klub_tabla[i].style.display = "none";
+				}
+
+				let admin_tabla = document.getElementsByClassName("admin");
+				for (var i = 0; i < admin_tabla.length; i++) {
+					admin_tabla[i].style.display = "none";
+				}
+
+				let sudija_tabla = document.getElementsByClassName("sudija");
+				for (var i = 0; i < sudija_tabla.length; i++) {
+					sudija_tabla[i].style.display = "none";
+				}
+
+			}
+		}
+	</script>
+</body>
+
+
+</html>
