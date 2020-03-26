@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+
+<head>
+	<title>Profili</title>
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+		integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+		integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+		crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+		integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+		integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://kit.fontawesome.com/021abf950c.js" crossorigin="anonymous"></script>
+</head>
+
+<body onload="prikaz()">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="index.html"><img src="slike/logo.png" width="30" height="30"
+				class="d-inline-block align-top" alt=""></a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse justify-content-end " id="navbarSupportedContent">
+			<!-- IGRAC -->
+			<div id="igrac-div" class="align-middle" style="display: none;">
+				<a class="ml-1" href="#"><i class="fas fa-chess-pawn fa-3x"></i></a>
+				<a class="ml-1" href="obavestenja.html"><i class="fas fa-envelope fa-3x"></i></a>
+				<a class="ml-1" href="profili.html"><i class="fas fa-user-cog fa-3x"></i></a>
+				<button class="btn btn-success my-2 my-sm-0 mr-2" type="button" onclick="logout()">izloguj se</button>
+			</div>
+			<!-- KLUB -->
+			<div id="klub-div" class="align-middle" style="display: none;">
+				<a class="ml-1" href="#"><i class="fas fa-chess-king fa-3x"></i></i></a>
+				<a class="ml-1" href="obavestenja.html"><i class="fas fa-envelope fa-3x"></i></a>
+				<a class="ml-1" href="profili.html"><i class="fa fa-users-cog fa-3x"></i></a>
+				<button class="btn btn-success my-2 my-sm-0 mr-2" type="button" onclick="logout()">izloguj se</button>
+			</div>
+			<!-- SUDIJA -->
+			<div id="sudija-div" class="align-middle" style="display: none;">
+				<a class="ml-1" href="obavestenja.html"><i class="fas fa-envelope fa-3x"></i></a>
+				<a class="ml-1" href="profili.html"><i class="fa fa-user-cog fa-3x"></i></a>
+				<button class="btn btn-success my-2 my-sm-0 mr-2" type="button" onclick="logout()">izloguj se</button>
+			</div>
+			<div id="admin-div" class="align-middle" style="display: none;">
+				<a class="ml-1" href="obavestenja.html"><i class="fas fa-envelope fa-3x"></i></a>
+				<a class="ml-1" href="profili.html"><i class="fa fa-cog fa-3x"></i></a>
+				<button class="btn btn-success my-2 my-sm-0 mr-2" type="button" onclick="logout()">izloguj se</button>
+			</div>
+		</div>
+	</nav>
+
+	<!-- KONTENT -->
+	<div class="container-fluid mt-1 ml-5">
+		<div id="igrac-profil" style="display:none">
+
+			<div class="row">
+
+				<div class="col-sm-3">
+
+					<div class="text-center">
+						<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style="width: 500px"
+							class="avatar img-circle img-thumbnail" alt="avatar">
+						<div class="col-sm-12">
+							<h1>Radoje Domanovic</h1>
+						</div>
+						<hr><br>
+						<h6 class="text-left offset-sm-2">Postavi novu sliku...</h6>
+						<input type="file" class="text-center center-block file-upload">
+					</div>
+					<hr><br>
+
+				</div>
+				<div class="col-sm-4">
+
+					<div class="tab-content">
+						<div class="tab-pane active" id="home">
+
+							<form class="form" action="##" method="post" id="registrationForm">
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="first_name">
+											<h4>Ime</h4>
+										</label>
+										<div class="alert alert-info" for="first_name">
+											<h5>Radoje</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_ime">Izmeni</button>
+										<input type="text" class="form-control" name="first_name" id="first_name"
+											placeholder="first name" title="enter your first name if any.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="last_name">
+											<h4>Prezime</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>Domanovic</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_prezime">Izmeni</button>
+										<input type="text" class="form-control" name="last_name" id="last_name"
+											placeholder="last name" title="enter your last name if any.">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="phone">
+											<h4>Kucni telefon</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>011848560322</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_kucni">Izmeni</button>
+										<input type="text" class="form-control" name="phone" id="phone"
+											placeholder="enter phone" title="enter your phone number if any.">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="mobile">
+											<h4>Mobilni telefon</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>063406321</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_mobilni">Izmeni</button>
+										<input type="text" class="form-control" name="mobile" id="mobile"
+											placeholder="enter mobile number" title="enter your mobile number if any.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="email">
+											<h4>E-mail</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>radojedomanovic@gmail.com</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_email">Izmeni</button>
+										<input type="text" class="form-control" name="email" id="email"
+											placeholder="you@email.com" title="enter your email.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="email">
+											<h4>Adresa</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>Ulica u Beogradu 15b</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_adresu">Izmeni</button>
+										<input type="text" class="form-control" id="location" placeholder="somewhere"
+											title="enter a location">
+									</div>
+								</div>
+								<div class="form-group">
+
+									<div class="col-xs-6">
+										<button class="btn btn-lg btn-dark" type="submit" id="izmeni_adresu">Izmeni
+											lozinku</button>
+										<label for="password" name="password" id="password">
+											<h4>Lozinka</h4>
+										</label>
+										<input type="password" class="form-control" name="password" id="password"
+											placeholder="password" title="enter your password.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="password" name="password" id="password">
+											<h4>Potvrdi lozinku</h4>
+										</label>
+										<input type="password" class="form-control" name="password" id="password"
+											placeholder="password" title="enter your password2.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-12">
+										<br>
+										<button class="btn btn-lg btn-success" type="submit">Save</button>
+										<button class="btn btn-lg btn-danger" type="reset">Reset</button>
+									</div>
+								</div>
+							</form>
+							<hr>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4 ml-4">
+					<div class="tab-content">
+						<div class="tab-pane active" id="home">
+
+							<form class="form" action="##" method="post" id="registrationForm">
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<p>
+											<h4>Pol</h4>
+										</p>
+										<input type="radio" id="male" name="gender" value="male">
+										<label for="male">
+											<h5>Musko</h5>
+										</label><br>
+										<input type="radio" id="female" name="gender" value="female">
+										<label for="female">
+											<h5>Zensko</h5>
+										</label><br>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="datum_rodjenja">
+											<h4>Datum rodjenja</h4>
+										</label>
+										<br>
+										<input type="date" id="datum_rodjenja" name="datum_rodjenja">
+										<br>
+										<button class="btn btn-lg btn-dark mt-3" type="submit"
+											id="izmeni_kucni">Izmeni</button>
+									</div>
+								</div>
+
+							</form>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div id="klub-profil" style="display:none">
+
+			<div class="row">
+
+				<div class="col-sm-3">
+
+					<div class="text-center">
+						<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style="width: 500px"
+							class="avatar img-circle img-thumbnail" alt="avatar">
+						<div class="col-sm-12">
+							<h1>Big club</h1>
+						</div>
+						<hr><br>
+						<h6 class="text-left offset-sm-2">Postavi novu sliku...</h6>
+						<input type="file" class="text-center center-block file-upload">
+					</div>
+					<hr><br>
+
+				</div>
+				<div class="col-sm-4">
+
+					<div class="tab-content">
+						<div class="tab-pane active" id="home">
+
+							<form class="form" action="##" method="post" id="registrationForm">
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="first_name">
+											<h4>Naziv</h4>
+										</label>
+										<div class="alert alert-info" for="first_name">
+											<h5>Sahovski klub</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_ime">Izmeni</button>
+										<input type="text" class="form-control" name="name" id="name"
+											placeholder="name">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="datum_rodjenja">
+											<h4>Datum osnivanja</h4>
+										</label>
+										<br>
+										<input type="date" id="datum_osnivanja" name="datum_osnivanja">
+										<br>
+										<button class="btn btn-lg btn-dark mt-3" type="submit"
+											id="izmeni_kucni">Izmeni</button>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="phone">
+											<h4>Kucni telefon</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>011848560322</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_kucni">Izmeni</button>
+										<input type="text" class="form-control" name="phone" id="phone"
+											placeholder="enter phone" title="enter your phone number if any.">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="mobile">
+											<h4>Mobilni telefon</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>063406321</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_mobilni">Izmeni</button>
+										<input type="text" class="form-control" name="mobile" id="mobile"
+											placeholder="enter mobile number" title="enter your mobile number if any.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="email">
+											<h4>E-mail</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>radojedomanovic@gmail.com</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_email">Izmeni</button>
+										<input type="text" class="form-control" name="email" id="email"
+											placeholder="you@email.com" title="enter your email.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="email">
+											<h4>Adresa</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>Ulica u Beogradu 15b</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_adresu">Izmeni</button>
+										<input type="text" class="form-control" id="location" placeholder="somewhere"
+											title="enter a location">
+									</div>
+								</div>
+								<div class="form-group">
+
+									<div class="col-xs-6">
+										<button class="btn btn-lg btn-dark" type="submit" id="izmeni_adresu">Izmeni
+											lozinku</button>
+										<label for="password" name="password" id="password">
+											<h4>Lozinka</h4>
+										</label>
+										<input type="password" class="form-control" name="password" id="password"
+											placeholder="password" title="enter your password.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="password" name="password" id="password">
+											<h4>Potvrdi lozinku</h4>
+										</label>
+										<input type="password" class="form-control" name="password" id="password"
+											placeholder="password" title="enter your password2.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-12">
+										<br>
+										<button class="btn btn-lg btn-success" type="submit">Save</button>
+										<button class="btn btn-lg btn-danger" type="reset">Reset</button>
+									</div>
+								</div>
+							</form>
+							<hr>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div id="sudija-profil" style="display:none">
+
+			<div class="row">
+
+				<div class="col-sm-3">
+
+					<div class="text-center">
+						<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style="width: 500px"
+							class="avatar img-circle img-thumbnail" alt="avatar">
+						<div class="col-sm-12">
+							<h1>Radoje Domanovic</h1>
+						</div>
+						<hr><br>
+						<h6 class="text-left offset-sm-2">Postavi novu sliku...</h6>
+						<input type="file" class="text-center center-block file-upload">
+					</div>
+					<hr><br>
+
+				</div>
+				<div class="col-sm-4">
+
+					<div class="tab-content">
+						<div class="tab-pane active" id="home">
+
+							<form class="form" action="##" method="post" id="registrationForm">
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="first_name">
+											<h4>Ime</h4>
+										</label>
+										<div class="alert alert-info" for="first_name">
+											<h5>Radoje</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_ime">Izmeni</button>
+										<input type="text" class="form-control" name="first_name" id="first_name"
+											placeholder="first name" title="enter your first name if any.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="last_name">
+											<h4>Prezime</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>Domanovic</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_prezime">Izmeni</button>
+										<input type="text" class="form-control" name="last_name" id="last_name"
+											placeholder="last name" title="enter your last name if any.">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="phone">
+											<h4>Kucni telefon</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>011848560322</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_kucni">Izmeni</button>
+										<input type="text" class="form-control" name="phone" id="phone"
+											placeholder="enter phone" title="enter your phone number if any.">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="mobile">
+											<h4>Mobilni telefon</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>063406321</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_mobilni">Izmeni</button>
+										<input type="text" class="form-control" name="mobile" id="mobile"
+											placeholder="enter mobile number" title="enter your mobile number if any.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="email">
+											<h4>E-mail</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>radojedomanovic@gmail.com</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_email">Izmeni</button>
+										<input type="text" class="form-control" name="email" id="email"
+											placeholder="you@email.com" title="enter your email.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="email">
+											<h4>Adresa</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>Ulica u Beogradu 15b</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_adresu">Izmeni</button>
+										<input type="text" class="form-control" id="location" placeholder="somewhere"
+											title="enter a location">
+									</div>
+								</div>
+								<div class="form-group">
+
+									<div class="col-xs-6">
+										<button class="btn btn-lg btn-dark" type="submit" id="izmeni_adresu">Izmeni
+											lozinku</button>
+										<label for="password" name="password" id="password">
+											<h4>Lozinka</h4>
+										</label>
+										<input type="password" class="form-control" name="password" id="password"
+											placeholder="password" title="enter your password.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="password" name="password" id="password">
+											<h4>Potvrdi lozinku</h4>
+										</label>
+										<input type="password" class="form-control" name="password" id="password"
+											placeholder="password" title="enter your password2.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-12">
+										<br>
+										<button class="btn btn-lg btn-success" type="submit">Save</button>
+										<button class="btn btn-lg btn-danger" type="reset">Reset</button>
+									</div>
+								</div>
+							</form>
+							<hr>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4 ml-4">
+					<div class="tab-content">
+						<div class="tab-pane active" id="home">
+
+							<form class="form" action="##" method="post" id="registrationForm">
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<p>
+											<h4>Pol</h4>
+										</p>
+										<input type="radio" id="male" name="gender" value="male">
+										<label for="male">
+											<h5>Musko</h5>
+										</label><br>
+										<input type="radio" id="female" name="gender" value="female">
+										<label for="female">
+											<h5>Zensko</h5>
+										</label><br>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="datum_rodjenja">
+											<h4>Datum rodjenja</h4>
+										</label>
+										<br>
+										<input type="date" id="datum_rodjenja" name="datum_rodjenja">
+										<br>
+										<button class="btn btn-lg btn-dark mt-3" type="submit"
+											id="izmeni_kucni">Izmeni</button>
+									</div>
+								</div>
+
+							</form>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+		<div id="admin-profil" style="display:none">
+
+			<div class="row">
+
+				<div class="col-sm-3">
+
+					<div class="text-center">
+						<img src="http://ssl.gstatic.com/accounts/ui/avatar_2x.png" style="width: 500px"
+							class="avatar img-circle img-thumbnail" alt="avatar">
+						<div class="col-sm-12">
+							<h1>Radoje Domanovic</h1>
+						</div>
+						<hr><br>
+						<h6 class="text-left offset-sm-2">Postavi novu sliku...</h6>
+						<input type="file" class="text-center center-block file-upload">
+					</div>
+					<hr><br>
+
+				</div>
+				<div class="col-sm-4">
+
+					<div class="tab-content">
+						<div class="tab-pane active" id="home">
+
+							<form class="form" action="##" method="post" id="registrationForm">
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="first_name">
+											<h4>Ime</h4>
+										</label>
+										<div class="alert alert-info" for="first_name">
+											<h5>Radoje</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_ime">Izmeni</button>
+										<input type="text" class="form-control" name="first_name" id="first_name"
+											placeholder="first name" title="enter your first name if any.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="last_name">
+											<h4>Prezime</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>Domanovic</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_prezime">Izmeni</button>
+										<input type="text" class="form-control" name="last_name" id="last_name"
+											placeholder="last name" title="enter your last name if any.">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="phone">
+											<h4>Kucni telefon</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>011848560322</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_kucni">Izmeni</button>
+										<input type="text" class="form-control" name="phone" id="phone"
+											placeholder="enter phone" title="enter your phone number if any.">
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="mobile">
+											<h4>Mobilni telefon</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>063406321</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_mobilni">Izmeni</button>
+										<input type="text" class="form-control" name="mobile" id="mobile"
+											placeholder="enter mobile number" title="enter your mobile number if any.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="email">
+											<h4>E-mail</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>radojedomanovic@gmail.com</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_email">Izmeni</button>
+										<input type="text" class="form-control" name="email" id="email"
+											placeholder="you@email.com" title="enter your email.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="email">
+											<h4>Adresa</h4>
+										</label>
+										<div class="alert alert-info" for="last_name">
+											<h5>Ulica u Beogradu 15b</h5>
+										</div>
+										<button class="btn btn-lg btn-dark" type="submit"
+											id="izmeni_adresu">Izmeni</button>
+										<input type="text" class="form-control" id="location" placeholder="somewhere"
+											title="enter a location">
+									</div>
+								</div>
+								<div class="form-group">
+
+									<div class="col-xs-6">
+										<button class="btn btn-lg btn-dark" type="submit" id="izmeni_adresu">Izmeni
+											lozinku</button>
+										<label for="password" name="password" id="password">
+											<h4>Lozinka</h4>
+										</label>
+										<input type="password" class="form-control" name="password" id="password"
+											placeholder="password" title="enter your password.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="password" name="password" id="password">
+											<h4>Potvrdi lozinku</h4>
+										</label>
+										<input type="password" class="form-control" name="password" id="password"
+											placeholder="password" title="enter your password2.">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="col-xs-12">
+										<br>
+										<button class="btn btn-lg btn-success" type="submit">Save</button>
+										<button class="btn btn-lg btn-danger" type="reset">Reset</button>
+									</div>
+								</div>
+							</form>
+							<hr>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4 ml-4">
+					<div class="tab-content">
+						<div class="tab-pane active" id="home">
+
+							<form class="form" action="##" method="post" id="registrationForm">
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<p>
+											<h4>Pol</h4>
+										</p>
+										<input type="radio" id="male" name="gender" value="male">
+										<label for="male">
+											<h5>Musko</h5>
+										</label><br>
+										<input type="radio" id="female" name="gender" value="female">
+										<label for="female">
+											<h5>Zensko</h5>
+										</label><br>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="col-xs-6">
+										<label for="datum_rodjenja">
+											<h4>Datum rodjenja</h4>
+										</label>
+										<br>
+										<input type="date" id="datum_rodjenja" name="datum_rodjenja">
+										<br>
+										<button class="btn btn-lg btn-dark mt-3" type="submit"
+											id="izmeni_kucni">Izmeni</button>
+									</div>
+								</div>
+
+							</form>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+	</div>
+
+	<script>
+		function prikaz() {
+			let username = localStorage.getItem("korisnicko_ime");
+			if (username == "igrac") {
+				//Prikazi profil igraca
+				document.getElementById("igrac-div").style.display = "";
+				document.getElementById("igrac-profil").style.display = "";
+			}
+			else if (username == "klub") {
+				//Prikazi profil kluba
+				document.getElementById("klub-div").style.display = "";
+				document.getElementById("klub-profil").style.display = "";
+			}
+			else if (username == "sudija") {
+				//Prikazi profil sudije
+				document.getElementById("sudija-div").style.display = "";
+				document.getElementById("sudija-profil").style.display = "";
+			}
+			else if (username == "admin") {
+				//Prikazi profil administratora
+				document.getElementById("admin-div").style.display = "";
+				document.getElementById("admin-profil").style.display = "";
+			}
+			else {
+				location.href = 'index.html';
+			}
+			//Sakrij text-boxove ostalo
+			var inputs = document.getElementsByTagName('input');
+
+			for (var i = 0; i < inputs.length; i++) {
+				if (inputs[i].type.toLowerCase() == 'text' || inputs[i].type.toLowerCase() == 'password') {
+					inputs[i].style.display = "none";
+				}
+			}
+			var elements = document.getElementsByName('password');
+
+			for (var i = 0; i < elements.length; i++) {
+				elements[i].style.display = "none";
+			}
+		}
+
+		function logout() {
+			if (localStorage.getItem("korisnicko_ime") != null) {
+				localStorage.removeItem("korisnicko_ime");
+				localStorage.removeItem("lozinka");
+				location.href = 'index.html';
+			}
+
+		}
+
+		$(document).ready(function () {
+
+			var readURL = function (input) {
+				if (input.files && input.files[0]) {
+					var reader = new FileReader();
+
+					reader.onload = function (e) {
+						$('.avatar').attr('src', e.target.result);
+					}
+
+					reader.readAsDataURL(input.files[0]);
+				}
+			}
+
+			$(".file-upload").on('change', function () {
+				readURL(this);
+			});
+		});
+
+	</script>
+</body>
+
+</html>

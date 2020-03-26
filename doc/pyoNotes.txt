@@ -1,0 +1,377 @@
+=======================
+---FAZA0---
+=======================
+
+
+
+--opis sistema:
+Bookking.com je internet portal za razmenu ili prodaju polovnih i novih knjiga.
+Aplikacija je namenjena za upotrebu kako pojedincima tako i knjizarama.
+
+Korisnicima je omoguceno da postave oglas za knjige koje prodaju.
+Prodaja moze da se vrsi na nekoliko nacina:
+    1: Direktno preko sajta ako je prodavac verifikovan
+    2: Indirektno preko middlemana(sajta)
+    3: Licnim dogovorom korisnika preko chat sistema
+
+
+
+--vrste korisnika:
+    1: Korisnik
+    2: Verifikovan korisnik
+    3: Gost
+    4: Admin
+
+Korisnik je korisnik #hvala
+
+Verifikovan korisnik mora da ima garanciju da ce da isporuci? npr knjizara? #vlade kenjaj nesto ovde pls
+
+Gost moze da browsuje inventarom ali bez registracije ne moze da kontaktira/naruci knjigu na svoju adresu
+
+Admin je Admin
+
+
+
+--funkcionalnosti:
+Registracija:
+    unosenje blabla
+Login:
+    blabla
+Browse:
+    Kupovina Direktno
+    Kupovina middlemanom
+    Kontaktiraj prodavca
+Messaging:
+    slanje
+    primanje
+    delete
+    blabla
+Verifikuj account:
+    neki sistem oko ovoga? nmp
+    valjda posaljes PIB firme ili sta vec
+    depozit?
+
+
+
+=======================
+---FAZA1---
+=======================
+
+
+
+5. Funkcionalni zahtevi
+U ovom odeljku definišu se osnovne funkcije koje sistem treba da obezbedi različitim kategorijama
+korisnika.
+
+5.1. Registracija korisnika
+Ukoliko korisnik nema svoj nalog, može ga kreirati unošenjem ličnih podataka. Ti podaci de biti
+upisani u bazu podataka na osnovu čega de kasnije modi da pristupa sistemu.
+
+5.2. Login korisnika
+Unosenje e-mail adrese i sifre korisnika.
+
+5.3. Moderacija
+Moderatoru je dozvoljeno da ukloni stetne oglase i da odobrava/odbija zahteve za verifikaciju.
+
+5.4. Administracija
+Administratoru je dozvoljeno potpuno upravljanje korisnickim nalozima.
+
+5.6. Pravljenje novog oglasa
+Svaki registrovan korisnik moze da postavi svoj oglas.
+Unos novog oglasa se vrsi preko HTML forme a podaci se do baze prenose preko PHP upita.
+?Oglas knjige moze biti za kupovinu ili iznajmljivanja.
+Prilikom unosenja obavezno je staviti sliku i tekst.
+
+    5.6.1. Kupovina
+    Korisnik moze da kupi knjigu na tri nacina.
+
+        5.6.1.1. Kupovina direktno preko sajta
+        Korisnik moze da od verifikovanih prodavaca direktno naruci knjigu placanjem preko sajta
+
+        5.6.1.2. Kupovina preko middlemana
+        Korisnik za oglase na kojima je to omoguceno moze da izvrsi kupovinu preko sajta kao middlemana. 
+        Kupac salje svoj novac bookking.com, a prodavac svoju knjigu. 
+        Kada obe stvari budu dostavljene bookking.com salje knjigu kupcu a novac prodavcu.
+
+        5.6.1.3. Kupovina direktnim dogovorom
+        Dva korisnika mogu medjusobno da se dogovore oko kupovine/prodaje preko sistema poruka.
+
+    ?5.6.2. Iznajmljivanje
+    ?Korisnik moze da iznajmi knjigu u slucaju da je ta opcija omogucena
+
+5.7. Pretraga oglasa
+Oglase je moguce pretraziti preko HTML formi ciji se podaci dobijaju iz baze putem PHP upita.
+
+5.8. Verifikacija korisnika
+Korisnik moze da dobije status verifikovanog ako preko html forme da dokaz o svom identitetu. Moderator potom moze da odobri ili odbije njegov zahtev.
+
+5.9. Sistem poruka
+Korisnici mogu medjusobno da se dopisuju preko sistema poruka
+
+
+
+8. Nefunkcionalni zahtevi
+8.1. Sistemski zahtevi
+Serverski deo treba da može da se izvršava na bilo kom Web serveru koji podržava PHP
+servis. Korisnički interfejs treba da bude raspoloživ za vecinu poznatih internet
+pretraživača. Potrebno je obezbediti da prikaz strana po dizajnu bitno ne odstupa u
+zavisnosti od toga koji se korisnički interfejs koristi (Chrome, Firefox, itd).
+
+8.2. Ostali zahtevi
+Sistem treba da pruži zadovoljavajude performanse pri odzivu, kao i određenu vizuelnu
+dinamičnost strana.
+
+8.3 Elektronsko placanje
+Sistem mora da podrzava nekoliko nacina elektronskog placanja.
+
+
+
+9. Zahtevi za dokumentacijom
+
+9.1 Upotstvo za koriscenje sajta
+Moderatorima je neophodno uputstvo za odobravanje verifikacije korisnicima
+
+9.2. Označavanje
+Svaka stranica mora imati logotip sajta
+
+
+
+=======================
+---FAZA2---
+=======================
+
+
+
+Moderacija:
+
+1.Uvod
+
+1.1.Rezime
+Definisanje scenarija upotrebe pri moderaciji sajta
+
+1.2.Namena
+Dokument će koristiti svi članovi projektnog tima u razvoju projekta i testiranju a može se koristiti i pri pisanju uputstva za upotrebu.
+
+1.3.Reference
+Projektni zadatak
+Uputstvo za pisanje specifikacije scenarija upotrebe funkcionalnosti
+
+1.4.Otvorena pitanja
+Da li je potrebno praviti graficki interfejs za moderatora na stranicama kojima pristupaju korisnici ili zaseban moderator odeljak?
+
+2.Scenario moderacije
+
+2.1.Kratak opis
+Moderatoru je dozvoljeno da ukloni stetne oglase i da odobrava/odbija zahteve za verifikaciju. Moderator se loguje na sajt. Neki od oglasa mogu biti maliciozni pa je moderatoru kao privilegovanom korisniku dozvoljeno da takve oglase ukloni sa sajta. Korisnici mogu da se prijave na sistem za verifikaciju gde moderator moze da odobri ili odbije njihovu prijavu u zavisnosti od ponudjenih podataka i politike sajta. Moderator ima pristup moderacija sekciji gde moze da pregleda zahteve za verifikaciju i prijavljene oglase.
+
+2.2.Tok dogadjaja
+
+2.2.1.Moderator otvara sekciju brisanja malicioznih oglasa
+1.Iz baze se uzimaju trenutni nemoderisani oglasi sa velikim brojem prijava.
+2.Na stranici se prikazuju oglasi u formatu:
+-glavna slika
+-naziv
+-broj prijava
+-dugme za brisanje
+-dugme za dublji pogled
+3.Moderator bira opciju(dugme) za jedan od ponudjenih oglasa
+
+2.2.1.1.Moderator bira dugme za direktno brisanje
+1.Iz baze se invalidira odredjeni oglas.
+2.Na stranici je oglas obojen sivom prozracnom bojom.
+
+2.2.2.Moderator bira dugme za dublji pogled
+1.Iz baze se uzima konkretan oglas.
+2.Na stranici se prikazuje oglas kako ga korisnik vidi i dugme za brisanje.
+
+2.2.2.1.Moderator bira dugme za brisanje
+1.U bazi se invalidira odredjeni oglas.
+2.Na stranici se ispisuje poruka uspeha.
+3.Korisniku se salje poruka o obrisanom oglasu i korisnik sam se eventualno banuje.
+
+2.2.3.Moderator otvara sekciju verifikacije korisnika
+1.Iz baze se uzimaju trenutni zahtevi za verifikaciju.
+2.Na stranici se prikazuju korisnici u formatu:
+-naziv
+-dugme za dublji pogled
+3.Moderator bira jednog od ponudjenih korisnika
+
+2.2.3.1.Moderator prihvata zahtev za verifikaciju
+1.Moderator bira dugme za prihvatanje
+2.U bazi se menja status korisnika u verifikovanog korisnika
+3.U bazi se menja status zahteva za verifikaciju
+
+2.2.3.2.Moderator odbija zahtev za verifikaciju
+1.Moderator bira dugme za prihvatanje
+2.U bazi se menja status zahteva za verifikaciju
+
+2.3.Posebni zahtevi
+Nema.
+
+2.4.Preduslovi
+Moderator mora da bude prijavljen u sistem.
+
+2.5.Posledice
+Akcije se beleze u bazi podataka.
+
+
+
+
+
+
+Administracija:
+
+1.Uvod
+
+1.1.Rezime
+Definisanje scenarija upotrebe pri administraciji sajta
+
+1.2.Namena
+Dokument će koristiti svi članovi projektnog tima u razvoju projekta i testiranju a može se koristiti i pri pisanju uputstva za upotrebu.
+
+1.3.Reference
+Projektni zadatak
+Uputstvo za pisanje specifikacije scenarija upotrebe funkcionalnosti
+
+1.4.Otvorena pitanja
+Da li je potrebno praviti graficki interfejs za administratora na stranicama kojima pristupaju korisnici ili zaseban moderator odeljak?
+
+2.Scenario administracije
+
+2.1.Kratak opis
+Administratoru je dozvoljeno da menja bilo koji sadrzaj sajta.
+Administrator ima privilegija da daje korisnicima moderatorsku ulogu.
+
+2.2.Tok dogadjaja
+
+2.2.1.Moderacija
+Privilegije administratora su nadskup privilegija moderatora
+
+2.2.2.Administrator edituje korisnika
+1.Na stranici se ispisuju informacije o korisniku
+-username
+-email
+-password
+-status
+2.Administrator bira i menja polje u bazi koje zeli da promeni za datog korisnika
+
+2.3.Posebni zahtevi
+Nema.
+
+2.4.Preduslovi
+Administrator mora da bude prijavljen u sistem.
+
+2.5.Posledice
+Akcije se beleze u bazi podataka.
+
+
+
+
+
+
+Sistem poruka:
+
+1.Uvod
+
+1.1.Rezime
+Definisanje scenarija pri upotrebi sistema poruka.
+
+1.2.Namena
+Dokument će koristiti svi članovi projektnog tima u razvoju projekta i testiranju a može se koristiti i pri pisanju uputstva za upotrebu.
+
+1.3.Reference
+Projektni zadatak
+Uputstvo za pisanje specifikacije scenarija upotrebe funkcionalnosti.
+
+1.4.Otvorena pitanja
+Sistem prijavljivanja spam poruka.
+
+2.Scenario sistema poruka
+
+2.1.Kratak opis
+Sistem poruka je ubacen povodom komunikacije izmedju korisnika i eventualne licne razmene dobara. Korisnici mogu medjusobno da salju jedni drugima poruke.
+
+2.2.Tok dogadjaja
+
+2.2.1.Korisnik pravi novu konverzaciju
+1.Korisnik bira dugme napravi konverzaciju na profilu drugog korisnika.
+2.Na stranici se prikazuje forma za slanje poruke.
+-prethodne poruke
+-text box za trenutnu poruku
+-dugme za slanje
+3.Korisnik salje poruku preko dugmeta za slanje.
+4.U bazi se kreira konverzacija i poslata poruka.
+5.Primalac dobija novu konverzaciju u svom prijemnom sanducetu.
+
+2.2.2.Korisnik prima poruku u svoje prijemno sanduce
+1.Na stranici se prikazuje notifikacija o primljenoj poruci.
+
+2.2.3.Korisnik brise konverzaciju
+1.Korisnik bira konverzaciju koju zeli da obrise.
+2.Korisnik pritiska dugme za brisanje konverzacije.
+3.U bazi se menja prikaz konverzacije za konkretnog korisnika.
+
+2.2.4.Korisnik blokira korisnika
+1.Korisnik bira dugme za blokiranje na profilu drugog korisnika.
+2.U bazi se pravi relacija blokiranja izmedju dva korisnika.
+
+2.3.Posebni zahtevi
+Nema.
+
+2.4.Preduslovi
+Korisnik mora da bude prijavljen u sistem.
+Korisnik ne sme da bude blokiran od strane drugog korisnika pri slanju poruka.
+
+2.5.Posledice
+Akcije se beleze u bazi podataka.
+
+
+
+
+
+
+Verifikacija korisnika:
+
+1.Uvod
+
+1.1.Rezime
+Definisanje scenarija pri podnosenju zahteva za verifikaciju.
+
+1.2.Namena
+Dokument će koristiti svi članovi projektnog tima u razvoju projekta i testiranju a može se koristiti i pri pisanju uputstva za upotrebu.
+
+1.3.Reference
+Projektni zadatak
+Uputstvo za pisanje specifikacije scenarija upotrebe funkcionalnosti.
+
+1.4.Otvorena pitanja
+Kojim sve dokumentima je moguce obaviti verifikaciju?
+
+2.Scenario sistema poruka
+
+2.1.Kratak opis
+Sistem poruka je ubacen povodom komunikacije izmedju korisnika i eventualne licne razmene dobara. Korisnici mogu medjusobno da salju jedni drugima poruke.
+
+2.2.Tok dogadjaja
+
+2.2.1.Korisnik pravi zahtev za verifikaciju
+1.Korisnik bira dugme pravljenja zahteva za verifikaciju na svom profilu
+2.Na stranici se prikazuje forma koja se popunjava:
+-ime i prezime podnosioca
+-broj licne karte ili pib pravnog lica
+-padajuci meni tipa dokaza o verodostojnosti podataka
+-upload dugme slike dokaza
+3.Korisnik popunjava formu i pritiska dugme za podnosenje zahteva
+4.U bazi se pravi novi zahtev za verifikaciju
+5.Dugme za pravljenje novog zahteva je onemoguceno
+
+2.3.Posebni zahtevi
+Nema.
+
+2.4.Preduslovi
+Korisnik mora da bude prijavljen u sistem.
+Korisnik mora da ne bude vec verifikovan
+
+2.5.Posledice
+Akcije se beleze u bazi podataka.
+
