@@ -1,0 +1,142 @@
+<!--Autori: Radenko Pejić i Janko Pašajlić-->
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <title>
+            BookKing
+        </title>
+        <meta charset="UTF-8">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/styles.css" rel="stylesheet">
+        
+
+    </head>
+    <body>
+        
+        
+        <nav class="navbar navbar-expand-md bg-light navbar-light">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar1">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+            
+            <div class="collapse navbar-collapse" id="collapsibleNavbar1">
+                <ul class="navbar-nav mr-auto">
+                    <li class="media" style="padding-top:10px; padding-bottom:10px;">
+                        <div class="media-left">
+                            
+                            <a href ="admin_profil.html">
+                            <img class="mr-3" src="resources\logo.png" style="width:80px" href="">
+                            </a>
+                        </div>
+                        <div class="media-body"  style="padding-top:20px; ">
+                            <h1 class="mt-0 ">BookKing</h1>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"  style ="padding-left:20px ;">
+                        <a href="index.html">Izloguj se</a>
+                    </li>
+                </ul>
+            
+            </div>
+        </nav>
+
+
+        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+			<!-- logo -->
+			<a class="navbar-brand">Administrator</a>
+			
+			<!-- kada se smanji prozor da se pojavi collapse button -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<!-- likovi -->
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+				<ul class="navbar-nav">
+                    <li class="nav-item active">
+						<a class="nav-link" href="admin_profil.html">Admin profil</a>
+                    </li> 
+					<li class="nav-item">
+						<a class="nav-link" href="admin_nalozi.html">Pretraga korisničkih naloga</a>
+                    </li> 
+                    <li class="nav-item">
+						<a class="nav-link" href="admin_oglasi.html">Pretraga oglasa</a>
+                    </li> 
+                    <li class="nav-item">
+						<a class="nav-link" href="admin_zahtevi.html">Pretraga zahteva za verifikaciju</a>
+                    </li> 
+				</ul>
+			</div> 
+            
+        </nav>
+        <div class="container" style="padding-top:20px;">
+            <div class="row">
+                <ol class="breadcrumb">
+                    <li><a href="#">
+                        <em class="fa fa-home"></em>
+                    </a></li>
+                    <li class="active">Dashboard</li>
+                </ol>
+            </div><!--/.row-->
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Dashboard</h1>
+                </div>
+            </div><!--/.row-->
+            
+            <div class="panel panel-container">
+                <div class="row">
+                    <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+                        <div class="panel panel-teal panel-widget border-right">
+                            <div class="row no-padding"><em class="fa fa-xl fa-shopping-cart color-blue"></em>
+                                <div class="large">120</div>
+                                <div class="text-muted">New Orders</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+                        <div class="panel panel-blue panel-widget border-right">
+                            <div class="row no-padding"><em class="fa fa-xl fa-comments color-orange"></em>
+                                <div class="large">52</div>
+                                <div class="text-muted">Comments</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+                        <div class="panel panel-orange panel-widget border-right">
+                            <div class="row no-padding"><em class="fa fa-xl fa-users color-teal"></em>
+                                <div class="large">24</div>
+                                <div class="text-muted">New Users</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
+                        <div class="panel panel-red panel-widget ">
+                            <div class="row no-padding"><em class="fa fa-xl fa-search color-red"></em>
+                                <div class="large">25.2k</div>
+                                <div class="text-muted">Page Views</div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!--/.row-->
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <h3>Site Traffic Overview</h3>
+                    <br>
+                    <img class="img-fluid" src="resources/chart.png" alt="">
+                </div>
+            </div><!--/.row-->
+            
+            
+        </div>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </body>
+</html>

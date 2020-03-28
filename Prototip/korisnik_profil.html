@@ -6,6 +6,7 @@
         <title>
             BookKing
         </title>
+        <meta charset="UTF-8">
     </head>
     <body>
         
@@ -21,7 +22,7 @@
                     <li class="media" style="padding-top:10px; padding-bottom:10px;">
                         <div class="media-left">
                             
-                            <a href ="admin.html">
+                            <a href ="admin_profil.html">
                             <img class="mr-3" src="resources\logo.png" style="width:80px" href="">
                             </a>
                         </div>
@@ -53,7 +54,7 @@
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
 					<li class="nav-item active">
-						<a class="nav-link" href="admin.html">Pretraga korisnickih naloga</a>
+						<a class="nav-link" href="admin_profil.html">Pretraga korisničkih naloga</a>
                     </li> 
 				</ul>
 			</div> 
@@ -83,19 +84,29 @@
                 <input type="text" class="form-control" placeholder="Bulevar oslobodjenja 12">
                 </div>
                 <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputCity">Grad</label>
-                    <input type="text" class="form-control" placeholder="Beograd">
+                    <div class="form-group col-md-6">
+                        <label for="inputCity">Grad</label>
+                        <input type="text" class="form-control" placeholder="Beograd">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">Država</label>
+                        <input id="inputState" class="form-control" placeholder="Srbija"></input>
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">Postanski broj</label>
+                        <input type="text" class="form-control" placeholder="11000">
+                    </div>
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">Država</label>
-                    <input id="inputState" class="form-control" placeholder="Srbija"></input>
+                <div class="form-row">
+                    <div class="form-group col-sm-12">
+                        <input type="checkbox" name="mod" id=""> Moderator
+                    </div>
                 </div>
-                <div class="form-group col-md-2">
-                    <label for="inputZip">Postanski broj</label>
-                    <input type="text" class="form-control" placeholder="11000">
+                <div class="form-row">
+                    <div class="form-group col-sm-12">
+                        <a href="admin_profil.html" type="submit" class="btn btn-primary">Potvrdi izmene</a>
+                    </div>
                 </div>
-                <a href="admin.html" type="submit" class="btn btn-primary">Potvrdi izmene</a>
             </form>
         </div>
 

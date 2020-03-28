@@ -6,6 +6,7 @@
         <title>
             BookKing
         </title>
+        <meta charset="UTF-8">
     </head>
     <body>
         
@@ -21,7 +22,7 @@
                     <li class="media" style="padding-top:10px; padding-bottom:10px;">
                         <div class="media-left">
                             
-                            <a href ="admin.html">
+                            <a href ="admin_profil.html">
                             <img class="mr-3" src="resources\logo.png" style="width:80px" href="">
                             </a>
                         </div>
@@ -52,42 +53,44 @@
 			<!-- likovi -->
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
-					<li class="nav-item active">
-						<a class="nav-link" href="admin.html">Pretraga korisničkih naloga</a>
+                    <li class="nav-item">
+						<a class="nav-link" href="admin_profil.html">Admin profil</a>
+                    </li> 
+					<li class="nav-item">
+						<a class="nav-link" href="admin_nalozi.html">Pretraga korisničkih naloga</a>
+                    </li> 
+					<li class="nav-item">
+						<a class="nav-link" href="admin_oglasi.html">Pretraga oglasa</a>
+                    </li> 
+                    <li class="nav-item active">
+						<a class="nav-link" href="admin_zahtevi.html">Pretraga zahteva za verifikaciju</a>
                     </li> 
 				</ul>
 			</div> 
             
         </nav>
+
         <div class="container" style="padding-top:20px;">
-            <form class="form-inline mr-auto">
-                <input class="form-control" type="text" placeholder="Korisničko ime" aria-label="username" style="width: 70%;">
-                <button class="btn btn-primary" type="submit" style="width: 30%;">Pretraga</button>
+
+            <form>
+                <div class="form-row">
+                    <label>Korisničko ime: Laguna</label><br>
+                </div>
+                <div class="form-row">
+                    <label>Verifikacioni dokaz:</label><br>
+                </div>
+                <div class="form-row">                 
+                    <a href="resources\doc.png" download>
+                        <img src="resources\doc.png" style="height: 100px;">
+                      </a>
+                </div>    
+                <br>
+                <a href="admin_zahtevi.html" type="button" class="btn btn-primary">Verifikuj nalog</a>
+                <br><br>
+                <a href="admin_zahtevi.html" type="button" class="btn btn-danger">Odbij verifikaciju naloga</a>
             </form>
-            
-            <table class="table table-striped">
-                <tbody>
-                    <tr>
-                        <td><a href = "korisnik_profil.html">jelica</a></td>
-                    </tr>
-                    <tr>
-                        <td>jankop5</td>
-                    </tr>
-                    <tr>
-                        <td>rade_pejic</td>
-                    </tr>
-                    <tr>
-                        <td>vladeLekic</td>
-                    </tr>
-                    <tr>
-                        <td>pyo</td>
-                    </tr>
-                    <tr>
-                        <td>Laguna</td>
-                    </tr>
-                </tbody>
-            </table>        
         </div>
+
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

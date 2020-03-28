@@ -11,7 +11,6 @@
     <body>
         
         
-        
         <nav class="navbar navbar-expand-md bg-light navbar-light">
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar1">
@@ -23,7 +22,7 @@
                     <li class="media" style="padding-top:10px; padding-bottom:10px;">
                         <div class="media-left">
                             
-                            <a href ="moderator.html">
+                            <a href ="korisnik.html">
                             <img class="mr-3" src="resources\logo.png" style="width:80px" href="">
                             </a>
                         </div>
@@ -33,6 +32,9 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"  style ="padding-left:20px ;">
+                        <a href="verifikacija.html">Verifikacija korisnika</a>
+                    </li>
                     <li class="nav-item"  style ="padding-left:20px ;">
                         <a href="index.html">Izloguj se</a>
                     </li>
@@ -44,7 +46,7 @@
 
         <nav class="navbar navbar-expand-md bg-dark navbar-dark">
 			<!-- logo -->
-			<a class="navbar-brand">Moderator</a>
+			<a class="navbar-brand">Korisnik</a>
 			
 			<!-- kada se smanji prozor da se pojavi collapse button -->
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -54,34 +56,44 @@
 			<!-- likovi -->
 			<div class="collapse navbar-collapse" id="collapsibleNavbar">
 				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link" href="moderator.html">Pretraga oglasa</a>
+					<li class="nav-item active">
+						<a class="nav-link" href="korisnik.html">Pretraga oglasa</a>
                     </li> 
-                    <li class="nav-item active">
-						<a class="nav-link" href="">Pretraga zahteva za verifikaciju</a>
+                    <li class="nav-item">
+						<a class="nav-link" href="oglas.html">Napravi oglas</a>
+                    </li> 
+                    <li class="nav-item">
+						<a class="nav-link" href="moj_profil.html">Moj profil</a>
+                    </li> 
+                    <li class="nav-item">
+						<a class="nav-link" href="moji_oglasi.html">Moji oglasi</a>
+                    </li> 
+                    <li class="nav-item">
+						<a class="nav-link" href="moje_poruke.html">Moje poruke <img src="resources/1024px-NYCS-bull-trans-1.svg.png" width="20" height="20"></a>
                     </li> 
 				</ul>
 			</div> 
         </nav>
 
-
         <div class="container" style="padding-top:20px;">
-            <form class="form-inline mr-auto">
-                <input class="form-control" type="text" placeholder="Korisnicko ime" aria-label="username" style="width: 70%;">
-                <button class="btn btn-primary" type="submit" style="width: 30%;">Pretraga</button>
-            </form>
-            
-            <table class="table table-striped">
-                <tbody>
-                    <tr>
-                        <td><a href = "mod_ver.html">Laguna</a></td>
-                    </tr>
-                    <tr>
-                        <td>jelica</td>
-                    </tr>
-                </tbody>
-            </table>        
+            <table width = "100%" border = 0 cellpadding="10">
+                <tr><td>
+                    <input type="radio" name="a" id="" checked> Preko sajta
+                </td></tr>
+                <tr><td>
+                    <input type="radio" name="a" id=""> Preko middleman-a
+                </td></tr>
+                <tr><td>
+                    <input type="radio" name="a" id=""> Preko sistema poruka
+                </td></tr>
+                <tr>
+                    <td>
+                        <a href="nacin_placanja.html" type="submit" class="btn btn-primary">Dalje</a>
+                    </td>
+                </tr>
+            </table> <hr /> <br />
         </div>
+
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>

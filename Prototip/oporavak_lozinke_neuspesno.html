@@ -11,7 +11,6 @@
     <body>
         
         
-        
         <nav class="navbar navbar-expand-md bg-light navbar-light">
 
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar1">
@@ -23,7 +22,7 @@
                     <li class="media" style="padding-top:10px; padding-bottom:10px;">
                         <div class="media-left">
                             
-                            <a href ="moderator.html">
+                            <a href ="index.html">
                             <img class="mr-3" src="resources\logo.png" style="width:80px" href="">
                             </a>
                         </div>
@@ -34,56 +33,38 @@
                 </ul>
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item"  style ="padding-left:20px ;">
-                        <a href="index.html">Izloguj se</a>
+                        <a href="register.html">Registracija</a>
+                    </li>
+                    <li class="nav-item"  style ="padding-left:20px ;">
+                        <a href="login.html">Logovanje</a>
+                    </li>
+                    <li class="nav-item" style ="padding-left:20px ;">
+                        <a href="adminlogin.html">Administrator logovanje</a>
+                    </li>
+                    <li class="nav-item" style ="padding-left:20px ;">
+                        <a href="modlogin.html">Moderator logovanje</a>
                     </li>
                 </ul>
             
             </div>
         </nav>
 
-
+        
         <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-			<!-- logo -->
-			<a class="navbar-brand">Moderator</a>
-			
-			<!-- kada se smanji prozor da se pojavi collapse button -->
-			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			
-			<!-- likovi -->
-			<div class="collapse navbar-collapse" id="collapsibleNavbar">
-				<ul class="navbar-nav">
-					<li class="nav-item">
-						<a class="nav-link" href="moderator.html">Pretraga oglasa</a>
-                    </li> 
-                    <li class="nav-item active">
-						<a class="nav-link" href="">Pretraga zahteva za verifikaciju</a>
-                    </li> 
-				</ul>
-			</div> 
+            <a class="navbar-brand">Oporavak lozinke</a>
         </nav>
-
-
+    
         <div class="container" style="padding-top:20px;">
-            <form class="form-inline mr-auto">
-                <input class="form-control" type="text" placeholder="Korisnicko ime" aria-label="username" style="width: 70%;">
-                <button class="btn btn-primary" type="submit" style="width: 30%;">Pretraga</button>
-            </form>
-            
-            <table class="table table-striped">
-                <tbody>
-                    <tr>
-                        <td><a href = "mod_ver.html">Laguna</a></td>
-                    </tr>
-                    <tr>
-                        <td>jelica</td>
-                    </tr>
-                </tbody>
-            </table>        
+
+            <div class="alert alert-danger" role="alert">
+                Korisničko ime ne postoji!
+            </div>
         </div>
+
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     </body>
 </html>
+
+
