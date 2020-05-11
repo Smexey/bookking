@@ -8,11 +8,10 @@ mail($to, $subject, $message, "From: bookkingPSI@gmail.com");
 
 ## TODO:
 header svake role je isti: izmestiti to u poseban master header
+mail config moze da se uradi iz app/config/email
 
-## .env
-
-
-
+## .env vars
+root?
 
 # CodeIgniter 4 Application Starter
 
