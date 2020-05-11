@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controllers;
 
 /**
@@ -43,11 +44,11 @@ class BaseController extends Controller
 		$this->session = \Config\Services::session();
 	}
 
-	public function nalog(){
+	public function nalog()
+	{
 
 		$korisnik = $this->session->get("korisnik");
-		
-		echo $korisnik->Ime."<br>".$korisnik->Imejl;
 
+		echo $korisnik->Ime . "<br>" . $korisnik->Imejl;
 	}
 }
