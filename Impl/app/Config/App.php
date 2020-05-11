@@ -23,7 +23,7 @@ class App extends BaseConfig
 	| environments.
 	|
 	*/
-	public $baseURL = 'http://localhost/bookking/Impl/public/';
+	public $baseURL = 'http://localhost/bookking/Impl/';
 
 	/*
 	|--------------------------------------------------------------------------
@@ -35,7 +35,7 @@ class App extends BaseConfig
 	| variable so that it is blank.
 	|
 	*/
-	public $indexPage = '';
+	public $indexPage = 'public';
 
 	/*
 	|--------------------------------------------------------------------------
