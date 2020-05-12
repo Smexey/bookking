@@ -3,11 +3,12 @@
 namespace App\Controllers;
 
 use App\Models\ModelKorisnik;
+use App\Models\ModelZahtevVer;
 
 class Moderator extends BaseController
 {
 
-	protected function pozovi($akcija)
+	protected function pozovi($akcija, $data = [])
 	{
 		$data['controller'] = 'Moderator';
 		echo view('pocetna/header_moderator.php', $data);
@@ -43,5 +44,21 @@ class Moderator extends BaseController
 
 		if ($imejl == "") return $this->pozovi('o_nama/o_nama_error');
 		else return $this->pozovi('o_nama/o_nama_success');
+	}
+
+	
+	public function prikaz_zahtevi(){
+		$zahtevVerModel = new \App\Models\ModelZahtevVer();
+		$data = [
+            'zahtevi' => $zahtevVerModel->where(['Stanje' => 'podnet'])->paginate(8, 'zahtevi'),
+            'pager' => $zahtevVerModel->pager
+        ];
+		$this->pozovi('zahtev_ver/prikaz_zahtevi', $data);
+	}
+
+	public function prikaz_zahtev($id){
+		$zahtevVerModel = new ModelZahtevVer();
+		$zahtev=$zahtevVerModel->find($id);
+		$this->pozovi('zahtev_ver/prikaz_zahtev', ['zahtev'=>$zahtev]);
 	}
 }
