@@ -8,7 +8,7 @@ use App\Models\ModelKorisnik;
 class Korisnik extends BaseController
 {
 
-	protected function pozovi($akcija)
+	protected function pozovi($akcija, $data = [])
 	{
 		$data['controller'] = 'Korisnik';
 		echo view('pocetna/header_korisnik.php', $data);
@@ -59,11 +59,19 @@ class Korisnik extends BaseController
 
 	
 	public function zahtev_ver(){
-		$this->pozovi('zahtev_ver/slanje_zahteva');
+		$zahtevVerModel = new ModelZahtevVer();
+		$korisnik = $this->session->get("korisnik");
+		//Provera da li postoji neobradjen zahtev trebutnog korisnika
+		if ($zahtevVerModel->proveraZahtevPodnet($korisnik->IdK)){
+			return $this->pozovi('zahtev_ver/slanje_zahteva_podnet');
+		}
+		else {
+			$data['zahtevNeuspesan'] = '';
+			$this->pozovi('zahtev_ver/slanje_zahteva', $data);
+		}
 	}
 
 	public function zahtev_ver_action(){
-		///proveriti u filteru da li ima poslat podnet zahtev
 		try {
 			//Nedefinisani, višestruki fajlovi i korupcioni napad na $_FILES se tretiraju kao greška
 			if (
@@ -111,8 +119,12 @@ class Korisnik extends BaseController
 				'Fajl'  => $fajl,
 				'Podneo' => $podneo
 			]);
+			//Ispis u slucaju da je zahtev uspesno poslat
+			return $this->pozovi('zahtev_ver/slanje_zahteva_success');
 		} catch (\Exception $th) {
-			echo $th->getMessage();
+			//Ispis greske
+			$data['zahtevNeuspesan'] = $th->getMessage();
+			return $this->pozovi('zahtev_ver/slanje_zahteva', $data);
 		}
 
 	}

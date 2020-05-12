@@ -50,7 +50,7 @@ class Moderator extends BaseController
 	public function prikaz_zahtevi(){
 		$zahtevVerModel = new \App\Models\ModelZahtevVer();
 		$data = [
-            'zahtevi' => $zahtevVerModel->where(['Stanje' => 'podnet'])->paginate(8, 'zahtevi'),
+            'zahtevi' => $zahtevVerModel->where(['Stanje' => 'podnet'])->paginate(6, 'zahtevi'),
             'pager' => $zahtevVerModel->pager
         ];
 		$this->pozovi('zahtev_ver/prikaz_zahtevi', $data);
@@ -60,5 +60,11 @@ class Moderator extends BaseController
 		$zahtevVerModel = new ModelZahtevVer();
 		$zahtev=$zahtevVerModel->find($id);
 		$this->pozovi('zahtev_ver/prikaz_zahtev', ['zahtev'=>$zahtev]);
+	}
+
+	public function prikaz_zahtev_fajl($id){
+		$zahtevVerModel = new ModelZahtevVer();
+		$zahtev=$zahtevVerModel->find($id);
+		echo view('zahtev_ver/prikaz_zahtev_fajl', ['zahtev'=>$zahtev]);
 	}
 }

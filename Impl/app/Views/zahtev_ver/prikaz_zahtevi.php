@@ -3,9 +3,9 @@
             
 <br><br>
 
-<div class="row">
+<div class="row"  style="height: 500px">
     <div class="offset-sm-2 col-sm-8">
-          
+        <br>
         <h3>Podneti zahtevi za verifikaciju</h3>
         <div class="myPager">
         <?php 
