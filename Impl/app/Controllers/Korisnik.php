@@ -206,4 +206,70 @@ class Korisnik extends BaseController
 		return redirect()->to(site_url("Korisnik/oglas/{$lastOglasID}"));
 	}
 	
+	public function nalog(){
+		$korisnik = $this->session->get("korisnik");
+		$data['ime'] = $korisnik->Ime;
+		$data['prezime'] = $korisnik->Prezime;
+		$data['imejl'] = $korisnik->Imejl;
+		$data['grad'] = $korisnik->Grad;
+		$data['sifra'] = $korisnik->Sifra;
+		$data['adresa'] = $korisnik->Adresa;
+		$data['drzava'] = $korisnik->Drzava;
+		$data['postBroj'] = $korisnik->PostBroj;
+		$this->pozovi('nalog/nalog',$data);
+	}
+
+	public function nalog_izmena(){
+		$korisnik = $this->session->get("korisnik");
+		$data['ime'] = $korisnik->Ime;
+		$data['prezime'] = $korisnik->Prezime;
+		$data['imejl'] = $korisnik->Imejl;
+		$data['grad'] = $korisnik->Grad;
+		$data['sifra'] = $korisnik->Sifra;
+		$data['adresa'] = $korisnik->Adresa;
+		$data['drzava'] = $korisnik->Drzava;
+		$data['postBroj'] = $korisnik->PostBroj;
+		$this->pozovi('nalog/nalog_izmena',$data);
+	}
+
+	public function nalog_izmena_action(){
+		$ime = $_POST['ime'];
+		$imejl = $_POST['imejl'];
+		$sifra = $_POST['sifra'];
+		$prezime = $_POST['prezime'];
+		$adresa = $_POST['adresa'];
+		$grad = $_POST['grad'];
+		$drzava = $_POST['drzava'];
+		$postBroj = $_POST['postBroj'];
+
+		$korisnik = $this->session->get("korisnik");
+		$korisnikModel = new ModelKorisnik();
+		
+		$data = [
+			'Ime' => $ime,
+			'Prezime'  => $prezime,
+			'Imejl'  => $imejl,
+			'Sifra'  => $sifra,
+			'Adresa'  => $adresa,
+			'Grad'  => $grad,
+			'Drzava'  => $drzava,
+			'PostBroj'  => $postBroj,
+			];
+
+		$id = $korisnik->IdK;
+		$save = $korisnikModel->update($id,$data);
+		
+		$korisnik = $korisnikModel->find($id);
+		$this->session->set("korisnik", $korisnik);
+
+		$data['ime'] = $korisnik->Ime;
+		$data['prezime'] = $korisnik->Prezime;
+		$data['imejl'] = $korisnik->Imejl;
+		$data['grad'] = $korisnik->Grad;
+		$data['sifra'] = $korisnik->Sifra;
+		$data['adresa'] = $korisnik->Adresa;
+		$data['drzava'] = $korisnik->Drzava;
+		$data['postBroj'] = $korisnik->PostBroj;
+		$this->pozovi('nalog/nalog',$data);	
+	}
 }

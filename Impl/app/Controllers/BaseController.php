@@ -47,15 +47,6 @@ class BaseController extends Controller
 		// E.g.:
 		$this->session = \Config\Services::session();
 	}
-
-	public function nalog()
-	{
-
-		$korisnik = $this->session->get("korisnik");
-
-		echo $korisnik->Ime . "<br>" . $korisnik->Imejl;
-	}
-
 	
 	protected function pozovi($akcija, $data = []){
 		throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
