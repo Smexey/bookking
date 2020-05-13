@@ -21,17 +21,17 @@
             ?>
                 <?= $pager->links('oglasi'); ?>
             </div>
-
-            <table class="table table-striped text-center">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Naslovnica</th>
-                        <th>Naslov</th> 
-                        <th>Autor</th> 
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
+            <?php 
+                if(count($oglasi)!=0){
+                    echo '<table class="table table-striped text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Naslovnica</th>
+                            <th>Naslov</th> 
+                            <th>Autor</th> 
+                        </tr>
+                    </thead>
+                    <tbody>';
                     foreach ($oglasi as $oglas) {
                         // $korisnikModel = new \App\Models\ModelKorisnik();
                         // $podneo = $korisnikModel->find($zahtev->Podneo);
@@ -42,9 +42,13 @@
                         echo "<td>{$oglas->Naslov}</td>";   
                         echo "<td>{$oglas->Autor}</td></tr>";  
                     } 
-                    ?>
-                </tbody>
-            </table>
+                    echo '</tbody>
+                    </table>';
+                }else{
+                    echo "<h2>Nema oglasa za traženu pretragu</h2>";
+                }
+            ?> 
+                
         </div>
 
     </div>   

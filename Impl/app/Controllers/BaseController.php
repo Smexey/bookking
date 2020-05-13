@@ -78,7 +78,7 @@ class BaseController extends Controller
 		$this->pozovi('pretraga/pretraga',[
             'oglasi' => $oglasi,
 			"trazeno"=>$this->request->getVar('pretraga'),
-            'pager' => $oglasModel->pager
+			'pager' => $oglasModel->pager
         ]);
 	}
 	//Rade
@@ -86,6 +86,8 @@ class BaseController extends Controller
 		$oglasModel = new ModelOglas();
 		$oglas = $oglasModel->find($id);
 		
+		$this->session->set('oglas', $oglas);
+
 		$this->pozovi('pretraga/oglas',[
 			'oglas' => $oglas,
 			'trenutni_korisnik' => $this->session->get("korisnik")
