@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\ModelKorisnik;
 use App\Models\ModelZahtevVer;
+use App\Models\ModelRola;
 
 class Moderator extends BaseController
 {
@@ -56,15 +57,42 @@ class Moderator extends BaseController
 		$this->pozovi('zahtev_ver/prikaz_zahtevi', $data);
 	}
 
-	public function prikaz_zahtev($id){
+	public function prikaz_zahtev($IdZ){
 		$zahtevVerModel = new ModelZahtevVer();
-		$zahtev=$zahtevVerModel->find($id);
+		$zahtev = $zahtevVerModel->find($IdZ);
 		$this->pozovi('zahtev_ver/prikaz_zahtev', ['zahtev'=>$zahtev]);
 	}
 
-	public function prikaz_zahtev_fajl($id){
+	public function prikaz_zahtev_fajl($IdZ){
 		$zahtevVerModel = new ModelZahtevVer();
-		$zahtev=$zahtevVerModel->find($id);
+		$zahtev= $zahtevVerModel->find($IdZ);
 		echo view('zahtev_ver/prikaz_zahtev_fajl', ['zahtev'=>$zahtev]);
+	}
+
+	public function razmotri_zahtev($IdZ){
+		$akcija = $_POST['zahtev_dugme'];
+		$zahtevVerModel = new ModelZahtevVer();
+		$zahtev= $zahtevVerModel->find($IdZ);
+
+		$moderator = $this->session->get("korisnik");
+		$odobrio = $moderator->IdK;
+
+		//odobravanje zahteva
+		if($akcija == 'odobri') {
+			$stanje = 'odobren';
+
+			$korisnikModel = new ModelKorisnik();
+			$rolaModel = new ModelRola();
+			
+			$rola = $rolaModel->where('Opis', 'Verifikovani')->first();
+			$korisnikModel->update($zahtev->Podneo, ['IdR' => $rola->IdR]);
+		}
+		//odbijanje zahteva
+		else if($akcija == 'odbij') {
+			$stanje = 'odbijen';
+		}
+
+		$zahtevVerModel->update($IdZ, ['Stanje' => $stanje, 'Odobrio' => $odobrio]);
+		return $this->pozovi('zahtev_ver/prikaz_zahtev_success', ['zahtev'=>$zahtev, 'stanje' => $stanje]);
 	}
 }

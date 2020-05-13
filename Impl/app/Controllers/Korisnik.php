@@ -67,7 +67,7 @@ class Korisnik extends BaseController
 		}
 		else {
 			$data['zahtevNeuspesan'] = '';
-			$this->pozovi('zahtev_ver/slanje_zahteva', $data);
+			return $this->pozovi('zahtev_ver/slanje_zahteva', $data);
 		}
 	}
 
