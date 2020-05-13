@@ -113,7 +113,6 @@ class Gost extends BaseController
 		}
 
 		$korisnikModel->save([
-			'IdK' => $maxId + 1,
 			'Imejl'  => $imejl,
 			'Sifra'  => $sifra,
 			'Ime'  => $ime,
@@ -124,7 +123,7 @@ class Gost extends BaseController
 			'PostBroj'  => $postBroj,
 			'IdR'  => 1,
 		]);
-
+		
 		$korisnik = $korisnikModel->find($maxId + 1);
 		$this->session->set('korisnik', $korisnik);
 

@@ -92,8 +92,8 @@ class Korisnik extends BaseController
 					throw new \Exception('Greška!');
 			}
 
-			//Provera maksimalne veličine dokumenta - 16MB
-			$limit = 16000000;
+			//Provera maksimalne veličine dokumenta - 1MB
+			$limit = 1000000;
 			if ($_FILES['zahtevFajl']['size'] >= $limit) {
 				throw new \Exception('Prekoračena je maksimalna veličina fajla(16 MB)!');
 			}
