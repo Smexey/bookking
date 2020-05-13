@@ -1,0 +1,168 @@
+  .homePageImg{
+    height: 100%;
+  }
+
+  .homePageP{
+    color:white;
+  }
+
+  .homePageBanner{
+      height: 100vh;
+      position: relative;
+  }
+
+  .homePageSlider{
+      width: 93%;
+      float: left;
+  }
+
+  .carousel-caption{
+      max-width: 500px !important;
+      max-height: 350px !important;
+      text-align: right !important;
+      right: 200px !important;
+      left: auto !important;
+      top: 100px !important;
+  }
+
+  .carousel-caption h1{
+      font-size: 50px;
+  }
+
+  .carousel-caption p{
+      font-size: 20px;
+  }
+
+  .homePageSideMenu{
+      width: 7% !important;
+      height: 100% !important;
+      float: left;
+      background-color: #30f2f2 !important;
+  }
+
+  .footer{
+      width: 90%;
+      padding-top: 10px;
+      background-color: #30f2f2 !important;
+      color: white;    
+      
+  }
+
+  .homePageSideMenu h1{
+      color:#ffffff;
+      text-align: center;
+  }
+
+  .carousel-indicators{
+      left: 85% !important;
+      height: 40% !important;
+      width: 95px !important;
+      top: 55% !important;
+      display: block !important;
+      color: #ffffff;
+  }
+
+  .carousel-indicators li{
+      width: 15px !important;
+      height: 15px !important;
+      border-radius: 50% !important;
+      margin-left: 15px !important;
+      margin-top: 15px !important;
+      background: transparent !important;
+      border: 2px solid #ffffff !important;
+  }
+
+  .homePageTopMenu{
+      position: absolute !important;
+      z-index: 2 !important;
+  }
+
+  .homePageTopMenu ul{
+      display: inline-flex;
+  }
+
+  .homePageTopMenu ul li{
+      list-style: none;
+      margin: 15px 20px;
+  }
+
+  .homePageTopMenu ul li a{
+      display: block;
+      font-size: large;
+  }
+
+  .dropdown-menu {
+      background-color: #30f2f2 !important;
+      color: white !important;
+      border: none !important;
+  }
+  
+  .dropdown-menu a{
+      background-color: transparent !important;
+      color: white !important;
+      border: none !important;
+    }
+
+    .dropdown-menu a:hover{
+      background-color: transparent !important;
+      color: #f2f230 !important;
+      border: none !important;
+    }
+
+    .navbar-collapse{
+        padding-right: 10px;
+    }
+    
+
+    #footer {
+        background-color: #30f2f2 !important;
+        text-align: center !important;
+        color:white;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+
+    .google-map{
+        border-top: none !important;
+        padding: 0px !important;
+        padding-bottom: 50px !important;
+    }
+
+    .locationText{
+        margin-top: 150px !important;
+        margin-bottom: 150px !important;
+    }
+
+    .careersVerticalLine{
+        font-size: 50px;
+        color: #f2f230;
+        font-weight: 100;
+    }
+
+    #insideText{
+        color: #f2f230;
+    }
+
+    .orangeTextColor{
+        color: #f2f230;
+    }
+
+    .myPager{
+        margin-top: 10px;
+        justify-content: center;
+        display: flex;
+    }
+
+    .myPager li{
+        background-color: #61f2c2;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-left: 3px;
+        margin-right: 3px;
+    }
+
+    .myPager a{
+        color: white;
+    }

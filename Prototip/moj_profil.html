@@ -1,0 +1,121 @@
+<!--Autori: Radenko Pejić i Janko Pašajlić-->
+
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <title>
+            BookKing
+        </title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        
+        
+        <nav class="navbar navbar-expand-md bg-light navbar-light">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar1">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+            
+            <div class="collapse navbar-collapse" id="collapsibleNavbar1">
+                <ul class="navbar-nav mr-auto">
+                    <li class="media" style="padding-top:10px; padding-bottom:10px;">
+                        <div class="media-left">
+                            
+                            <a href ="korisnik.html">
+                            <img class="mr-3" src="resources\logo.png" style="width:80px" href="">
+                            </a>
+                        </div>
+                        <div class="media-body"  style="padding-top:20px; ">
+                            <h1 class="mt-0 ">BookKing</h1>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"  style ="padding-left:20px ;">
+                        <a href="verifikacija.html">Verifikacija korisnika</a>
+                    </li>
+                    <li class="nav-item"  style ="padding-left:20px ;">
+                        <a href="index.html">Izloguj se</a>
+                    </li>
+                </ul>
+            
+            </div>
+        </nav>
+
+
+        <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+			<!-- logo -->
+			<a class="navbar-brand">Korisnik</a>
+			
+			<!-- kada se smanji prozor da se pojavi collapse button -->
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			
+			<!-- likovi -->
+			<div class="collapse navbar-collapse" id="collapsibleNavbar">
+				<ul class="navbar-nav">
+					<li class="nav-item">
+						<a class="nav-link" href="korisnik.html">Pretraga oglasa</a>
+                    </li> 
+                    <li class="nav-item">
+						<a class="nav-link" href="oglas.html">Napravi oglas</a>
+                    </li> 
+                    <li class="nav-item active">
+						<a class="nav-link" href="moj_profil.html.html">Moj profil</a>
+                    </li> 
+                    <li class="nav-item">
+						<a class="nav-link" href="moji_oglasi.html">Moji oglasi</a>
+                    </li> 
+                    <li class="nav-item">
+						<a class="nav-link" href="moje_poruke.html">Moje poruke <img src="resources/1024px-NYCS-bull-trans-1.svg.png" width="20" height="20"></a>
+                    </li> 
+				</ul>
+			</div> 
+        </nav>
+
+        <div class="container" style="padding-top:20px;">
+
+            <form>
+                <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputEmail4">Korisničko ime</label>
+                    <input type="username" class="form-control" placeholder="jelica">
+                    <small class="form-text text-muted">Nikome nećemo odati Vaše privatne podatke</small>
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="inputPassword4">Lozinka</label>
+                    <input type="password" class="form-control" placeholder="*******">
+                </div>
+                </div>
+                <div class="form-group">
+                <label for="inputAddress">E-mejl</label>
+                <input type="text" class="form-control" placeholder="jelica@etf.rs">
+                </div>
+                <div class="form-group">
+                <label for="inputAddress2">Adresa</label>
+                <input type="text" class="form-control" placeholder="Bulevar oslobodjenja 12">
+                </div>
+                <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="inputCity">Grad</label>
+                    <input type="text" class="form-control" placeholder="Beograd">
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inputState">Država</label>
+                    <input id="inputState" class="form-control" placeholder="Srbija"></input>
+                </div>
+                <div class="form-group col-md-2">
+                    <label for="inputZip">Postanski broj</label>
+                    <input type="text" class="form-control" placeholder="11000">
+                </div>
+                <a href="korisnik.html" type="submit" class="btn btn-primary">Potvrdi izmene</a>
+            </form>
+        </div>
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    </body>
+</html>
