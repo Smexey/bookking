@@ -5,6 +5,9 @@ namespace App\Controllers;
 use App\Models\ModelKorisnik;
 use App\Models\ModelZahtevVer;
 use App\Models\ModelRola;
+use App\Models\ModelOglas;
+use App\Models\ModelPrijava;
+use App\Models\ModelStanje;
 
 class Moderator extends BaseController
 {
@@ -29,6 +32,7 @@ class Moderator extends BaseController
 
 	public function logout_action()
 	{
+		$this->session->destroy();
 		return redirect()->to(site_url('Gost'));
 	}
 
@@ -94,5 +98,23 @@ class Moderator extends BaseController
 
 		$zahtevVerModel->update($IdZ, ['Stanje' => $stanje, 'Odobrio' => $odobrio]);
 		return $this->pozovi('zahtev_ver/prikaz_zahtev_success', ['zahtev'=>$zahtev, 'stanje' => $stanje]);
+	}
+
+	//Rade
+	public function obisanje_oglasa($id){
+		$this->pozovi('pretraga/brisanje', ['IdO'=>$id]);
+	}
+	//Rade
+	public function obrisi($id){
+		$db      = \Config\Database::connect();
+		$builder = $db->table('oglas'); 
+		$stanjeModel = new ModelStanje(); 
+		$stanje = $stanjeModel->where('Opis','Uklonjen')->first(); 
+		$data = [
+			'IdS' => $stanje->IdS 
+		]; 
+		$builder->where('IdO', $id);
+		$builder->update($data);
+		return redirect()->to(site_url("/bookking/Impl/public/Moderator/pretraga/"));
 	}
 }

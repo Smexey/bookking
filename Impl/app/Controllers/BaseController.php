@@ -16,6 +16,8 @@ namespace App\Controllers;
  */
 
 use CodeIgniter\Controller;
+use App\Models\ModelOglas;
+use App\Models\ModelStanje;
 
 class BaseController extends Controller
 {
@@ -27,7 +29,9 @@ class BaseController extends Controller
 	 *
 	 * @var array
 	 */
-	protected $helpers = [];
+
+	//Rade
+	protected $helpers = ['form','url'];
 
 	/**
 	 * Constructor.
@@ -50,5 +54,42 @@ class BaseController extends Controller
 		$korisnik = $this->session->get("korisnik");
 
 		echo $korisnik->Ime . "<br>" . $korisnik->Imejl;
+	}
+
+	
+	protected function pozovi($akcija, $data = []){
+		throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
+	}
+
+	//Rade
+	public function pretraga(){
+		$oglasModel = new ModelOglas(); 
+		$stanjeModel = new ModelStanje();
+		$stanje = $stanjeModel->where(['Opis'=>'Okacen'])->first();
+		$tekst = $this->request->getVar('pretraga'); 
+		if($tekst != null){
+			$oglasi = $oglasModel ->like('Naslov',$tekst)
+			->orLike('Autor',$tekst)
+			->orLike('Opis',$tekst)
+			->where('IdS',$stanje->IdS)
+			->paginate(8, 'oglasi');
+		}else {
+			$oglasi = $oglasModel->where('IdS',$stanje->IdS)->paginate(8, 'oglasi');
+		}
+		$this->pozovi('pretraga/pretraga',[
+            'oglasi' => $oglasi,
+			"trazeno"=>$this->request->getVar('pretraga'),
+            'pager' => $oglasModel->pager
+        ]);
+	}
+	//Rade
+	public function oglas($id){
+		$oglasModel = new ModelOglas();
+		$oglas = $oglasModel->find($id);
+		
+		$this->pozovi('pretraga/oglas',[
+			'oglas' => $oglas,
+			'trenutni_korisnik' => $this->session->get("korisnik")
+        ]);
 	}
 }

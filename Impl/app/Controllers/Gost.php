@@ -8,7 +8,7 @@ use App\Models\ModelRola;
 class Gost extends BaseController
 {
 
-	protected function pozovi($akcija, $error_msg = "")
+	protected function pozovi($akcija, $data=[], $error_msg = "")
 	{
 		$data['controller'] = 'Gost';
 		$data['error_msg'] = $error_msg;

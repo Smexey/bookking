@@ -2,8 +2,11 @@
 
 namespace App\Controllers;
 use App\Models\ModelZahtevVer;
-
 use App\Models\ModelKorisnik;
+use App\Models\ModelOglas;
+use App\Models\ModelOglasTag;
+use App\Models\ModelStanje;
+use App\Models\ModelTag;
 
 class Korisnik extends BaseController
 {
@@ -128,4 +131,79 @@ class Korisnik extends BaseController
 		}
 
 	}
+
+	//Rade
+	public function moji_oglasi(){
+		$korisnik = $this->session->get("korisnik");
+		$oglasModel = new ModelOglas(); 
+		$stanjeModel = new ModelStanje();
+		$stanje = $stanjeModel->where(['Opis'=>'Okacen'])->first();
+		$tekst = $this->request->getVar('pretraga'); 
+		if($tekst != null){
+			$oglasi = $oglasModel ->like('Naslov',$tekst)
+			->orLike('Autor',$tekst)
+			->orLike('Opis',$tekst)
+			->where('IdS',$stanje->IdS)
+			->where('IdK',$korisnik->IdK)
+			->paginate(8, 'oglasi');
+		}else {
+			$oglasi = $oglasModel->where('IdS',$stanje->IdS)
+			->where('IdK',$korisnik->IdK)->paginate(8, 'oglasi');
+		}
+		$this->pozovi('pretraga/pretraga',[
+            'oglasi' => $oglasi,
+			"trazeno"=>$this->request->getVar('pretraga'),
+            'pager' => $oglasModel->pager
+        ]);
+	}
+
+	//Rade
+	public function dodaj_oglas(){
+		$this->pozovi('pretraga/dodajOglas');
+	}
+
+	//Rade
+	public function nova_vest(){
+		if(!$this->validate([ 
+							'naslov'=>'required|min_length[2]|max_length[50]',
+							'opis'=>'required|min_length[5]',
+							'autor'=>'required|min_length[5]',
+							'cena'=>'required|numeric']))
+			return $this->pozovi('pretraga/dodajOglas',
+				['errors'=>$this->validator->listErrors()]);
+		$stanjeModel = new ModelStanje();
+		$stanje = $stanjeModel->where(['Opis'=>'Okacen'])->first();
+		$korisnik = $this->session->get("korisnik");
+		$oglasModel = new ModelOglas();
+		$file = $this->request->getPost('naslovnica');
+		$oglasModel->save([
+			'IdK' => $korisnik->IdK,
+			'IdS' => $stanje->IdS,
+			'Autor' => $this->request->getVar('autor'),
+			'Naslov' => $this->request->getVar('naslov'),
+			'Opis' => $this->request->getVar('opis'),
+			'Cena' => $this->request->getVar('cena'),
+			'Naslovnica' => file_get_contents($_FILES['naslovnica']['tmp_name'])
+		]);
+		$lastOglasID = $oglasModel->getInsertID();
+		$tags = $this->request->getVar('tags');
+		// $tags = strtolower($tags);
+		$tags = preg_split("/[\s,]+/", $tags);
+		// $tags = preg_match("/[\w]+/",$tags);
+		$tagModel = new ModelTag();
+		$oglasTagModel = new ModelOglasTag();
+		foreach ($tags as $tag) { 
+			$tagModel->save([ 
+				'Opis' => $tag 
+			]); 
+			// $tagId = $tagModel->where(['Opis'=>$tag])->first();
+			$tagId = $tagModel->getInsertID();
+			$oglasTagModel->save([ 
+				'IdT' => $tagId,
+				'IdO' => $lastOglasID 
+			]);
+		}
+		return redirect()->to(site_url("Korisnik/oglas/{$lastOglasID}"));
+	}
+	
 }

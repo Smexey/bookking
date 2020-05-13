@@ -3,11 +3,12 @@
 namespace App\Controllers;
 
 use App\Models\ModelKorisnik;
+use App\Models\ModelStanje;
 
 class Admin extends BaseController
 {
 
-	protected function pozovi($akcija)
+	protected function pozovi($akcija, $data=[])
 	{
 		$data['controller'] = 'Admin';
 		echo view('pocetna/header_admin.php', $data);
@@ -27,6 +28,7 @@ class Admin extends BaseController
 
 	public function logout_action()
 	{
+		$this->session->destroy();
 		return redirect()->to(site_url('Gost'));
 	}
 
@@ -44,5 +46,25 @@ class Admin extends BaseController
 
 		if ($imejl == "") return $this->pozovi('o_nama/o_nama_error');
 		else return $this->pozovi('o_nama/o_nama_success');
+	}
+
+	
+
+	//Rade
+	public function obisanje_oglasa($id){
+		$this->pozovi('pretraga/brisanje', ['IdO'=>$id]);
+	}
+	//Rade
+	public function obrisi($id){
+		$db      = \Config\Database::connect();
+		$builder = $db->table('oglas'); 
+		$stanjeModel = new ModelStanje(); 
+		$stanje = $stanjeModel->where('Opis','Uklonjen')->first(); 
+		$data = [
+			'IdS' => $stanje->IdS 
+		]; 
+		$builder->where('IdO', $id);
+		$builder->update($data);
+		return redirect()->to(site_url("/bookking/Impl/public/Admin/pretraga/"));
 	}
 }
