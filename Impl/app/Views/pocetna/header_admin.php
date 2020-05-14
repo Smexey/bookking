@@ -111,6 +111,10 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="<?php echo site_url("Korisnik/poruke"); ?>" class="nav-link smoothScroll">Poruke</a>
+                </li>
+
+                <li class="nav-item">
                     <a href="<?php echo site_url("Admin/logout"); ?>" class="nav-link smoothScroll">Izloguj se</a>
                 </li>
 

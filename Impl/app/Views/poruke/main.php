@@ -1,12 +1,17 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/css/poruke.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php
+
+                                                    use App\Models\ModelKorisnik;
+
+                                                    echo base_url('/assets/css/poruke.css'); ?>">
 </head>
 
 <body>
     <div class="container">
 
+        <br><br>
         <br><br>
 
         <div class="messaging">
@@ -14,73 +19,90 @@
                 <div class="inbox_people">
                     <div class="headind_srch">
                         <div class="recent_heading">
-                            <h4>Recent</h4>
+                            <h4>Messages</h4>
                         </div>
-
-                        <!-- <div class="srch_bar">
-                            <div class="stylish-input-group">
-                                <input type="text" class="search-bar" placeholder="Search">
-                                <span class="input-group-addon">
-                                    <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
-                                </span> </div>
-                        </div> -->
-
                     </div>
+
                     <div class="inbox_chat">
+                        <?php
+                        // echo $konverzacije[0]->Korisnik2;
+                        $modelKorisnik = new ModelKorisnik();
 
-                        <div class="chat_list active_chat">
-                            <div class="chat_people">
-                                <div class="chat_ib">
-                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                    <p>Test, which is a new approach to have all solutions
-                                        astrology under one roof.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="chat_list">
-                            <div class="chat_people">
-                                <div class="chat_ib">
-                                    <h5>Sunil Rajput <span class="chat_date">Dec 25</span></h5>
-                                    <p>Test, which is a new approach to have all solutions
-                                        astrology under one roof.</p>
-                                </div>
-                            </div>
-                        </div>
+                        foreach ($konverzacije as $konv) {
+                            $ret = "";
+                            $ret .= "<form class='porform' action=" . site_url("$controller/otvoriKonverzaciju_action") . " method='POST'>";
 
+                            $ret .= "<button class='chat_list";
+                            if (isset($selected) && $konv->Korisnik2 == $selected) {
+                                $ret .= " active_chat";
+                            }
+                            $ret .= "' type='submit'> ";
+
+                            $ret .= " <div class='chat_people'> ";
+                            $ret .= " <div class='chat_ib'> ";
+                            $ret .= "<input type='hidden' name='korisnikPrimalac' value='" . $konv->Korisnik2 . "'>";
+
+                            $ret .= $modelKorisnik->find($konv->Korisnik2)->Ime;
+                            //<p>poslednja poruka ide ovde?</p>
+
+                            $ret .= " </div> ";
+                            $ret .= " </div> ";
+                            $ret .= " </button> ";
+                            $ret .= " </form> ";
+
+                            echo $ret;
+                        }
+                        ?>
                     </div>
                 </div>
 
-
                 <div class="mesgs">
                     <div class="msg_history">
-                        <!-- <div class="incoming_msg">
-                            <div class="received_msg">
-                                <div class="received_withd_msg">
-                                    <p>Test which is a new approach to have all
-                                        solutions</p>
-                                    <span class="time_date"> 11:01 AM | June 9</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="outgoing_msg">
-                            <div class="sent_msg">
-                                <p>Test which is a new approach to have all
-                                    solutions</p>
-                                <span class="time_date"> 11:01 AM | June 9</span>
-                            </div>
-                        </div> -->
+
+                        <?php
+                        if (isset($currentPoruke)) {
+                            foreach ($currentPoruke as $por) {
+                                $ret = "";
+
+                                if ($selected == $por->Korisnik2) {
+                                    $ret .= "<div class='incoming_msg'>";
+                                    $ret .= "<div class='received_withd_msg'>";
+                                } else {
+                                    $ret .= "<div class='outgoing_msg'>";
+                                    $ret .= "<div class='sent_msg'>";
+                                }
+
+                                $ret .=  "<p>";
+                                $ret .= $por->Tekst;
+                                $ret .= "</p>";
+                                $ret .= "</div>";
+                                $ret .= "</div>";
+                                echo $ret;
+                            }
+                        }
+
+                        ?>
                     </div>
+
                     <form action="<?php echo site_url("$controller/posaljiPor_action"); ?>" method="POST">
                         <div class="type_msg">
                             <div class="input_msg_write">
                                 <input type="text" name="text" class="write_msg" value="<?php if (isset($_POST['text'])) echo $_POST['text'] ?>" placeholder="Type a message" />
+
                                 <button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                             </div>
                         </div>
                     </form>
                 </div>
+
             </div>
-            <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            <br><br><br>
+
+            <?php
+
+            ?>
+
+
         </div>
     </div>
 </body>

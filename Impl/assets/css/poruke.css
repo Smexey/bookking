@@ -8,7 +8,7 @@ img {
 }
 
 .inbox_people {
-    background: chartreuse none repeat scroll 0 0;
+    background: #f8f8f8 none repeat scroll 0 0;
     float: left;
     overflow: hidden;
     width: 40%;
@@ -101,15 +101,17 @@ img {
     border-bottom: 1px solid #c4c4c4;
     margin: 0;
     padding: 18px 16px 10px;
+    width: 100%;
+    text-align: left;
 }
 
 .inbox_chat {
-    height: 570px;
+    height: 560px;
     overflow-y: scroll;
 }
 
 .active_chat {
-    background: #ebebeb;
+    border-style: inset;
 }
 
 .received_msg {
@@ -158,7 +160,10 @@ img {
 
 .outgoing_msg {
     overflow: hidden;
-    margin: 26px 0 26px;
+}
+
+.incoming_msg {
+    overflow: hidden;
 }
 
 .sent_msg {
@@ -201,4 +206,8 @@ img {
 .msg_history {
     height: 516px;
     overflow-y: auto;
+}
+
+.porform {
+    margin: 0;
 }

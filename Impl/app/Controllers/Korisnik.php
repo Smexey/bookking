@@ -453,11 +453,4 @@ class Korisnik extends BaseController
 		$data['postBroj'] = $korisnik->PostBroj;
 		$this->pozovi('nalog/nalog', $data);
 	}
-
-
-	public function poruke()
-	{
-		$data = null;
-		$this->pozovi('poruke/main', $data);
-	}
 }
