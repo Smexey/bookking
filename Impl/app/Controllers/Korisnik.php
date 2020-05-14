@@ -258,6 +258,12 @@ class Korisnik extends BaseController
 							'brK'=>'required|min_length[12]|max_length[12]|numeric',
 							'validThu'=>'required|min_length[5]|max_length[5]',
 							'cvv'=>'required|min_length[2]|max_length[50]',
+						]) ||
+			$this->request->getVar('placanje')=='Pouzecem'
+		&& !$this->validate(['cardholder'=>'max_length[0]',
+							'brK'=>'max_length[0]',
+							'validThu'=>'max_length[0]',
+							'cvv'=>'max_length[0]',
 						]))//srediti ove provere
 			return $this->pozovi('kupovina/forma',
 			['oglas'=>$oglas,'errors'=>$this->validator->listErrors()]);

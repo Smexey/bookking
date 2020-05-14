@@ -1,5 +1,4 @@
-<br><br>
-<!-- <input type="hidden" name="a" id="" value=<?php echo $a; ?>> -->
+<br><br> 
 <div class="container" style="padding-top:20px;">
     <?php if(!empty($message)) echo "<script type='text/javascript'>alert('$message');</script>"; ?>
     <?php if(!empty($errors)) echo "<span style='color:red'>$errors</span>"; ?>
