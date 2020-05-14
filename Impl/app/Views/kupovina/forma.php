@@ -11,7 +11,8 @@
                     ?> dinara</font>
                 <br /><br />
                 <p>Odaberite način plaćanja:</p>
-                <input type="radio" id="Kartica" name="placanje" value="Kartica">
+                <input type="radio" id="Kartica" name="placanje" value="Kartica"
+                <?php echo (set_value('placanje') == 'Kartica') ?  "checked" : "" ;  ?>>
                 <label for="Kartica">&nbsp;Kartica</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -19,7 +20,10 @@
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="radio" id="Pouzecem" name="placanje" value="Pouzecem" checked>
+                <input type="radio" id="Pouzecem" name="placanje" value="Pouzecem" 
+                <?php echo (set_value('placanje') == 'Pouzecem' || (
+                    set_value('placanje') != 'Pouzecem' && set_value('placanje') != 'Kartica'
+                )) ?  "checked" : "" ;  ?>>
                 <label for="Pouzecem">&nbsp;Pouzećem</label><br>
                 <input class="form-control" type="text" placeholder="Ime i prezime" 
                 aria-label="Ime" style="width: 40%;" name='cardholder' value="<?php echo set_value('cardholder')?>">

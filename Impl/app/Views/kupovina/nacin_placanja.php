@@ -15,7 +15,7 @@
                 </td></tr>';
                 }else{
                     echo '<tr><td>
-                    <input type="radio" name="a" id="" value="middleman"> Preko middleman-a
+                    <input type="radio" name="a" id="" value="middleman" checked> Preko middleman-a
                 </td></tr>';
                 }
             ?> 

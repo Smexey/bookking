@@ -154,7 +154,7 @@ class Korisnik extends BaseController
 
 	//Rade
 	public function nova_vest(){
-		if(!$this->validate([ 
+		if(!$this->validate(['naslovnica' => 'uploaded[naslovnica]|max_size[naslovnica,1024]',
 							'naslov'=>'required|min_length[2]|max_length[50]',
 							'opis'=>'required|min_length[5]',
 							'autor'=>'required|min_length[5]',
@@ -255,9 +255,11 @@ class Korisnik extends BaseController
 		$oglas = $this->session->get('oglas');
 		if($this->request->getVar('placanje')=='Kartica'
 		&& !$this->validate(['cardholder'=>'required|min_length[2]|max_length[50]',
-							'brK'=>'required|min_length[12]|max_length[12]|numeric',
-							'validThu'=>'required|min_length[5]|max_length[5]',
-							'cvv'=>'required|min_length[2]|max_length[50]',
+							// 'brK'=>'required|valid_cc_number[amex]|
+							// valid_cc_number[maestro]|valid_cc_number[visa]',
+							'brK'=>'required|regex_match[/^[0-9]{12,12}$/]',
+							'validThu'=>'required|regex_match[/(?:0[1-9]|1[0-2])\/[0-9]{2}/]',
+							'cvv'=>'required|regex_match[/^[0-9]{3,4}$/]',
 						]) ||
 			$this->request->getVar('placanje')=='Pouzecem'
 		&& !$this->validate(['cardholder'=>'max_length[0]',
