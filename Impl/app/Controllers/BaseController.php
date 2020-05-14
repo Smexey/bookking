@@ -135,17 +135,20 @@ class BaseController extends Controller
 	public function posaljiPor_action()
 	{
 		$text = $_POST['text'];
-
 		$korisnik1 = $this->session->get("korisnik")->IdK;
 		$korisnik2 = $this->session->get("selected");
 
-		$porModel = new ModelPoruka();
+		if ($text != "") {
+			$porModel = new ModelPoruka();
 
-		$porModel->save([
-			'Korisnik1'  => $korisnik1,
-			'Korisnik2'  => $korisnik2,
-			'Tekst'  => $text
-		]);
+			$porModel->save([
+				'Korisnik1'  => $korisnik1,
+				'Korisnik2'  => $korisnik2,
+				'Tekst'  => $text
+			]);
+		}
+
+
 		$_POST['korisnikPrimalac'] = $korisnik2;
 		$this->otvoriKonverzaciju_action();
 	}

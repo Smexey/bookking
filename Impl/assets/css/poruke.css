@@ -44,7 +44,7 @@ img {
 }
 
 .recent_heading h4 {
-    color: #05728f;
+    color: #16697a;
     font-size: 21px;
     margin: auto;
 }
@@ -149,7 +149,7 @@ img {
 }
 
 .sent_msg p {
-    background: #05728f none repeat scroll 0 0;
+    background: #16697a none repeat scroll 0 0;
     border-radius: 3px;
     font-size: 14px;
     margin: 0;
@@ -160,10 +160,12 @@ img {
 
 .outgoing_msg {
     overflow: hidden;
+    margin: 5px 0 5px;
 }
 
 .incoming_msg {
     overflow: hidden;
+    margin: 5px 0 5px;
 }
 
 .sent_msg {
@@ -186,7 +188,7 @@ img {
 }
 
 .msg_send_btn {
-    background: #05728f none repeat scroll 0 0;
+    background: #16697a none repeat scroll 0 0;
     border: medium none;
     border-radius: 50%;
     color: #fff;

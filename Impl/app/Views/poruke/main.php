@@ -1,17 +1,12 @@
 <html>
 
 <head>
-    <link rel="stylesheet" type="text/css" href="<?php
-
-                                                    use App\Models\ModelKorisnik;
-
-                                                    echo base_url('/assets/css/poruke.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/css/poruke.css'); ?>">
 </head>
 
 <body>
     <div class="container">
 
-        <br><br>
         <br><br>
 
         <div class="messaging">
@@ -26,6 +21,8 @@
                     <div class="inbox_chat">
                         <?php
                         // echo $konverzacije[0]->Korisnik2;
+                        use App\Models\ModelKorisnik;
+
                         $modelKorisnik = new ModelKorisnik();
 
                         foreach ($konverzacije as $konv) {
@@ -96,12 +93,7 @@
                 </div>
 
             </div>
-            <br><br><br>
-
-            <?php
-
-            ?>
-
+            <br><br>
 
         </div>
     </div>
