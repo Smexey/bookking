@@ -31,7 +31,7 @@ class BaseController extends Controller
 	 */
 
 	//Rade
-	protected $helpers = ['form','url', 'html'];
+	protected $helpers = ['form', 'url', 'html'];
 
 	/**
 	 * Constructor.
@@ -48,39 +48,48 @@ class BaseController extends Controller
 		$this->session = \Config\Services::session();
 	}
 
-	
-	protected function pozovi($akcija, $data = []){
+
+	protected function pozovi($akcija, $data = [])
+	{
 		throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 	}
 
 	//Rade
-	public function pretraga(){
-		$oglasModel = new ModelOglas(); 
+	public function pretraga()
+	{
+		$oglasModel = new ModelOglas();
 		$stanjeModel = new ModelStanje();
-		$stanje = $stanjeModel->where(['Opis'=>'Okacen'])->first();
-		$tekst = $this->request->getVar('pretraga'); 
-		if($tekst != null){
+		$stanje = $stanjeModel->where(['Opis' => 'Okacen'])->first();
+		$tekst = $this->request->getVar('pretraga');
+		if ($tekst != null) {
 			$oglasi = $oglasModel->where("IdS=$stanje->IdS AND (Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%')")
-			->paginate(8, 'oglasi');
-		}else {
-			$oglasi = $oglasModel->where('IdS',$stanje->IdS)->paginate(8, 'oglasi');
+				->paginate(8, 'oglasi');
+		} else {
+			$oglasi = $oglasModel->where('IdS', $stanje->IdS)->paginate(8, 'oglasi');
 		}
-		$this->pozovi('pretraga/pretraga',[
-            'oglasi' => $oglasi,
-			"trazeno"=>$this->request->getVar('pretraga'),
-            'pager' => $oglasModel->pager
-        ]);
+		$this->pozovi('pretraga/pretraga', [
+			'oglasi' => $oglasi,
+			"trazeno" => $this->request->getVar('pretraga'),
+			'pager' => $oglasModel->pager
+		]);
 	}
 	//Rade
-	public function oglas($id){
+	public function oglas($id)
+	{
 		$oglasModel = new ModelOglas();
 		$oglas = $oglasModel->find($id);
 
 		$this->session->set('oglas', $oglas);
-		
-		$this->pozovi('pretraga/oglas',[
+
+		$this->pozovi('pretraga/oglas', [
 			'oglas' => $oglas,
 			'trenutni_korisnik' => $this->session->get("korisnik")
-        ]);
+		]);
+	}
+
+
+	public function posaljiPor_action()
+	{
+		$text = $_POST['text'];
 	}
 }

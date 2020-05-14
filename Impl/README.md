@@ -10,6 +10,7 @@ mail($to, $subject, $message, "From: bookkingPSI@gmail.com");
 header svake role je isti: izmestiti to u poseban master header
 mail config moze da se uradi iz app/config/email
 promeniti confirme u confirm da bi svi pricali istim jezikom
+zameniti fontawesome sa cdn
 
 ## .env vars
 root?
