@@ -48,14 +48,6 @@ class BaseController extends Controller
 		$this->session = \Config\Services::session();
 	}
 
-	public function nalog()
-	{
-
-		$korisnik = $this->session->get("korisnik");
-
-		echo $korisnik->Ime . "<br>" . $korisnik->Imejl;
-	}
-
 	
 	protected function pozovi($akcija, $data = []){
 		throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
@@ -68,10 +60,7 @@ class BaseController extends Controller
 		$stanje = $stanjeModel->where(['Opis'=>'Okacen'])->first();
 		$tekst = $this->request->getVar('pretraga'); 
 		if($tekst != null){
-			$oglasi = $oglasModel ->like('Naslov',$tekst)
-			->orLike('Autor',$tekst)
-			->orLike('Opis',$tekst)
-			->where('IdS',$stanje->IdS)
+			$oglasi = $oglasModel ->where("IdS=".$stanje->IdS." AND (Naslov LIKE '%".$tekst."%' OR Autor LIKE '%".$tekst."%' OR Opis LIKE '%".$tekst."%')")
 			->paginate(8, 'oglasi');
 		}else {
 			$oglasi = $oglasModel->where('IdS',$stanje->IdS)->paginate(8, 'oglasi');

@@ -2,7 +2,7 @@
     <body>
         <div class="container text-center"  style="height:100%">
             
-            <form action="<?php echo site_url("Moderator/razmotri_zahtev/{$zahtev->IdZ}"); ?>" method="POST">
+            <form action="<?php echo site_url("$controller/razmotri_zahtev/{$zahtev->IdZ}"); ?>" method="POST">
                 <br><br><br>
 
                 <div class="justify-content-center">

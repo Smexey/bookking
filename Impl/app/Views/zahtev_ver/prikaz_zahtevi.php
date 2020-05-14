@@ -47,7 +47,7 @@
                     );
 
                     echo "<tr><td style='display: table-cell;vertical-align: middle;'>{$podneo->Imejl}</td>";
-                    echo "<td>".anchor("$controller/prikaz_profil/{$podneo->IdK}", img($imgProfil))."</td>";  
+                    echo "<td>".anchor("$controller/nalog/{$podneo->IdK}", img($imgProfil))."</td>";  
                     echo "<td>".anchor("$controller/prikaz_zahtev/{$zahtev->IdZ}", img($imgDetalji))."</td></tr>";  
                 }
                 ?>

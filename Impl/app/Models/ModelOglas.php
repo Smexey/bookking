@@ -8,5 +8,11 @@ class ModelOglas extends Model {
     protected $returnType = 'App\Entities\Oglas';
     protected $allowedFields = ['IdO','IdK','IdS','Autor','Naslov',
                                 'Opis','Cena','Naslovnica'];
+
+
+    public function svi(){
+        $query = $this->query("SELECT * FROM oglas WHERE EXISTS(SELECT * FROM prijava WHERE prijava.IdO=oglas.IdO)");
+        return $query->get();
+    }
  
 }

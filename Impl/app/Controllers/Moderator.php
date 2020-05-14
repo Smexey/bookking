@@ -117,4 +117,42 @@ class Moderator extends BaseController
 		$builder->update($data);
 		return redirect()->to(site_url("/bookking/Impl/public/Moderator/pretraga/"));
 	}
+
+
+	//Janko
+	public function pretraga(){
+		$oglasModel = new ModelOglas(); 
+		$stanjeModel = new ModelStanje();
+		$prijavaModel = new ModelPrijava();
+		$stanje = $stanjeModel->where(['Opis'=>'Okacen'])->first();
+		$tekst = $this->request->getVar('pretraga'); 
+		if($tekst != null){
+			$oglasi = $oglasModel ->where("IdS=".$stanje->IdS." AND EXISTS(SELECT * FROM prijava WHERE prijava.IdO=oglas.IdO) AND (Naslov LIKE '%".$tekst."%' OR Autor LIKE '%".$tekst."%' OR Opis LIKE '%".$tekst."%')")
+			->paginate(8, 'oglasi');
+		}else {
+			$oglasi = $oglasModel -> where("IdS=".$stanje->IdS." AND EXISTS(SELECT * FROM prijava WHERE prijava.IdO=oglas.IdO)")
+			->paginate(8, 'oglasi');
+		}
+		$this->pozovi('pretraga/pretraga',[
+			'oglasi' => $oglasi,
+			"trazeno"=>$this->request->getVar('pretraga'),
+			'pager' => $oglasModel->pager
+		]);
+	}
+	
+	public function nalog($IdK){
+		$korisnikModel = new ModelKorisnik();
+		$korisnik = $korisnikModel->find($IdK);
+		$data['ime'] = $korisnik->Ime;
+		$data['prezime'] = $korisnik->Prezime;
+		$data['imejl'] = $korisnik->Imejl;
+		$data['grad'] = $korisnik->Grad;
+		$data['sifra'] = $korisnik->Sifra;
+		$data['adresa'] = $korisnik->Adresa;
+		$data['drzava'] = $korisnik->Drzava;
+		$data['postBroj'] = $korisnik->PostBroj;
+		$data['rola'] = 'Moderator';
+		$this->pozovi('nalog/nalog',$data);
+	}
+
 }
