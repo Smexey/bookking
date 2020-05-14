@@ -121,7 +121,7 @@ class Admin extends BaseController
 	}
 
 
-	public function nalog($IdK){
+	public function nalog_pregled($IdK){
 		$korisnikModel = new ModelKorisnik();
 		$korisnik = $korisnikModel->find($IdK);
 		$data['ime'] = $korisnik->Ime;
@@ -137,58 +137,45 @@ class Admin extends BaseController
 		$this->pozovi('nalog/nalog',$data);
 	}
 
-	public function nalog_izmena(){
-		$korisnikModel = new ModelKorisnik();
-		$korisnik = $korisnikModel->find($IdK);
-		$data['ime'] = $korisnik->Ime;
-		$data['prezime'] = $korisnik->Prezime;
-		$data['imejl'] = $korisnik->Imejl;
-		$data['grad'] = $korisnik->Grad;
-		$data['sifra'] = $korisnik->Sifra;
-		$data['adresa'] = $korisnik->Adresa;
-		$data['drzava'] = $korisnik->Drzava;
-		$data['postBroj'] = $korisnik->PostBroj;
-		$data['rola'] = 'Admin';
-		$data['IdK'] = $IdK;
-		$this->pozovi('nalog/nalog_izmena',$data);
+	public function nalog_brisanje($IdK){
+		$this->pozovi('nalog/brisanje', ['IdK'=>$IdK]);
 	}
 
-	public function nalog_izmena_action(){
-		$ime = $_POST['ime'];
-		$imejl = $_POST['imejl'];
-		$sifra = $_POST['sifra'];
-		$prezime = $_POST['prezime'];
-		$adresa = $_POST['adresa'];
-		$grad = $_POST['grad'];
-		$drzava = $_POST['drzava'];
-		$postBroj = $_POST['postBroj'];
-
+	/* Doraditi sve u ostalim kontrolerima kada je nalog uklonjen*/
+	public function nalog_brisanje_action($IdK){
 		$korisnikModel = new ModelKorisnik();
-		
+		$korisnikModel->update($IdK, ['Stanje' => 'Uklonjen']);
+
+		$stanjeModel = new ModelStanje(); 
+		$stanje = $stanjeModel->where('Opis','Uklonjen')->first(); 
+
+		$oglasModel = new ModelOglas();
+		$oglasi = $oglasModel->dohvatiSveOglaseKorisnika($IdK);
+
+		foreach ($oglasi as $oglas) {
+			$oglasModel->update($oglas->IdO, ['IdS' => $stanje->IdS]);
+		}
+
+		$zahtevVerModel = new ModelZahtevVer();
+		$zahtev = $zahtevVerModel->dohvatiPodnetZahtevKorisnika($IdK);
+		if ($zahtev != null){
+			$admin = $this->session->get("korisnik");
+			$odobrio = $admin->IdK;
+			$zahtevVerModel->update($zahtev->IdZ, ['Stanje' => 'odbijen', 'Odobrio' => $odobrio]);
+		}
+
+		return redirect()->to(site_url("/bookking/Impl/public/Admin/"));
+	}
+
+	public function svi_nalozi(){
+		$rolaModel = new ModelRola();
+		$rola = $rolaModel->where('Opis', 'Admin')->first();
+		$korisnikModel = new ModelKorisnik();
 		$data = [
-			'Ime' => $ime,
-			'Prezime'  => $prezime,
-			'Imejl'  => $imejl,
-			'Sifra'  => $sifra,
-			'Adresa'  => $adresa,
-			'Grad'  => $grad,
-			'Drzava'  => $drzava,
-			'PostBroj'  => $postBroj,
-			];
-
-		$id = $IdK;
-		$save = $korisnikModel->update($id,$data);
-		
-		$korisnik = $korisnikModel->find($id);
-
-		$data['ime'] = $korisnik->Ime;
-		$data['prezime'] = $korisnik->Prezime;
-		$data['imejl'] = $korisnik->Imejl;
-		$data['grad'] = $korisnik->Grad;
-		$data['sifra'] = $korisnik->Sifra;
-		$data['adresa'] = $korisnik->Adresa;
-		$data['drzava'] = $korisnik->Drzava;
-		$data['postBroj'] = $korisnik->PostBroj;
-		$this->pozovi('nalog/nalog',$data);	
+            'nalozi' => $korisnikModel->where(['Stanje' => 'Vazeci', 'IdR !=' => $rola->IdR ])->paginate(6, 'nalozi'),
+            'pager' => $korisnikModel->pager
+        ];
+		return $this->pozovi('nalog/nalog_svi', $data);
 	}
+	
 }

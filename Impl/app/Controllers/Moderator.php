@@ -140,7 +140,7 @@ class Moderator extends BaseController
 		]);
 	}
 	
-	public function nalog($IdK){
+	public function nalog_pregled($IdK){
 		$korisnikModel = new ModelKorisnik();
 		$korisnik = $korisnikModel->find($IdK);
 		$data['ime'] = $korisnik->Ime;

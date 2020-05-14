@@ -28,6 +28,9 @@
                             <th>Naslovnica</th>
                             <th>Naslov</th> 
                             <th>Autor</th> 
+                            <?php if($controller!=='Gost'): ?>
+                                <th>Profil korisnika</th>
+                            <?php endif;?>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,7 +43,18 @@
                         .base64_encode($oglas->Naslovnica).'" height=100 width=100>')."</td>";  
                     
                         echo "<td style='display: table-cell;vertical-align: middle;'>{$oglas->Naslov}</td>";   
-                        echo "<td style='display: table-cell;vertical-align: middle;'>{$oglas->Autor}</td></tr>";  
+                        echo "<td style='display: table-cell;vertical-align: middle;'>{$oglas->Autor}</td>"; 
+                        if($controller!=='Gost') {
+                            $imgsrcProfil = base_url('/assets/images/zahtev_profil.png');
+                            $imgProfil = array(
+                                'src' => $imgsrcProfil,
+                                'alt' => 'Profil',
+                                'style' => 'height: 50px'
+                            );        
+                            echo "<td style='display: table-cell;vertical-align: middle;'>".
+                            anchor("$controller/nalog_pregled/{$oglas->IdK}", img($imgProfil))."</td>";  
+                        }
+                        echo "</tr>";
                     } 
                     ?>
                     </tbody>

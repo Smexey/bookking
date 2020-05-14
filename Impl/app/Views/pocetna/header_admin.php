@@ -103,6 +103,10 @@
                 </li>
 
                 <li class="nav-item">
+                    <a href="<?php echo site_url("Admin/svi_nalozi"); ?>" class="nav-link smoothScroll">Nalozi</a>
+                </li>
+
+                <li class="nav-item">
                     <a href="<?php echo site_url("Admin/prikaz_zahtevi"); ?>" class="nav-link smoothScroll">Zahtevi</a>
                 </li>
 

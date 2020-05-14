@@ -24,7 +24,8 @@ class Gost extends BaseController
 
 	public function login()
 	{
-		$this->pozovi('login/login');
+		$data['loginNeuspesan'] = '';
+		$this->pozovi('login/login', $data);
 	}
 
 	public function login_action()
@@ -33,7 +34,7 @@ class Gost extends BaseController
 		$sifra = $_POST['sifra'];
 
 		$korisnikModel = new ModelKorisnik();
-		$korisnik = $korisnikModel->where('Imejl', $imejl)->where("Sifra", $sifra)->first();
+		$korisnik = $korisnikModel->where(['Imejl' => $imejl, 'Stanje' => 'Vazeci'])->where("Sifra", $sifra)->first();
 
 		if ($korisnik != null) {
 			$rolaModel = new ModelRola();
@@ -48,7 +49,11 @@ class Gost extends BaseController
 			else if ($rola->Opis == "Moderator") return redirect()->to(site_url('Moderator'));
 
 			return redirect()->to(site_url('Gost'));
-		} else return $this->pozovi('login/login_error');
+		} 
+		else {
+			$data['loginNeuspesan'] = 'Login nije uspeo!';
+			return $this->pozovi('login/login', $data);
+		}
 	}
 
 	public function oporavak()
@@ -121,6 +126,7 @@ class Gost extends BaseController
 			'Grad'  => $grad,
 			'Drzava'  => $drzava,
 			'PostBroj'  => $postBroj,
+			'Stanje' => 'Vazeci',
 			'IdR'  => 1,
 		]);
 		

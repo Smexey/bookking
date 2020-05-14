@@ -31,7 +31,7 @@ class BaseController extends Controller
 	 */
 
 	//Rade
-	protected $helpers = ['form','url'];
+	protected $helpers = ['form','url', 'html'];
 
 	/**
 	 * Constructor.

@@ -18,4 +18,8 @@ class ModelZahtevVer extends Model {
         $podnetiZahtevi = $this->where(['Podneo' => $Podneo, 'Stanje' => 'podnet'])->findAll();
         return count($podnetiZahtevi) != 0; ///promeniti u == 1
     }
+
+    public function dohvatiPodnetZahtevKorisnika($podneo){
+        return $this->where(['Podneo' => $podneo, 'Stanje' => 'podnet'])->first();
+    }
 }

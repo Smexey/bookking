@@ -6,6 +6,16 @@
                 <br><br><br>
                 <h1>Login</h1>
 
+                <?php if($loginNeuspesan!=='') : ?>
+                    <div class="row">
+                        <div class="offset-sm-4 col-sm-4">
+                            <div class="alert text-center alert-danger">
+                                <?php echo $loginNeuspesan; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
                 <div class="offset-sm-5">        
                     <table class="text-center">
                         <tr class="text-center">

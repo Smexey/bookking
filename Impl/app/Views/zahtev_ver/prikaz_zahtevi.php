@@ -30,8 +30,6 @@
                     $korisnikModel = new \App\Models\ModelKorisnik();
                     $podneo = $korisnikModel->find($zahtev->Podneo);
 
-                    helper('html');
-
                     $imgsrcProfil = base_url('/assets/images/zahtev_profil.png');
                     $imgProfil = array(
                         'src' => $imgsrcProfil,
@@ -47,7 +45,7 @@
                     );
 
                     echo "<tr><td style='display: table-cell;vertical-align: middle;'>{$podneo->Imejl}</td>";
-                    echo "<td>".anchor("$controller/nalog/{$podneo->IdK}", img($imgProfil))."</td>";  
+                    echo "<td>".anchor("$controller/nalog_pregled/{$podneo->IdK}", img($imgProfil))."</td>";  
                     echo "<td>".anchor("$controller/prikaz_zahtev/{$zahtev->IdZ}", img($imgDetalji))."</td></tr>";  
                 }
                 ?>

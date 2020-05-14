@@ -238,7 +238,28 @@ class Verifikovani extends BaseController
 		]);
 		return redirect()->to(site_url("Verifikovani/pretraga"));
 	}
-	
+
+	public function nalog_pregled($IdK){
+		$korisnikKojiPregleda = $this->session->get("korisnik");
+		
+		$korisnikModel = new ModelKorisnik();
+		$korisnik = $korisnikModel->find($IdK);
+		$data['ime'] = $korisnik->Ime;
+		$data['prezime'] = $korisnik->Prezime;
+		$data['imejl'] = $korisnik->Imejl;
+		$data['grad'] = $korisnik->Grad;
+		$data['sifra'] = $korisnik->Sifra;
+		$data['adresa'] = $korisnik->Adresa;
+		$data['drzava'] = $korisnik->Drzava;
+		$data['postBroj'] = $korisnik->PostBroj;
+		if ($korisnikKojiPregleda->IdK == $korisnik->IdK){
+			$data['rola'] = 'Verifikovani';
+		}
+		else{
+			$data['rola'] = 'Pregled';
+		}
+		$this->pozovi('nalog/nalog',$data);
+	}
 
 	public function nalog(){
 		$korisnik = $this->session->get("korisnik");

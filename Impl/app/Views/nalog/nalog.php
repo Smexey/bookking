@@ -31,10 +31,12 @@
                         <td class="blueColor">Imejl:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         <td class="text-center"><?php echo $imejl; ?></td>
                     </tr>
-                    <tr>
-                        <td class="blueColor">Šifra:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class="text-center"><?php echo $sifra; ?></td>
-                    </tr>
+                    <?php if($rola === 'Admin' || $rola === 'Korisnik' || $rola === 'Verifikovani'):?>
+                        <tr>
+                            <td class="blueColor">Šifra:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                            <td class="text-center"><?php echo $sifra; ?></td>
+                        </tr>
+                    <?php endif;?>
                     <tr>
                         <td class="blueColor">Adresa:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         <td class="text-center"><?php echo $adresa; ?></td>
@@ -55,7 +57,7 @@
                         <td><br></td>
                     </tr>
                     <tr>
-                        <?php if($rola === 'Verifikovani' || $rola == 'Admin'):?>
+                        <?php if($rola === 'Verifikovani'):?>
                         <td colspan = 2 class="text-center" >
                             <form action="<?php echo site_url("$controller/nalog_izmena"); ?>" method="POST">
                                 <button class="btn btn-primarly">Izmeni nalog</button>
@@ -71,6 +73,12 @@
                             <!--Janko dodao-->
                             <form action="<?php echo site_url("$controller/zahtev_ver"); ?>" method="POST">
                                 <button class="btn btn-primarly">Zahtev za verifikaciju</button>
+                            </form>
+                        </td>
+                        <?php elseif($rola === 'Admin'):?>
+                        <td colspan = 2 class="text-center" >
+                            <form action="<?php echo site_url("$controller/nalog_brisanje/{$IdK}"); ?>" method="POST">
+                                <button class="btn btn-primarly">Obriši nalog</button>
                             </form>
                         </td>
                         <?php endif;?>
