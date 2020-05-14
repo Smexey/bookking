@@ -127,10 +127,10 @@ class Moderator extends BaseController
 		$stanje = $stanjeModel->where(['Opis'=>'Okacen'])->first();
 		$tekst = $this->request->getVar('pretraga'); 
 		if($tekst != null){
-			$oglasi = $oglasModel ->where("IdS=".$stanje->IdS." AND EXISTS(SELECT * FROM prijava WHERE prijava.IdO=oglas.IdO) AND (Naslov LIKE '%".$tekst."%' OR Autor LIKE '%".$tekst."%' OR Opis LIKE '%".$tekst."%')")
+			$oglasi = $oglasModel->where("IdS=$stanje->IdS AND EXISTS(SELECT * FROM prijava WHERE prijava.IdO=oglas.IdO) AND (Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%')")
 			->paginate(8, 'oglasi');
 		}else {
-			$oglasi = $oglasModel -> where("IdS=".$stanje->IdS." AND EXISTS(SELECT * FROM prijava WHERE prijava.IdO=oglas.IdO)")
+			$oglasi = $oglasModel -> where("IdS=$stanje->IdS AND EXISTS(SELECT * FROM prijava WHERE prijava.IdO=oglas.IdO)")
 			->paginate(8, 'oglasi');
 		}
 		$this->pozovi('pretraga/pretraga',[

@@ -21,16 +21,16 @@
             ?>
                 <?= $pager->links('oglasi'); ?>
             </div>
-
-            <table class="table table-striped text-center">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>Naslovnica</th>
-                        <th>Naslov</th> 
-                        <th>Autor</th> 
-                    </tr>
-                </thead>
-                <tbody>
+            <?php if(count($oglasi)!=0) : ?>
+                <table class="table table-striped text-center">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Naslovnica</th>
+                            <th>Naslov</th> 
+                            <th>Autor</th> 
+                        </tr>
+                    </thead>
+                    <tbody>
                     <?php
                     foreach ($oglasi as $oglas) {
                         // $korisnikModel = new \App\Models\ModelKorisnik();
@@ -39,12 +39,22 @@
                         echo "<tr><td>".anchor("$controller/oglas/{$oglas->IdO}", '<img src="data:image/jpeg;base64,'
                         .base64_encode($oglas->Naslovnica).'" height=100 width=100>')."</td>";  
                     
-                        echo "<td>{$oglas->Naslov}</td>";   
-                        echo "<td>{$oglas->Autor}</td></tr>";  
+                        echo "<td style='display: table-cell;vertical-align: middle;'>{$oglas->Naslov}</td>";   
+                        echo "<td style='display: table-cell;vertical-align: middle;'>{$oglas->Autor}</td></tr>";  
                     } 
                     ?>
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
+            <?php else: ?>
+                <div class="row">
+                    <div class="offset-sm-2 col-sm-8">
+                        <div class="alert text-center alert-info">
+                            Nema oglasa za traženu pretragu!
+                        </div>
+                    </div>
+                </div>  
+            <?php endif;?> 
+                
         </div>
 
     </div>   

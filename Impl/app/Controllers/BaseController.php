@@ -60,7 +60,7 @@ class BaseController extends Controller
 		$stanje = $stanjeModel->where(['Opis'=>'Okacen'])->first();
 		$tekst = $this->request->getVar('pretraga'); 
 		if($tekst != null){
-			$oglasi = $oglasModel ->where("IdS=".$stanje->IdS." AND (Naslov LIKE '%".$tekst."%' OR Autor LIKE '%".$tekst."%' OR Opis LIKE '%".$tekst."%')")
+			$oglasi = $oglasModel->where("IdS=$stanje->IdS AND (Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%')")
 			->paginate(8, 'oglasi');
 		}else {
 			$oglasi = $oglasModel->where('IdS',$stanje->IdS)->paginate(8, 'oglasi');
@@ -75,6 +75,8 @@ class BaseController extends Controller
 	public function oglas($id){
 		$oglasModel = new ModelOglas();
 		$oglas = $oglasModel->find($id);
+
+		$this->session->set('oglas', $oglas);
 		
 		$this->pozovi('pretraga/oglas',[
 			'oglas' => $oglas,

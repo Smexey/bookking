@@ -3,7 +3,7 @@
             
 <br><br>
 
-<div class="row"  style="height: 100%">
+<div class="row">
     <div class="offset-sm-2 col-sm-8">
         <br>
         <h3>Podneti zahtevi za verifikaciju</h3>
@@ -16,7 +16,7 @@
         </div>
 
         <?php if(count($zahtevi) > 0) : ?>
-        <table class="table table-striped text-center" style="vertical-align: middle;">
+        <table class="table table-striped text-center">
             <thead class="thead-dark">
                 <tr>
                     <th>Podnosilac zahteva</th>

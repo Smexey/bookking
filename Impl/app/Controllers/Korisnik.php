@@ -5,6 +5,7 @@ use App\Models\ModelZahtevVer;
 use App\Models\ModelKorisnik;
 use App\Models\ModelOglas;
 use App\Models\ModelOglasTag;
+use App\Models\ModelPrijava;
 use App\Models\ModelStanje;
 use App\Models\ModelTag;
 
@@ -164,7 +165,7 @@ class Korisnik extends BaseController
 
 	//Rade
 	public function nova_vest(){
-		if(!$this->validate([ 
+		if(!$this->validate(['naslovnica' => 'uploaded[naslovnica]|max_size[naslovnica,1024]',
 							'naslov'=>'required|min_length[2]|max_length[50]',
 							'opis'=>'required|min_length[5]',
 							'autor'=>'required|min_length[5]',
@@ -189,23 +190,149 @@ class Korisnik extends BaseController
 		$tags = $this->request->getVar('tags');
 		// $tags = strtolower($tags);
 		$tags = preg_split("/[\s,]+/", $tags);
-		// $tags = preg_match("/[\w]+/",$tags);
+		// $tags = preg_match("/[\w]+/g",$tags);
 		$tagModel = new ModelTag();
 		$oglasTagModel = new ModelOglasTag();
-		foreach ($tags as $tag) { 
-			$tagModel->save([ 
-				'Opis' => $tag 
-			]); 
-			// $tagId = $tagModel->where(['Opis'=>$tag])->first();
-			$tagId = $tagModel->getInsertID();
-			$oglasTagModel->save([ 
-				'IdT' => $tagId,
-				'IdO' => $lastOglasID 
-			]);
+		foreach ($tags as $tag) {
+			if($tag!=""){ 
+				$tagProvera = $tagModel->where(['Opis'=>$tag])->findAll();
+				$ok = true;
+				foreach ($tagProvera as $tp) { 
+					if(count($tagProvera)!=0) {
+						$tagId = $tp->IdT; 
+						$ok = false;
+					}
+					break;
+				}
+				if($ok){
+					$tagModel->save([ 
+						'Opis' => $tag 
+					]);  
+					$tagId = $tagModel->getInsertID(); 
+				}
+				$oglasTagProvera = $oglasTagModel->where(['IdT'=>$tagId,
+														'IdO'=>$lastOglasID])->findAll();
+				$ok = true;
+				foreach ($oglasTagProvera as $otp) { 
+					$ok = false;
+					break;
+				}
+				if($ok){
+					$oglasTagModel->save([ 
+						'IdT' => $tagId,
+						'IdO' => $lastOglasID 
+					]);
+				}
+			}
 		}
 		return redirect()->to(site_url("Korisnik/oglas/{$lastOglasID}"));
 	}
-	
+	//Rade
+	public function obisanje_oglasa($id){
+		$this->pozovi('pretraga/brisanje', ['IdO'=>$id]);
+	}
+	//Rade
+	public function obrisi($id){
+		$db      = \Config\Database::connect();
+		$builder = $db->table('oglas'); 
+		$stanjeModel = new ModelStanje(); 
+		$stanje = $stanjeModel->where('Opis','Uklonjen')->first(); 
+		$data = [
+			'IdS' => $stanje->IdS 
+		]; 
+		$builder->where('IdO', $id);
+		$builder->update($data);
+		return redirect()->to(site_url("/bookking/Impl/public/Korisnik/pretraga/"));
+	}
+	//Rade
+	public function kupovina(){
+		$oglas = $this->session->get('oglas');
+		$this->pozovi("kupovina/nacin_placanja", ['oglas'=>$oglas]);
+	}
+	//Rade
+	public function kupovina_dalje(){
+		$oglas = $this->session->get('oglas');
+		$this->session->set('nacin',$this->request->getVar('a'));
+		if("poruka"==$this->request->getVar('a')){
+			//redirect na prodavca
+			// $this->pozovi('kupovina/forma',['oglas'=>$oglas, 'a'=> 'cao']);
+		}else{
+			$this->pozovi('kupovina/forma',['oglas'=>$oglas, 
+											'a'=> $this->request->getVar('a')]);
+		}
+	}
+	//Rade
+	public function provera(){
+		$oglas = $this->session->get('oglas');
+		if($this->request->getVar('placanje')=='Kartica'
+		&& !$this->validate(['cardholder'=>'required|min_length[2]|max_length[50]',
+							// 'brK'=>'required|valid_cc_number[amex]|
+							// valid_cc_number[maestro]|valid_cc_number[visa]',
+							'brK'=>'required|regex_match[/^[0-9]{12,12}$/]',
+							'validThu'=>'required|regex_match[/(?:0[1-9]|1[0-2])\/[0-9]{2}/]',
+							'cvv'=>'required|regex_match[/^[0-9]{3,4}$/]',
+						]) ||
+			$this->request->getVar('placanje')=='Pouzecem'
+		&& !$this->validate(['cardholder'=>'max_length[0]',
+							'brK'=>'max_length[0]',
+							'validThu'=>'max_length[0]',
+							'cvv'=>'max_length[0]',
+						]))//srediti ove provere
+			return $this->pozovi('kupovina/forma',
+			['oglas'=>$oglas,'errors'=>$this->validator->listErrors()]);
+		else{
+			//return $this->pozovi('pretraga/pretraga',[]);
+			$db      = \Config\Database::connect();
+			$builder = $db->table('oglas');
+			$nacin = $this->session->get('nacin');
+			if('sajt'==$nacin) 
+				$opisKupovine='KupljenPrekoSajta';
+			else if('middleman'==$nacin) 
+				$opisKupovine='KupljenPrekoMiddlema';
+			// else $opisKupovine='Kupljen';
+			$stanjeModel = new ModelStanje();
+			$stanje = $stanjeModel->where(['Opis'=>$opisKupovine])->first();
+			$oglas = $this->session->get('oglas');
+			$data = [
+				'IdS' => $stanje->IdS 
+			]; 
+			$builder->where('IdO', $oglas->IdO);
+			$builder->update($data);
+			// $oglasModel = new ModelOglas();
+			// $oglasModel->find($korisnik->IdK)->update(['IdS'=>$stanje->IdS]);
+			$message = "Usesno obavljena kupovina! Očekujte dalja obavestenja preko email-a";
+			//poslati mejlove kome gde treba(ima oglas u sesiji pa se izvuce idk->imejl)
+			$this->pozovi('kupovina/kupljeno',
+			['message'=>$message]);
+		}
+	}
+		
+	//Rade
+	public function uspesna_kupovina(){
+		return redirect()->to(site_url("Korisnik/pretraga"));
+	}
+
+	//Rade
+	public function prijava_forma(){
+		$this->pozovi('prijava/forma_prijave',[]);
+	}
+	//Rade
+	public function prijava(){
+		$prijavaModel = new ModelPrijava();
+
+		$korisnik = $this->session->get("korisnik");
+		$oglas = $this->session->get("oglas"); 
+		$opis = $this->request->getVar('opisPrijave');
+
+		$prijavaModel->insert([
+			'IdK' => $korisnik->IdK,
+			'Opis' => $opis,
+			'IdO'  => $oglas->IdO
+		]);
+		return redirect()->to(site_url("Korisnik/pretraga"));
+	}
+
+
 	public function nalog(){
 		$korisnik = $this->session->get("korisnik");
 		$data['ime'] = $korisnik->Ime;

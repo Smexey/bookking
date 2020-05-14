@@ -71,6 +71,20 @@
         } 
         ?>
     </form>
+    <form name="prijava" method="get"
+        action="<?= site_url("$controller/prijava_forma") ?>" > 
+        <?php  
+        if(isset($trenutni_korisnik)){
+            $rolaModel = new ModelRola();
+            $rola = $rolaModel->where('IdR', $trenutni_korisnik->IdR)->first(); 
+            if( ($rola->Opis == "Korisnik" ||
+                $rola->Opis == "Verifikovani") &&
+                $trenutni_korisnik->IdK != $oglas->IdK) //provera korisnik
+                echo '<input class="btn" name="Prijavi" type="submit" 
+                        value="Prijavi" style="margin-left:100">'; 
+        } 
+        ?>
+    </form>
     <form name="obisanje_oglasa" method="get"
         action="<?= site_url("$controller/obisanje_oglasa/$oglas->IdO") ?>" >  
         <?php
