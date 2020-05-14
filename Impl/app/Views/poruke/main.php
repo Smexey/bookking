@@ -63,7 +63,7 @@
                             foreach ($currentPoruke as $por) {
                                 $ret = "";
 
-                                if ($selected == $por->Korisnik2) {
+                                if ($selected != $por->Korisnik2) {
                                     $ret .= "<div class='incoming_msg'>";
                                     $ret .= "<div class='received_withd_msg'>";
                                 } else {
