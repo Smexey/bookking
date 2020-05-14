@@ -147,3 +147,22 @@
         color: #f2f230;
     }
 
+    .myPager{
+        margin-top: 10px;
+        justify-content: center;
+        display: flex;
+    }
+
+    .myPager li{
+        background-color: #61f2c2;
+        padding-left: 10px;
+        padding-right: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-left: 3px;
+        margin-right: 3px;
+    }
+
+    .myPager a{
+        color: white;
+    }

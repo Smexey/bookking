@@ -7,9 +7,9 @@ use CodeIgniter\Model;
 class ModelKorisnik extends Model
 {
     protected $table      = 'korisnik';
-    protected $primaryKey = 'idK';
+    protected $primaryKey = 'IdK';
     protected $returnType = 'App\Entities\Korisnik';
-    protected $allowedFields = ['IdK', 'Imejl', 'Sifra', 'Ime', 'Prezime', 'Adresa', 'Grad', 'Drzava', 'PostBroj', 'IdR'];
+    protected $allowedFields = ['IdK', 'Imejl', 'Sifra', 'Ime', 'Prezime', 'Adresa', 'Grad', 'Drzava', 'PostBroj', 'Stanje', 'IdR'];
 
     public function pretraga($tekst)
     {
