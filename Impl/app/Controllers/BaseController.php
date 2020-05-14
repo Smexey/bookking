@@ -149,4 +149,32 @@ class BaseController extends Controller
 		$_POST['korisnikPrimalac'] = $korisnik2;
 		$this->otvoriKonverzaciju_action();
 	}
+
+	public function zapocniKonverzaciju()
+	{
+		$text = "Zdravo, voleo bih da kupim ovu knjigu: " . $_POST['knjiga'];
+
+		$korisnik1 = $this->session->get("korisnik")->IdK;
+		$korisnik2 = $_POST['primalac'];
+
+		$razgModel = new ModelRazgovor();
+		$razgModel->save([
+			'Korisnik1'  => $korisnik1,
+			'Korisnik2'  => $korisnik2,
+		]);
+		$razgModel->save([
+			'Korisnik1'  => $korisnik2,
+			'Korisnik2'  => $korisnik1,
+		]);
+
+		$porModel = new ModelPoruka();
+
+		$porModel->save([
+			'Korisnik1'  => $korisnik1,
+			'Korisnik2'  => $korisnik2,
+			'Tekst'  => $text
+		]);
+		$_POST['korisnikPrimalac'] = $korisnik2;
+		$this->otvoriKonverzaciju_action();
+	}
 }
