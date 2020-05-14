@@ -104,7 +104,8 @@ img {
 }
 
 .inbox_chat {
-    height: 550px;
+    height: 560px;
+    color: chartreuse;
     overflow-y: scroll;
 }
 
