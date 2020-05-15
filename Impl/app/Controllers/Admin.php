@@ -3,25 +3,17 @@
 namespace App\Controllers;
 
 use App\Models\ModelKorisnik;
-<<<<<<< HEAD
-use App\Models\ModelStanje;
-=======
 use App\Models\ModelZahtevVer;
 use App\Models\ModelRola;
 use App\Models\ModelOglas;
 use App\Models\ModelPrijava;
 use App\Models\ModelStanje;
 
->>>>>>> origin/master
 
 class Admin extends BaseController
 {
 
-<<<<<<< HEAD
-	protected function pozovi($akcija,$data=[])
-=======
 	protected function pozovi($akcija, $data=[])
->>>>>>> origin/master
 	{
 		$data['controller'] = 'Admin';
 		echo view('pocetna/header_admin.php', $data);
@@ -61,8 +53,6 @@ class Admin extends BaseController
 		else return $this->pozovi('o_nama/o_nama_success');
 	}
 
-<<<<<<< HEAD
-=======
 	
 	public function prikaz_zahtevi(){
 		$zahtevVerModel = new \App\Models\ModelZahtevVer();
@@ -111,7 +101,6 @@ class Admin extends BaseController
 		$zahtevVerModel->update($IdZ, ['Stanje' => $stanje, 'Odobrio' => $odobrio]);
 		return $this->pozovi('zahtev_ver/prikaz_zahtev_success', ['zahtev'=>$zahtev, 'stanje' => $stanje]);
 	}
->>>>>>> origin/master
 
 	//Rade
 	public function obisanje_oglasa($id){
@@ -130,8 +119,6 @@ class Admin extends BaseController
 		$builder->update($data);
 		return redirect()->to(site_url("/bookking/Impl/public/Admin/pretraga/"));
 	}
-<<<<<<< HEAD
-=======
 
 
 	public function nalog_pregled($IdK){
@@ -191,5 +178,4 @@ class Admin extends BaseController
 		return $this->pozovi('nalog/nalog_svi', $data);
 	}
 	
->>>>>>> origin/master
 }

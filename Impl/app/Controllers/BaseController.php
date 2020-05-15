@@ -18,11 +18,8 @@ namespace App\Controllers;
 use CodeIgniter\Controller;
 use App\Models\ModelOglas;
 use App\Models\ModelStanje;
-<<<<<<< HEAD
-=======
 use App\Models\ModelPoruka;
 use App\Models\ModelRazgovor;
->>>>>>> origin/master
 
 class BaseController extends Controller
 {
@@ -36,11 +33,7 @@ class BaseController extends Controller
 	 */
 
 	//Rade
-<<<<<<< HEAD
-	protected $helpers = ['form','url'];
-=======
 	protected $helpers = ['form', 'url', 'html'];
->>>>>>> origin/master
 
 	/**
 	 * Constructor.
@@ -54,7 +47,7 @@ class BaseController extends Controller
 		// Preload any models, libraries, etc, here.
 		//--------------------------------------------------------------------
 		// E.g.:
-		$this->session = \Config\Services::session(); 
+		$this->session = \Config\Services::session();
 	}
 
 
@@ -186,45 +179,5 @@ class BaseController extends Controller
 		]);
 		$_POST['korisnikPrimalac'] = $korisnik2;
 		$this->otvoriKonverzaciju_action();
-	}
-
-	protected function pozovi($akcija, $data = []){
-		throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-	}
-
-	//Rade
-	public function pretraga(){
-		$oglasModel = new ModelOglas(); 
-		$stanjeModel = new ModelStanje();
-		$stanje = $stanjeModel->where(['Opis'=>'Okacen'])->first();
-		$tekst = $this->request->getVar('pretraga'); 
-		if($tekst != null){
-			// $oglasi = $oglasModel ->like('Naslov',$tekst)
-			// ->orLike('Autor',$tekst)
-			// ->orLike('Opis',$tekst)
-			// ->where('IdS',$stanje->IdS)
-			// ->paginate(8, 'oglasi');
-			$oglasi = $oglasModel->where("IdS=$stanje->IdS AND (Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%')")
-			->paginate(8, 'oglasi');
-		}else {
-			$oglasi = $oglasModel->where('IdS',$stanje->IdS)->paginate(8, 'oglasi');
-		}
-		$this->pozovi('pretraga/pretraga',[
-            'oglasi' => $oglasi,
-			"trazeno"=>$this->request->getVar('pretraga'),
-			'pager' => $oglasModel->pager
-        ]);
-	}
-	//Rade
-	public function oglas($id){
-		$oglasModel = new ModelOglas();
-		$oglas = $oglasModel->find($id);
-		
-		$this->session->set('oglas', $oglas);
-
-		$this->pozovi('pretraga/oglas',[
-			'oglas' => $oglas,
-			'trenutni_korisnik' => $this->session->get("korisnik")
-        ]);
 	}
 }

@@ -5,11 +5,7 @@
 
 <div class="row">
     <div class="offset-sm-2 col-sm-8">
-<<<<<<< HEAD
-          
-=======
         <br>
->>>>>>> origin/master
         <h3>Podneti zahtevi za verifikaciju</h3>
         <div class="myPager">
         <?php 
@@ -19,10 +15,7 @@
             <?= $pager->links('zahtevi'); ?>
         </div>
 
-<<<<<<< HEAD
-=======
         <?php if(count($zahtevi) > 0) : ?>
->>>>>>> origin/master
         <table class="table table-striped text-center">
             <thead class="thead-dark">
                 <tr>
@@ -36,11 +29,6 @@
                 foreach ($zahtevi as $zahtev) {
                     $korisnikModel = new \App\Models\ModelKorisnik();
                     $podneo = $korisnikModel->find($zahtev->Podneo);
-<<<<<<< HEAD
-                    echo "<tr><td>{$podneo->Imejl}</td>";
-                    echo "<td>".anchor("$controller/prikaz_profil/{$podneo->IdK}", "Profil")."</td>";  
-                    echo "<td>".anchor("$controller/prikaz_zahtev/{$zahtev->IdZ}", "Zahtev")."</td></tr>";  
-=======
 
                     $imgsrcProfil = base_url('/assets/images/zahtev_profil.png');
                     $imgProfil = array(
@@ -59,13 +47,10 @@
                     echo "<tr><td style='display: table-cell;vertical-align: middle;'>{$podneo->Imejl}</td>";
                     echo "<td>".anchor("$controller/nalog_pregled/{$podneo->IdK}", img($imgProfil))."</td>";  
                     echo "<td>".anchor("$controller/prikaz_zahtev/{$zahtev->IdZ}", img($imgDetalji))."</td></tr>";  
->>>>>>> origin/master
                 }
                 ?>
             </tbody>
         </table>
-<<<<<<< HEAD
-=======
         <?php else: ?>
             <div class="row">
                 <div class="offset-sm-2 col-sm-8">
@@ -75,7 +60,6 @@
                 </div>
             </div>
         <?php endif; ?>
->>>>>>> origin/master
     </div>
 
 </div>

@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-<br><br>
-
-<?php 
-echo "<h2>{$zahtev->IdZ}</h2><h3>{$zahtev->Podneo}</h3>{$zahtev->Stanje}";
-
-?>
-=======
 <html>
     <body>
         <div class="container text-center"  style="height:100%">
@@ -39,4 +31,3 @@ echo "<h2>{$zahtev->IdZ}</h2><h3>{$zahtev->Podneo}</h3>{$zahtev->Stanje}";
         </div>
     </body>
 </html>
->>>>>>> origin/master

@@ -4,23 +4,12 @@ namespace App\Controllers;
 
 use App\Models\ModelKorisnik;
 use App\Models\ModelOglas;
-<<<<<<< HEAD
-use App\Models\ModelOglasTag;
-use App\Models\ModelPrijava;
 use App\Models\ModelStanje;
-use App\Models\ModelTag;
-=======
-use App\Models\ModelStanje;
->>>>>>> origin/master
 
 class Verifikovani extends BaseController
 {
 
-<<<<<<< HEAD
-	protected function pozovi($akcija,$data=[])
-=======
 	protected function pozovi($akcija, $data=[])
->>>>>>> origin/master
 	{
 		$data['controller'] = 'Verifikovani';
 		echo view('pocetna/header_verifikovan.php', $data);
@@ -58,11 +47,7 @@ class Verifikovani extends BaseController
 		if ($imejl == "") return $this->pozovi('o_nama/o_nama_error');
 		else return $this->pozovi('o_nama/o_nama_success');
 	}
-<<<<<<< HEAD
-
-=======
 	
->>>>>>> origin/master
 	//Rade
 	public function moji_oglasi(){
 		$korisnik = $this->session->get("korisnik");
@@ -87,10 +72,7 @@ class Verifikovani extends BaseController
             'pager' => $oglasModel->pager
         ]);
 	}
-<<<<<<< HEAD
-=======
 
->>>>>>> origin/master
 	//Rade
 	public function dodaj_oglas(){
 		$this->pozovi('pretraga/dodajOglas');
@@ -256,8 +238,6 @@ class Verifikovani extends BaseController
 		]);
 		return redirect()->to(site_url("Verifikovani/pretraga"));
 	}
-<<<<<<< HEAD
-=======
 
 	public function nalog_pregled($IdK){
 		$korisnikKojiPregleda = $this->session->get("korisnik");
@@ -350,5 +330,4 @@ class Verifikovani extends BaseController
 		$this->pozovi('nalog/nalog',$data);	
 	}
 
->>>>>>> origin/master
 }

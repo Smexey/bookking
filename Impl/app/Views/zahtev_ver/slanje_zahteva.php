@@ -6,8 +6,6 @@
                 <br><br><br>
                 <h1>Zahtev za verifikaciju</h1>
 
-<<<<<<< HEAD
-=======
                 <?php if($zahtevNeuspesan!=='') : ?>
                     <div class="row">
                         <div class="offset-sm-4 col-sm-4">
@@ -18,7 +16,6 @@
                     </div>
                 <?php endif; ?>
 
->>>>>>> origin/master
                 <div class="justify-content-center">
                     <h4>Prinesite dokaz za verifikaciju</h4>
                     <input type="file" name="zahtevFajl">

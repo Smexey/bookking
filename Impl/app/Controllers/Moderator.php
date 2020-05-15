@@ -3,18 +3,11 @@
 namespace App\Controllers;
 
 use App\Models\ModelKorisnik;
-<<<<<<< HEAD
-use App\Models\ModelOglas;
-use App\Models\ModelPrijava;
-use App\Models\ModelStanje;
-use App\Models\ModelZahtevVer;
-=======
 use App\Models\ModelZahtevVer;
 use App\Models\ModelRola;
 use App\Models\ModelOglas;
 use App\Models\ModelPrijava;
 use App\Models\ModelStanje;
->>>>>>> origin/master
 
 class Moderator extends BaseController
 {
@@ -62,24 +55,12 @@ class Moderator extends BaseController
 	public function prikaz_zahtevi(){
 		$zahtevVerModel = new \App\Models\ModelZahtevVer();
 		$data = [
-<<<<<<< HEAD
-            'zahtevi' => $zahtevVerModel->where(['Stanje' => 'podnet'])->paginate(8, 'zahtevi'),
-=======
             'zahtevi' => $zahtevVerModel->where(['Stanje' => 'podnet'])->paginate(6, 'zahtevi'),
->>>>>>> origin/master
             'pager' => $zahtevVerModel->pager
         ];
 		$this->pozovi('zahtev_ver/prikaz_zahtevi', $data);
 	}
 
-<<<<<<< HEAD
-	public function prikaz_zahtev($id){
-		$zahtevVerModel = new ModelZahtevVer();
-		$zahtev=$zahtevVerModel->find($id);
-		$this->pozovi('zahtev_ver/prikaz_zahtev', ['zahtev'=>$zahtev]);
-	}
-
-=======
 	public function prikaz_zahtev($IdZ){
 		$zahtevVerModel = new ModelZahtevVer();
 		$zahtev = $zahtevVerModel->find($IdZ);
@@ -119,7 +100,6 @@ class Moderator extends BaseController
 		return $this->pozovi('zahtev_ver/prikaz_zahtev_success', ['zahtev'=>$zahtev, 'stanje' => $stanje]);
 	}
 
->>>>>>> origin/master
 	//Rade
 	public function obisanje_oglasa($id){
 		$this->pozovi('pretraga/brisanje', ['IdO'=>$id]);
@@ -137,8 +117,6 @@ class Moderator extends BaseController
 		$builder->update($data);
 		return redirect()->to(site_url("/bookking/Impl/public/Moderator/pretraga/"));
 	}
-<<<<<<< HEAD
-=======
 
 
 	//Janko
@@ -177,5 +155,4 @@ class Moderator extends BaseController
 		$this->pozovi('nalog/nalog',$data);
 	}
 
->>>>>>> origin/master
 }
