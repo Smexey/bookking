@@ -269,7 +269,7 @@ class Korisnik extends BaseController
 		$this->session->set('nacin', $this->request->getVar('a'));
 		if ("poruka" == $this->request->getVar('a')) {
 			//redirect na prodavca 
-			$_POST['knjiga'] = $oglas->Naslov;
+			$_POST['knjiga'] = "Zdravo, voleo bih da kupim ovu knjigu: " . $oglas->Naslov;
 			$_POST['primalac'] = $oglas->IdK;
 			$this->zapocniKonverzaciju();
 		} else {
