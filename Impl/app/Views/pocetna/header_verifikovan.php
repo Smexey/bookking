@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/css/style.css'); ?>">
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/css/aos.css'); ?>">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/font-awesome.min.css'); ?>">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/css/font-awesome.min.css'); ?>">
     <!--CSS TEMPLATE-->
     <link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/css/tooplate-gymso-style.css'); ?>">
     <style>
@@ -112,6 +112,10 @@
 
                 <li class="nav-item">
                     <a href="<?php echo site_url("Verifikovani/nalog"); ?>" class="nav-link smoothScroll">Moj nalog</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="<?php echo site_url("Korisnik/poruke"); ?>" class="nav-link smoothScroll">Poruke</a>
                 </li>
 
                 <li class="nav-item">
