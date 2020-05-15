@@ -86,7 +86,7 @@
                     <form action="<?php echo site_url("$controller/posaljiPor_action"); ?>" method="POST">
                         <div class="type_msg">
                             <div class="input_msg_write">
-                                <input type="text" name="text" class="write_msg" value="<?php if (isset($_POST['text'])) echo $_POST['text'] ?>" placeholder="Type a message" />
+                                <input autofocus type="text" name="text" class="write_msg" value="<?php if (isset($_POST['text'])) echo $_POST['text'] ?>" placeholder="Type a message" />
 
                                 <button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                             </div>
