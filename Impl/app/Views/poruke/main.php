@@ -20,10 +20,6 @@
 
                     <div class="inbox_chat">
                         <?php
-                        // echo $konverzacije[0]->Korisnik2;
-                        use App\Models\ModelKorisnik;
-
-                        $modelKorisnik = new ModelKorisnik();
 
                         foreach ($korisnici as $kor) {
 
@@ -42,7 +38,6 @@
                             $ret .= "<input type='hidden' name='korisnikPrimalac' value='" . $kor->IdK . "'>";
 
                             $ret .= $kor->Ime;
-                            //<p>poslednja poruka ide ovde?</p>
 
                             $ret .= " </div> ";
                             $ret .= " </div> ";
