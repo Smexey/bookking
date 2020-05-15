@@ -155,7 +155,7 @@ class BaseController extends Controller
 
 	public function zapocniKonverzaciju()
 	{
-		$text = "Zdravo, voleo bih da kupim ovu knjigu: " . $_POST['knjiga'];
+		$text = $_POST['knjiga'];
 
 		$korisnik1 = $this->session->get("korisnik")->IdK;
 		$korisnik2 = $_POST['primalac'];
