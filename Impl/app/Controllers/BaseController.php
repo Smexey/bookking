@@ -92,7 +92,7 @@ class BaseController extends Controller
 
 
 
-	public function getNizKonverz($IdK)
+	public function getNizKorisnika($IdK)
 	{
 		$razgModel = new ModelRazgovor();
 		$modelKorisnik = new ModelKorisnik();
@@ -102,7 +102,12 @@ class BaseController extends Controller
 				unset($niz[$key]);
 			}
 		}
-		return $niz;
+		$ret = [];
+		foreach ($niz as $konv) {
+			array_push($ret, $modelKorisnik->find($konv->Korisnik2));
+		}
+
+		return $ret;
 	}
 
 
@@ -118,11 +123,11 @@ class BaseController extends Controller
 
 		$svePor = $porModel->dohvatiPoruke($korisnik->IdK, $selected);
 
-		$niz = $this->getNizKonverz($korisnik1->IdK);
+		$niz = $this->getNizKorisnika($korisnik->IdK);
 
 
 		$this->pozovi("poruke/main", [
-			"konverzacije" => $niz,
+			"korisnici" => $niz,
 			"selected" => $selected,
 			"currentPoruke" => $svePor
 		]);
@@ -133,11 +138,11 @@ class BaseController extends Controller
 	{
 		$korisnik = $this->session->get("korisnik");
 
-		$niz = $this->getNizKonverz($korisnik->IdK);
+		$niz = $this->getNizKorisnika($korisnik->IdK);
 
 
 		$this->pozovi("poruke/main", [
-			"konverzacije" => $niz,
+			"korisnici" => $niz,
 		]);
 	}
 

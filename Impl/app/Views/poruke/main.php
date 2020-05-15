@@ -20,23 +20,28 @@
 
                     <div class="inbox_chat">
                         <?php
+                        // echo $konverzacije[0]->Korisnik2;
+                        use App\Models\ModelKorisnik;
 
-                        foreach ($konverzacije as $konv) {
+                        $modelKorisnik = new ModelKorisnik();
+
+                        foreach ($korisnici as $kor) {
+
 
                             $ret = "";
                             $ret .= "<form class='porform' action=" . site_url("$controller/otvoriKonverzaciju_action") . " method='POST'>";
 
                             $ret .= "<button class='chat_list";
-                            if (isset($selected) && $konv->Korisnik2 == $selected) {
+                            if (isset($selected) && $kor->IdK == $selected) {
                                 $ret .= " active_chat";
                             }
                             $ret .= "' type='submit'> ";
 
                             $ret .= " <div class='chat_people'> ";
                             $ret .= " <div class='chat_ib'> ";
-                            $ret .= "<input type='hidden' name='korisnikPrimalac' value='" . $konv->Korisnik2 . "'>";
+                            $ret .= "<input type='hidden' name='korisnikPrimalac' value='" . $kor->IdK . "'>";
 
-                            $ret .= $modelKorisnik->find($konv->Korisnik2)->Ime;
+                            $ret .= $kor->Ime;
                             //<p>poslednja poruka ide ovde?</p>
 
                             $ret .= " </div> ";
