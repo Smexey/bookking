@@ -1,6 +1,6 @@
 <br /><br /><br />
 <div class="container" style="padding-top:20px;">
-    <form action="<?php echo site_url("$controller/kupovina_dalje"); ?>" method="POST">     
+    <form action="<?php echo site_url("$controller/kupovina_dalje"); ?>" method="POST">  
         <table width = "100%" border = 0 cellpadding="10">
             <?php
                 use App\Models\ModelKorisnik;
