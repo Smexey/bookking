@@ -116,7 +116,6 @@ class BaseController extends Controller
 		$korisnik = $this->session->get("korisnik");
 
 		$selected = $_POST['korisnikPrimalac'];
-		$this->session->set("selected", $selected);
 
 		$porModel = new ModelPoruka();
 
@@ -155,9 +154,9 @@ class BaseController extends Controller
 	{
 		$text = $_POST['text'];
 		$korisnik1 = $this->session->get("korisnik")->IdK;
-		$korisnik2 = $this->session->get("selected");
+		$korisnik2 = $_POST['selected'];
 
-		if ($text != "") {
+		if ($text != "" && $korisnik2 != null) {
 			$porModel = new ModelPoruka();
 
 			$porModel->save([
@@ -169,7 +168,8 @@ class BaseController extends Controller
 
 
 		$_POST['korisnikPrimalac'] = $korisnik2;
-		$this->otvoriKonverzaciju_action();
+		if ($korisnik2 != null) $this->otvoriKonverzaciju_action();
+		else $this->otvoriPoruke_action();
 	}
 
 	public function zapocniKonverzaciju()
