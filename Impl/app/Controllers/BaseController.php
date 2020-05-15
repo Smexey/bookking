@@ -92,30 +92,7 @@ class BaseController extends Controller
 
 
 
-
-	public function otvoriKonverzaciju_action()
-	{
-		$korisnik = $this->session->get("korisnik");
-
-		$selected = $_POST['korisnikPrimalac'];
-		$this->session->set("selected", $selected);
-
-		$porModel = new ModelPoruka();
-
-
-		$svePor = $porModel->dohvatiPoruke($korisnik->IdK, $selected);
-
-		$niz = getNizKonverz($korisnik1->IdK);
-
-
-		$this->pozovi("poruke/main", [
-			"konverzacije" => $niz,
-			"selected" => $selected,
-			"currentPoruke" => $svePor
-		]);
-	}
-
-	protected function getNizKonverz($IdK)
+	public function getNizKonverz($IdK)
 	{
 		$razgModel = new ModelRazgovor();
 		$modelKorisnik = new ModelKorisnik();
@@ -129,11 +106,34 @@ class BaseController extends Controller
 	}
 
 
+	public function otvoriKonverzaciju_action()
+	{
+		$korisnik = $this->session->get("korisnik");
+
+		$selected = $_POST['korisnikPrimalac'];
+		$this->session->set("selected", $selected);
+
+		$porModel = new ModelPoruka();
+
+
+		$svePor = $porModel->dohvatiPoruke($korisnik->IdK, $selected);
+
+		$niz = $this->getNizKonverz($korisnik1->IdK);
+
+
+		$this->pozovi("poruke/main", [
+			"konverzacije" => $niz,
+			"selected" => $selected,
+			"currentPoruke" => $svePor
+		]);
+	}
+
+
 	public function otvoriPoruke_action()
 	{
 		$korisnik = $this->session->get("korisnik");
 
-		$niz = getNizKonverz($korisnik->IdK);
+		$niz = $this->getNizKonverz($korisnik->IdK);
 
 
 		$this->pozovi("poruke/main", [
