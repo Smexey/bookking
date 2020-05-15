@@ -101,11 +101,12 @@ class BaseController extends Controller
 		$this->session->set("selected", $selected);
 
 		$porModel = new ModelPoruka();
-		$razgModel = new ModelRazgovor();
+
 
 		$svePor = $porModel->dohvatiPoruke($korisnik->IdK, $selected);
 
-		$niz = $razgModel->where("Korisnik1", $korisnik->IdK)->findAll();
+		$niz = getNizKonverz($korisnik1->IdK);
+
 
 		$this->pozovi("poruke/main", [
 			"konverzacije" => $niz,
@@ -114,23 +115,25 @@ class BaseController extends Controller
 		]);
 	}
 
-
-	public function otvoriPoruke_action()
+	protected function getNizKonverz($IdK)
 	{
-		$korisnik = $this->session->get("korisnik");
-
 		$razgModel = new ModelRazgovor();
-
-
 		$modelKorisnik = new ModelKorisnik();
-
-		$niz = $razgModel->where("Korisnik1", $korisnik->IdK)->findAll();
-
+		$niz = $razgModel->where("Korisnik1", $IdK)->findAll();
 		foreach ($niz as $key => $el) {
 			if ($modelKorisnik->find($el->Korisnik2)->Stanje != "Vazeci") {
 				unset($niz[$key]);
 			}
 		}
+		return $niz;
+	}
+
+
+	public function otvoriPoruke_action()
+	{
+		$korisnik = $this->session->get("korisnik");
+
+		$niz = getNizKonverz($korisnik->IdK);
 
 
 		$this->pozovi("poruke/main", [
