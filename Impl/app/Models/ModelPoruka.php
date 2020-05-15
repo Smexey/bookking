@@ -16,6 +16,6 @@ class ModelPoruka extends Model
 
     public function dohvatiPoruke($IdK1, $IdK2)
     {
-        return $this->where("(Korisnik1 = " . $IdK1 . " and Korisnik2 = " . $IdK2 . ") or (Korisnik2 = " . $IdK1 . " and Korisnik1 = " . $IdK2 . ")", null)->findAll();
+        return $this->where("(Korisnik1 = " . $IdK1 . " and Korisnik2 = " . $IdK2 . ") or (Korisnik2 = " . $IdK1 . " and Korisnik1 = " . $IdK2 . ")", null)->findAll()->orderBy("IdPo", "DESC");
     }
 }
