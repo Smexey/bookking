@@ -161,14 +161,19 @@ class BaseController extends Controller
 		$korisnik2 = $_POST['primalac'];
 
 		$razgModel = new ModelRazgovor();
-		$razgModel->save([
-			'Korisnik1'  => $korisnik1,
-			'Korisnik2'  => $korisnik2,
-		]);
-		$razgModel->save([
-			'Korisnik1'  => $korisnik2,
-			'Korisnik2'  => $korisnik1,
-		]);
+
+		if ($razgModel->where("Korisnik1", $korisnik1)->first() != null) {
+			$razgModel->save([
+				'Korisnik1'  => $korisnik1,
+				'Korisnik2'  => $korisnik2,
+			]);
+			$razgModel->save([
+				'Korisnik1'  => $korisnik2,
+				'Korisnik2'  => $korisnik1,
+			]);
+		}
+
+
 
 		$porModel = new ModelPoruka();
 
