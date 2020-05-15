@@ -162,7 +162,7 @@ class BaseController extends Controller
 
 		$razgModel = new ModelRazgovor();
 
-		if ($razgModel->where("Korisnik1", $korisnik1)->first() != null) {
+		if ($razgModel->where("Korisnik1", $korisnik1)->first() == null) {
 			$razgModel->save([
 				'Korisnik1'  => $korisnik1,
 				'Korisnik2'  => $korisnik2,
