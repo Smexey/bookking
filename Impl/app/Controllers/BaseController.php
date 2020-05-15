@@ -20,6 +20,7 @@ use App\Models\ModelOglas;
 use App\Models\ModelStanje;
 use App\Models\ModelPoruka;
 use App\Models\ModelRazgovor;
+use App\Models\ModelKorisnik;
 
 class BaseController extends Controller
 {
@@ -120,7 +121,17 @@ class BaseController extends Controller
 
 		$razgModel = new ModelRazgovor();
 
+
+		$modelKorisnik = new ModelKorisnik();
+
 		$niz = $razgModel->where("Korisnik1", $korisnik->IdK)->findAll();
+
+		foreach ($niz as $key => $el) {
+			if ($modelKorisnik->find($el->Korisnik2)->Stanje != "Vazeci") {
+				unset($niz[$key]);
+			}
+		}
+
 
 		$this->pozovi("poruke/main", [
 			"konverzacije" => $niz,

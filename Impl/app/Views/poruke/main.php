@@ -20,13 +20,8 @@
 
                     <div class="inbox_chat">
                         <?php
-                        // echo $konverzacije[0]->Korisnik2;
-                        use App\Models\ModelKorisnik;
-
-                        $modelKorisnik = new ModelKorisnik();
 
                         foreach ($konverzacije as $konv) {
-                            if ($modelKorisnik->find($konv->Korisnik2)->Stanje != "Vazeci") continue;
 
                             $ret = "";
                             $ret .= "<form class='porform' action=" . site_url("$controller/otvoriKonverzaciju_action") . " method='POST'>";
