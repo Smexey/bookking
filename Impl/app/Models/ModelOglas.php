@@ -8,5 +8,12 @@ class ModelOglas extends Model {
     protected $returnType = 'App\Entities\Oglas';
     protected $allowedFields = ['IdO','IdK','IdS','Autor','Naslov',
                                 'Opis','Cena','Naslovnica'];
+<<<<<<< HEAD
+=======
+
+    public function dohvatiSveOglaseKorisnika($IdK){
+        return $this->where('IdK', $IdK)->findAll();
+    }
+>>>>>>> origin/master
  
 }

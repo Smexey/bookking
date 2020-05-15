@@ -4,15 +4,23 @@ namespace App\Controllers;
 
 use App\Models\ModelKorisnik;
 use App\Models\ModelOglas;
+<<<<<<< HEAD
 use App\Models\ModelOglasTag;
 use App\Models\ModelPrijava;
 use App\Models\ModelStanje;
 use App\Models\ModelTag;
+=======
+use App\Models\ModelStanje;
+>>>>>>> origin/master
 
 class Verifikovani extends BaseController
 {
 
+<<<<<<< HEAD
 	protected function pozovi($akcija,$data=[])
+=======
+	protected function pozovi($akcija, $data=[])
+>>>>>>> origin/master
 	{
 		$data['controller'] = 'Verifikovani';
 		echo view('pocetna/header_verifikovan.php', $data);
@@ -50,7 +58,11 @@ class Verifikovani extends BaseController
 		if ($imejl == "") return $this->pozovi('o_nama/o_nama_error');
 		else return $this->pozovi('o_nama/o_nama_success');
 	}
+<<<<<<< HEAD
 
+=======
+	
+>>>>>>> origin/master
 	//Rade
 	public function moji_oglasi(){
 		$korisnik = $this->session->get("korisnik");
@@ -75,6 +87,10 @@ class Verifikovani extends BaseController
             'pager' => $oglasModel->pager
         ]);
 	}
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 	//Rade
 	public function dodaj_oglas(){
 		$this->pozovi('pretraga/dodajOglas');
@@ -240,4 +256,99 @@ class Verifikovani extends BaseController
 		]);
 		return redirect()->to(site_url("Verifikovani/pretraga"));
 	}
+<<<<<<< HEAD
+=======
+
+	public function nalog_pregled($IdK){
+		$korisnikKojiPregleda = $this->session->get("korisnik");
+		
+		$korisnikModel = new ModelKorisnik();
+		$korisnik = $korisnikModel->find($IdK);
+		$data['ime'] = $korisnik->Ime;
+		$data['prezime'] = $korisnik->Prezime;
+		$data['imejl'] = $korisnik->Imejl;
+		$data['grad'] = $korisnik->Grad;
+		$data['sifra'] = $korisnik->Sifra;
+		$data['adresa'] = $korisnik->Adresa;
+		$data['drzava'] = $korisnik->Drzava;
+		$data['postBroj'] = $korisnik->PostBroj;
+		if ($korisnikKojiPregleda->IdK == $korisnik->IdK){
+			$data['rola'] = 'Verifikovani';
+		}
+		else{
+			$data['rola'] = 'Pregled';
+		}
+		$this->pozovi('nalog/nalog',$data);
+	}
+
+	public function nalog(){
+		$korisnik = $this->session->get("korisnik");
+		$data['ime'] = $korisnik->Ime;
+		$data['prezime'] = $korisnik->Prezime;
+		$data['imejl'] = $korisnik->Imejl;
+		$data['grad'] = $korisnik->Grad;
+		$data['sifra'] = $korisnik->Sifra;
+		$data['adresa'] = $korisnik->Adresa;
+		$data['drzava'] = $korisnik->Drzava;
+		$data['postBroj'] = $korisnik->PostBroj;
+		$data['rola'] = 'Verifikovani';
+		$this->pozovi('nalog/nalog',$data);
+	}
+
+	public function nalog_izmena(){
+		$korisnik = $this->session->get("korisnik");
+		$data['ime'] = $korisnik->Ime;
+		$data['prezime'] = $korisnik->Prezime;
+		$data['imejl'] = $korisnik->Imejl;
+		$data['grad'] = $korisnik->Grad;
+		$data['sifra'] = $korisnik->Sifra;
+		$data['adresa'] = $korisnik->Adresa;
+		$data['drzava'] = $korisnik->Drzava;
+		$data['postBroj'] = $korisnik->PostBroj;
+		$data['rola'] = 'Verifikovani';
+		$this->pozovi('nalog/nalog_izmena',$data);
+	}
+
+	public function nalog_izmena_action(){
+		$ime = $_POST['ime'];
+		$imejl = $_POST['imejl'];
+		$sifra = $_POST['sifra'];
+		$prezime = $_POST['prezime'];
+		$adresa = $_POST['adresa'];
+		$grad = $_POST['grad'];
+		$drzava = $_POST['drzava'];
+		$postBroj = $_POST['postBroj'];
+
+		$korisnik = $this->session->get("korisnik");
+		$korisnikModel = new ModelKorisnik();
+		
+		$data = [
+			'Ime' => $ime,
+			'Prezime'  => $prezime,
+			'Imejl'  => $imejl,
+			'Sifra'  => $sifra,
+			'Adresa'  => $adresa,
+			'Grad'  => $grad,
+			'Drzava'  => $drzava,
+			'PostBroj'  => $postBroj,
+			];
+
+		$id = $korisnik->IdK;
+		$save = $korisnikModel->update($id,$data);
+		
+		$korisnik = $korisnikModel->find($id);
+		$this->session->set("korisnik", $korisnik);
+
+		$data['ime'] = $korisnik->Ime;
+		$data['prezime'] = $korisnik->Prezime;
+		$data['imejl'] = $korisnik->Imejl;
+		$data['grad'] = $korisnik->Grad;
+		$data['sifra'] = $korisnik->Sifra;
+		$data['adresa'] = $korisnik->Adresa;
+		$data['drzava'] = $korisnik->Drzava;
+		$data['postBroj'] = $korisnik->PostBroj;
+		$this->pozovi('nalog/nalog',$data);	
+	}
+
+>>>>>>> origin/master
 }

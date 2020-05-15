@@ -3,10 +3,18 @@
 namespace App\Controllers;
 
 use App\Models\ModelKorisnik;
+<<<<<<< HEAD
 use App\Models\ModelOglas;
 use App\Models\ModelPrijava;
 use App\Models\ModelStanje;
 use App\Models\ModelZahtevVer;
+=======
+use App\Models\ModelZahtevVer;
+use App\Models\ModelRola;
+use App\Models\ModelOglas;
+use App\Models\ModelPrijava;
+use App\Models\ModelStanje;
+>>>>>>> origin/master
 
 class Moderator extends BaseController
 {
@@ -54,18 +62,64 @@ class Moderator extends BaseController
 	public function prikaz_zahtevi(){
 		$zahtevVerModel = new \App\Models\ModelZahtevVer();
 		$data = [
+<<<<<<< HEAD
             'zahtevi' => $zahtevVerModel->where(['Stanje' => 'podnet'])->paginate(8, 'zahtevi'),
+=======
+            'zahtevi' => $zahtevVerModel->where(['Stanje' => 'podnet'])->paginate(6, 'zahtevi'),
+>>>>>>> origin/master
             'pager' => $zahtevVerModel->pager
         ];
 		$this->pozovi('zahtev_ver/prikaz_zahtevi', $data);
 	}
 
+<<<<<<< HEAD
 	public function prikaz_zahtev($id){
 		$zahtevVerModel = new ModelZahtevVer();
 		$zahtev=$zahtevVerModel->find($id);
 		$this->pozovi('zahtev_ver/prikaz_zahtev', ['zahtev'=>$zahtev]);
 	}
 
+=======
+	public function prikaz_zahtev($IdZ){
+		$zahtevVerModel = new ModelZahtevVer();
+		$zahtev = $zahtevVerModel->find($IdZ);
+		$this->pozovi('zahtev_ver/prikaz_zahtev', ['zahtev'=>$zahtev]);
+	}
+
+	public function prikaz_zahtev_fajl($IdZ){
+		$zahtevVerModel = new ModelZahtevVer();
+		$zahtev= $zahtevVerModel->find($IdZ);
+		echo view('zahtev_ver/prikaz_zahtev_fajl', ['zahtev'=>$zahtev]);
+	}
+
+	public function razmotri_zahtev($IdZ){
+		$akcija = $_POST['zahtev_dugme'];
+		$zahtevVerModel = new ModelZahtevVer();
+		$zahtev= $zahtevVerModel->find($IdZ);
+
+		$moderator = $this->session->get("korisnik");
+		$odobrio = $moderator->IdK;
+
+		//odobravanje zahteva
+		if($akcija == 'odobri') {
+			$stanje = 'odobren';
+
+			$korisnikModel = new ModelKorisnik();
+			$rolaModel = new ModelRola();
+			
+			$rola = $rolaModel->where('Opis', 'Verifikovani')->first();
+			$korisnikModel->update($zahtev->Podneo, ['IdR' => $rola->IdR]);
+		}
+		//odbijanje zahteva
+		else if($akcija == 'odbij') {
+			$stanje = 'odbijen';
+		}
+
+		$zahtevVerModel->update($IdZ, ['Stanje' => $stanje, 'Odobrio' => $odobrio]);
+		return $this->pozovi('zahtev_ver/prikaz_zahtev_success', ['zahtev'=>$zahtev, 'stanje' => $stanje]);
+	}
+
+>>>>>>> origin/master
 	//Rade
 	public function obisanje_oglasa($id){
 		$this->pozovi('pretraga/brisanje', ['IdO'=>$id]);
@@ -83,4 +137,45 @@ class Moderator extends BaseController
 		$builder->update($data);
 		return redirect()->to(site_url("/bookking/Impl/public/Moderator/pretraga/"));
 	}
+<<<<<<< HEAD
+=======
+
+
+	//Janko
+	public function pretraga(){
+		$oglasModel = new ModelOglas(); 
+		$stanjeModel = new ModelStanje();
+		$prijavaModel = new ModelPrijava();
+		$stanje = $stanjeModel->where(['Opis'=>'Okacen'])->first();
+		$tekst = $this->request->getVar('pretraga'); 
+		if($tekst != null){
+			$oglasi = $oglasModel->where("IdS=$stanje->IdS AND EXISTS(SELECT * FROM prijava WHERE prijava.IdO=oglas.IdO) AND (Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%')")
+			->paginate(8, 'oglasi');
+		}else {
+			$oglasi = $oglasModel -> where("IdS=$stanje->IdS AND EXISTS(SELECT * FROM prijava WHERE prijava.IdO=oglas.IdO)")
+			->paginate(8, 'oglasi');
+		}
+		$this->pozovi('pretraga/pretraga',[
+			'oglasi' => $oglasi,
+			"trazeno"=>$this->request->getVar('pretraga'),
+			'pager' => $oglasModel->pager
+		]);
+	}
+	
+	public function nalog_pregled($IdK){
+		$korisnikModel = new ModelKorisnik();
+		$korisnik = $korisnikModel->find($IdK);
+		$data['ime'] = $korisnik->Ime;
+		$data['prezime'] = $korisnik->Prezime;
+		$data['imejl'] = $korisnik->Imejl;
+		$data['grad'] = $korisnik->Grad;
+		$data['sifra'] = $korisnik->Sifra;
+		$data['adresa'] = $korisnik->Adresa;
+		$data['drzava'] = $korisnik->Drzava;
+		$data['postBroj'] = $korisnik->PostBroj;
+		$data['rola'] = 'Moderator';
+		$this->pozovi('nalog/nalog',$data);
+	}
+
+>>>>>>> origin/master
 }

@@ -7,4 +7,8 @@ class ModelPrijava extends Model {
     protected $primaryKey = ['IdPr'];
     protected $returnType = 'App\Entities\Prijava';
     protected $allowedFields = ['IdK', 'IdO', 'Opis'];
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/master
 }
