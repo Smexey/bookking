@@ -72,7 +72,7 @@ class BaseController extends Controller
 		}
 		$this->pozovi('pretraga/pretraga', [
 			'oglasi' => $oglasi,
-			"trazeno" => $this->request->getVar('pretraga'),
+			'trazeno' => $this->request->getVar('pretraga'),
 			'pager' => $oglasModel->pager,
 			'mojiOglasi' => false
 		]);

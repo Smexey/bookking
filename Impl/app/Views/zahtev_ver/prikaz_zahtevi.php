@@ -5,8 +5,18 @@
 
 <div class="row">
     <div class="offset-sm-2 col-sm-8">
-        <br>
-        <h3>Podneti zahtevi za verifikaciju</h3>
+        <form name="pretraganalozi" method="get" action="<?= site_url("$controller/prikaz_zahtevi") ?>">
+            Pretraga: <input type="text" name="pretraga">
+            <input class='btn' value='Traži' type="submit"><br>
+        </form>
+        <?php
+            if (!empty($trazeno))
+                echo "<h3>Rezultati pretrage $trazeno:</h3>";
+            else if ($trenutni_korisnik === 'Moderator')
+                echo "<h3>Podneti zahtevi za verifikaciju</h3>";
+            else if ($trenutni_korisnik === 'Admin')
+                echo "<h3>Svi zahtevi za verifikaciju</h3>";     
+        ?>
         <div class="myPager">
         <?php 
             $myPath = '/bookking/Impl/public//'.uri_string();

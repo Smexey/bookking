@@ -6,12 +6,12 @@
             <?php if ($mojiOglasi == true):?>
                 <form name="pretragavesti" method="get" action="<?= site_url("$controller/moji_oglasi") ?>">
                     Pretraga: <input type="text" name="pretraga">
-                    <input class='btn' type="submit"><br>
+                    <input class='btn' value='Traži' type="submit"><br>
                 </form>
             <?php else: ?>
                 <form name="pretragavesti" method="get" action="<?= site_url("$controller/pretraga") ?>">
                     Pretraga: <input type="text" name="pretraga">
-                    <input class='btn' type="submit"><br>
+                    <input class='btn' value='Traži' type="submit"><br>
                 </form>
             <?php endif; ?>
             <?php

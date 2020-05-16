@@ -60,14 +60,14 @@ class Verifikovani extends BaseController
 		$stanje = $stanjeModel->where(['Opis' => 'Okacen'])->first();
 		$tekst = $this->request->getVar('pretraga');
 		if ($tekst != null) {
-			$oglasi = $oglasModel->where("IdS=$stanje->IdS AND IdK={korisnik->IdK AND (Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%')")
+			$oglasi = $oglasModel->where("IdS=$stanje->IdS AND IdK=$korisnik->IdK AND (Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%')")
 				->paginate(8, 'oglasi');
 		} else {
 			$oglasi = $oglasModel->where(['IdS' => $stanje->IdS, 'IdK' => $korisnik->IdK])->paginate(8, 'oglasi');
 		}
 		$this->pozovi('pretraga/pretraga', [
 			'oglasi' => $oglasi,
-			"trazeno" => $this->request->getVar('pretraga'),
+			'trazeno' => $this->request->getVar('pretraga'),
 			'pager' => $oglasModel->pager,
 			'mojiOglasi' => true
 		]);
