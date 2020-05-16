@@ -4,7 +4,10 @@ namespace App\Controllers;
 
 use App\Models\ModelKorisnik;
 use App\Models\ModelOglas;
+use App\Models\ModelOglasTag;
+use App\Models\ModelPrijava;
 use App\Models\ModelStanje;
+use App\Models\ModelTag;
 
 class Verifikovani extends BaseController
 {
@@ -49,28 +52,25 @@ class Verifikovani extends BaseController
 	}
 	
 	//Rade
-	public function moji_oglasi(){
+	public function moji_oglasi()
+	{
 		$korisnik = $this->session->get("korisnik");
-		$oglasModel = new ModelOglas(); 
+		$oglasModel = new ModelOglas();
 		$stanjeModel = new ModelStanje();
-		$stanje = $stanjeModel->where(['Opis'=>'Okacen'])->first();
-		$tekst = $this->request->getVar('pretraga'); 
-		if($tekst != null){
-			$oglasi = $oglasModel ->like('Naslov',$tekst)
-			->orLike('Autor',$tekst)
-			->orLike('Opis',$tekst)
-			->where('IdS',$stanje->IdS)
-			->where('IdK',$korisnik->IdK)
-			->paginate(8, 'oglasi');
-		}else {
-			$oglasi = $oglasModel->where('IdS',$stanje->IdS)
-			->where('IdK',$korisnik->IdK)->paginate(8, 'oglasi');
+		$stanje = $stanjeModel->where(['Opis' => 'Okacen'])->first();
+		$tekst = $this->request->getVar('pretraga');
+		if ($tekst != null) {
+			$oglasi = $oglasModel->where("IdS=$stanje->IdS AND IdK={korisnik->IdK AND (Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%')")
+				->paginate(8, 'oglasi');
+		} else {
+			$oglasi = $oglasModel->where(['IdS' => $stanje->IdS, 'IdK' => $korisnik->IdK])->paginate(8, 'oglasi');
 		}
-		$this->pozovi('pretraga/pretraga',[
-            'oglasi' => $oglasi,
-			"trazeno"=>$this->request->getVar('pretraga'),
-            'pager' => $oglasModel->pager
-        ]);
+		$this->pozovi('pretraga/pretraga', [
+			'oglasi' => $oglasi,
+			"trazeno" => $this->request->getVar('pretraga'),
+			'pager' => $oglasModel->pager,
+			'mojiOglasi' => true
+		]);
 	}
 
 	//Rade
