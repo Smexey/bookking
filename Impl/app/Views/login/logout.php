@@ -8,9 +8,6 @@
                 
                 <button type="submit" class='btn btn-primarly'>&nbsp;&nbsp;&nbsp;Odjavi se&nbsp;&nbsp;&nbsp;</button>
                 
-                <br><br><br><br><br>
-                <br><br><br><br><br>
-                <br><br><br><br><br>
 
             </form>
         </div>

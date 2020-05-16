@@ -327,6 +327,7 @@ class Verifikovani extends BaseController
 		$data['adresa'] = $korisnik->Adresa;
 		$data['drzava'] = $korisnik->Drzava;
 		$data['postBroj'] = $korisnik->PostBroj;
+		$data['rola'] = 'Verifikovani';
 		$this->pozovi('nalog/nalog',$data);	
 	}
 

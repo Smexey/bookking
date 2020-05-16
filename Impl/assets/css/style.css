@@ -1,3 +1,7 @@
+  .container{
+      min-height: 90%;
+  }
+  
   .homePageImg{
     height: 100%;
   }
@@ -12,7 +16,7 @@
   }
 
   .homePageSlider{
-      width: 93%;
+      width: 92.993%;
       float: left;
   }
 

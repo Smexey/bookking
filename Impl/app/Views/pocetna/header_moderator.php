@@ -107,7 +107,7 @@
                 </li>
 
                 <li class="nav-item">
-                    <a href="<?php echo site_url("Korisnik/poruke"); ?>" class="nav-link smoothScroll">Poruke</a>
+                    <a href="<?php echo site_url("Moderator/poruke"); ?>" class="nav-link smoothScroll">Poruke</a>
                 </li>
 
                 <li class="nav-item">

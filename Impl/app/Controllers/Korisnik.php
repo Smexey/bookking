@@ -449,6 +449,7 @@ class Korisnik extends BaseController
 		$data['adresa'] = $korisnik->Adresa;
 		$data['drzava'] = $korisnik->Drzava;
 		$data['postBroj'] = $korisnik->PostBroj;
+		$data['rola'] = 'Korisnik';
 		$this->pozovi('nalog/nalog', $data);
 	}
 }
