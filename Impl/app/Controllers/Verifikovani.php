@@ -189,28 +189,37 @@ class Verifikovani extends BaseController
 			['oglas'=>$oglas,'errors'=>$this->validator->listErrors()]);
 		else{
 			//return $this->pozovi('pretraga/pretraga',[]);
-			$db      = \Config\Database::connect();
-			$builder = $db->table('oglas');
+			$kupac = $this->session->get('korisnik');
+			$kupovinaModel = new ModelKupovina();
+			$nacinKupovineModel = new ModelNacinKupovine();
 			$nacin = $this->session->get('nacin');
-			if('sajt'==$nacin) 
-				$opisKupovine='KupljenPrekoSajta';
-			else if('middleman'==$nacin) 
-				$opisKupovine='KupljenPrekoMiddlema';
-			// else $opisKupovine='Kupljen';
-			$stanjeModel = new ModelStanje();
-			$stanje = $stanjeModel->where(['Opis'=>$opisKupovine])->first();
-			$oglas = $this->session->get('oglas');
-			$data = [
-				'IdS' => $stanje->IdS 
-			]; 
-			$builder->where('IdO', $oglas->IdO);
-			$builder->update($data);
-			// $oglasModel = new ModelOglas();
-			// $oglasModel->find($korisnik->IdK)->update(['IdS'=>$stanje->IdS]);
+			
+			if ('sajt' == $nacin){
+				$nacinKupovine = $nacinKupovineModel->where('Opis', 'Preko sajta')->first();
+				//stanje oglasa se ne menja jer verifikovani 
+				//ima vise knjiga za isti oglas i sam upravlja uklanjanjem oglasa
+			}
+			else if ('middleman' == $nacin){
+				$nacinKupovine = $nacinKupovineModel->where('Opis', 'Preko middlemana')->first();
+				$oglasModel = new ModelOglas();
+				$stanjeModel = new ModelStanje();
+				$stanjeOglasa = $stanjeModel->where('Opis', 'Kupljen')->first();
+				//azuriranje stanja oglasa da je kupljen
+				$oglasModel->update($oglas->IdO, ['IdS' => $stanjeOglasa->IdS]);
+			}
+
+			$kupovinaModel->save([
+				'IdK' => $kupac->IdK,
+				'IdO' => $oglas->IdO,
+				'IdN' => $nacinKupovine->IdN
+			]);
+			
 			$message = "Usesno obavljena kupovina! Očekujte dalja obavestenja preko email-a";
 			//poslati mejlove kome gde treba(ima oglas u sesiji pa se izvuce idk->imejl)
-			$this->pozovi('kupovina/kupljeno',
-			['message'=>$message]);
+			$this->pozovi(
+				'kupovina/kupljeno',
+				['message' => $message]
+			);
 		}
 	}
 		

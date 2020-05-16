@@ -53,6 +53,24 @@ class Admin extends BaseController
 		else return $this->pozovi('o_nama/o_nama_success');
 	}
 
+	//Janko
+	public function pretraga()
+	{
+		$oglasModel = new ModelOglas();
+		$tekst = $this->request->getVar('pretraga');
+		if ($tekst != null) {
+			$oglasi = $oglasModel->where("Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%' OR IdS IN (SELECT IdS FROM stanjeoglasa WHERE Opis LIKE '%$tekst%')")
+				->paginate(8, 'oglasi');
+		} else {
+			$oglasi = $oglasModel->paginate(8, 'oglasi');
+		}
+		$this->pozovi('pretraga/pretraga', [
+			'oglasi' => $oglasi,
+			'trazeno' => $this->request->getVar('pretraga'),
+			'pager' => $oglasModel->pager,
+			'mojiOglasi' => false
+		]);
+	}
 	
 	public function prikaz_zahtevi(){
 		$zahtevVerModel = new ModelZahtevVer();
