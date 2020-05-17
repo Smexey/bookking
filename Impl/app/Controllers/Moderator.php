@@ -102,19 +102,52 @@ class Moderator extends BaseController
 		$moderator = $this->session->get("korisnik");
 		$odobrio = $moderator->IdK;
 
+		$korisnikModel = new ModelKorisnik();
+		$promovisaniKorisnik = $korisnikModel->find($zahtev->Podneo);
+
 		//odobravanje zahteva
 		if($akcija == 'odobri') {
 			$stanje = 'odobren';
 
-			$korisnikModel = new ModelKorisnik();
 			$rolaModel = new ModelRola();
 			
 			$rola = $rolaModel->where('Opis', 'Verifikovani')->first();
 			$korisnikModel->update($zahtev->Podneo, ['IdR' => $rola->IdR]);
+
+			//sendmail
+			$message = "Zdravo " .$promovisaniKorisnik->Ime. ",";
+			$message .= "\n\nČestitamo! Vaš zahtev za verifikaciju naloga je odobren!";
+			$message .= "\nPostali ste verifikovani korisnik na sajtu bookking.com!";
+			$message .= "\nNadalje sami brinete o uklanjanju oglasa i pošiljkama pri kupovini.";
+
+			$email = \Config\Services::email();
+
+			$email->setFrom('bookkingPSI@gmail.com', 'Bookking');
+			$email->setTo($promovisaniKorisnik->Imejl);
+
+			$email->setSubject('Promocija u verifikovanog korisnika');
+			$email->setMessage($message);
+
+			$result = $email->send();
 		}
 		//odbijanje zahteva
 		else if($akcija == 'odbij') {
 			$stanje = 'odbijen';
+
+			//sendmail
+			$message = "Zdravo " .$promovisaniKorisnik->Ime. ",";
+			$message .= "\n\nNažalost, Vaš zahtev za verifikaciju naloga je odbijen.";
+			$message .= "\nPokušajte ponovo u dogledno vreme!";
+
+			$email = \Config\Services::email();
+
+			$email->setFrom('bookkingPSI@gmail.com', 'Bookking');
+			$email->setTo($promovisaniKorisnik->Imejl);
+
+			$email->setSubject('Promocija u verifikovanog korisnika');
+			$email->setMessage($message);
+
+			$result = $email->send();
 		}
 
 		$zahtevVerModel->update($IdZ, ['Stanje' => $stanje, 'Odobrio' => $odobrio]);
