@@ -43,14 +43,25 @@ class Admin extends BaseController
 		$this->pozovi('o_nama/o_nama');
 	}
 
-
 	public function o_nama_action()
 	{
 		$imejl = $_POST['imejl'];
 		$poruka = $_POST['poruka'];
 
 		if ($imejl == "") return $this->pozovi('o_nama/o_nama_error');
-		else return $this->pozovi('o_nama/o_nama_success');
+		else{
+			
+			$email = \Config\Services::email();
+
+			$email->setFrom($imejl, $imejl);
+			$email->setTo("bookkingPSI@gmail.com");
+
+			$email->setSubject('Žalba korisnika');
+			$email->setMessage($poruka);
+
+			$result = $email->send();
+			return $this->pozovi('o_nama/o_nama_success');
+		}
 	}
 
 	//Janko

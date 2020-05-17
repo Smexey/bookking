@@ -73,8 +73,16 @@ class Gost extends BaseController
 			$message .= "\n\nOvaj mejl je poslat na zahtev oporavka šifre sa sajta bookking.com. U slučaju da ne prepoznajete ovu akciju molimo Vas da pošaljete mejl na našu adresu.";
 			$message .= "\nŠifra: " . $korisnik->Sifra;
 
+			$email = \Config\Services::email();
 
-			$result = mail($imejl, "Be king, bookking", $message, "From: bookkingPSI@gmail.com");
+			$email->setFrom('bookkingPSI@gmail.com', 'Bookking');
+			$email->setTo($imejl);
+
+			$email->setSubject('Oporavak šifre');
+			$email->setMessage($message);
+
+			$result = $email->send();
+			//$result = mail($imejl, "Be king, bookking", $message, "From: bookkingPSI@gmail.com");
 
 			if ($result) $this->pozovi('oporavak/oporavak_success');
 			else $this->pozovi('oporavak/oporavak_error');
@@ -184,7 +192,19 @@ class Gost extends BaseController
 		$message = "Zdravo " . $ime . ",";
 		$message .= "\n\nOvaj mejl je poslat na zahtev registracije naloga na sajta bookking.com. Kod koji je potrebno da potvrdite nalazi se na dnu imejla.";
 		$message .= "\nKod: " . $code;
-		$result = mail($imejl, "Be king, bookking", $message, "From: bookkingPSI@gmail.com");
+
+		
+		$email = \Config\Services::email();
+
+		$email->setFrom('bookkingPSI@gmail.com', 'Bookking');
+		$email->setTo($imejl);
+
+		$email->setSubject('Registracija naloga');
+		$email->setMessage($message);
+
+		$result = $email->send();
+
+		//$result = mail($imejl, "Be king, bookking", $message, "From: bookkingPSI@gmail.com");
 
 		$_POST['confirmeCode'] = $code;
 		$this->pozovi('registracija/registracija_confirme');
@@ -206,6 +226,18 @@ class Gost extends BaseController
 		$poruka = $_POST['poruka'];
 
 		if ($imejl == "") return $this->pozovi('o_nama/o_nama_error');
-		else return $this->pozovi('o_nama/o_nama_success');
+		else{
+			
+			$email = \Config\Services::email();
+
+			$email->setFrom($imejl, $imejl);
+			$email->setTo("bookkingPSI@gmail.com");
+
+			$email->setSubject('Žalba korisnika');
+			$email->setMessage($poruka);
+
+			$result = $email->send();
+			return $this->pozovi('o_nama/o_nama_success');
+		}
 	}
 }
