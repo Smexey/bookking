@@ -293,6 +293,9 @@ class Korisnik extends BaseController
 	public function provera()
 	{
 		$oglas = $this->session->get('oglas');
+		$korisnikModel = new ModelKorisnik();
+		$prodavac = $korisnikModel->find($oglas->IdK);
+
 		if (
 			$this->request->getVar('placanje') == 'Kartica'
 			&& !$this->validate([
@@ -326,6 +329,38 @@ class Korisnik extends BaseController
 				$nacinKupovine = $nacinKupovineModel->where('Opis', 'Preko sajta')->first();
 				//stanje oglasa se ne menja jer verifikovani 
 				//ima vise knjiga za isti oglas i sam upravlja uklanjanjem oglasa
+				
+				//sendmail
+				$message = "Zdravo " .$kupac->Ime. ",";
+				$message .= "\n\nČestitamo! Uspešno ste podneli zahtev za kupovinu!";
+				$message .= "\nDalje informacije ćete dobiti preko mejla prodavca:";
+				$message .= "\nImejl prodavca: ". $prodavac->Imejl;
+
+				$email = \Config\Services::email();
+
+				$email->setFrom('bookkingPSI@gmail.com', 'Bookking');
+				$email->setTo($kupac->Imejl);
+
+				$email->setSubject('Kupovina olgasa');
+				$email->setMessage($message);
+
+				$result = $email->send();
+
+				//sendmail
+				$message = "Zdravo " .$prodavac->Ime. ",";
+				$message .= "\n\nČestitamo! Imate novi zahtev za kupovinu!";
+				$message .= "\nDalje je potrebno da stupite u kontakt sa kupcem:";
+				$message .= "\nImejl kupca: ". $kupac->Imejl;
+
+				$email = \Config\Services::email();
+
+				$email->setFrom('bookkingPSI@gmail.com', 'Bookking');
+				$email->setTo($prodavac->Imejl);
+
+				$email->setSubject('Prodaja oglasa');
+				$email->setMessage($message);
+
+				$result = $email->send();
 			}
 			else if ('middleman' == $nacin){
 				$nacinKupovine = $nacinKupovineModel->where('Opis', 'Preko middlemana')->first();
@@ -334,6 +369,36 @@ class Korisnik extends BaseController
 				$stanjeOglasa = $stanjeModel->where('Opis', 'Kupljen')->first();
 				//azuriranje stanja oglasa da je kupljen
 				$oglasModel->update($oglas->IdO, ['IdS' => $stanjeOglasa->IdS]);
+
+				//sendmail
+				$message = "Zdravo " .$kupac->Ime. ",";
+				$message .= "\n\nČestitamo! Uspešno ste obavili kupovinu!";
+				$message .= "\nObavestićemo Vas kada pošiljka bude poslata na Vašu adresu.";
+
+				$email = \Config\Services::email();
+
+				$email->setFrom('bookkingPSI@gmail.com', 'Bookking');
+				$email->setTo($kupac->Imejl);
+
+				$email->setSubject('Kupovina olgasa');
+				$email->setMessage($message);
+
+				$result = $email->send();
+
+				//sendmail
+				$message = "Zdravo " .$prodavac->Ime. ",";
+				$message .= "\n\nČestitamo! Vaš oglas je uspešno prodat!";
+				$message .= "\nUskoro ćemo poslati pošiljku na adresu kupca.";
+
+				$email = \Config\Services::email();
+
+				$email->setFrom('bookkingPSI@gmail.com', 'Bookking');
+				$email->setTo($prodavac->Imejl);
+
+				$email->setSubject('Prodaja oglasa');
+				$email->setMessage($message);
+
+				$result = $email->send();
 			}
 
 			$kupovinaModel->save([
@@ -343,7 +408,7 @@ class Korisnik extends BaseController
 			]);
 			
 			$message = "Usesno obavljena kupovina! Očekujte dalja obavestenja preko email-a";
-			//poslati mejlove kome gde treba(ima oglas u sesiji pa se izvuce idk->imejl)
+			
 			$this->pozovi(
 				'kupovina/kupljeno',
 				['message' => $message]
