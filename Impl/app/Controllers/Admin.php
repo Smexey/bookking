@@ -162,6 +162,8 @@ class Admin extends BaseController
 	public function nalog_pregled($IdK){
 		$korisnikModel = new ModelKorisnik();
 		$korisnik = $korisnikModel->find($IdK);
+		$rolaModel = new ModelRola();
+		$rola = $rolaModel->find($korisnik->IdR);
 		$data['ime'] = $korisnik->Ime;
 		$data['prezime'] = $korisnik->Prezime;
 		$data['imejl'] = $korisnik->Imejl;
@@ -172,6 +174,8 @@ class Admin extends BaseController
 		$data['postBroj'] = $korisnik->PostBroj;
 		$data['rola'] = 'Admin';
 		$data['IdK'] = $IdK;
+		$data['IdMod'] = $korisnik->IdMod;
+		$data['opisRole'] = $rola->Opis;
 		$this->pozovi('nalog/nalog',$data);
 	}
 
@@ -182,18 +186,49 @@ class Admin extends BaseController
 	/* Doraditi sve u ostalim kontrolerima kada je nalog uklonjen*/
 	public function nalog_brisanje_action($IdK){
 		$korisnikModel = new ModelKorisnik();
-		$korisnikModel->update($IdK, ['Stanje' => 'Uklonjen']);
+		$korisnikModel->update($IdK, ['Stanje' => 'Uklonjen', 'IdMod' => null]);
+
+		//azuriranje stanja uklonjenog korisnika u Uklonjen
+		$korisnik = $korisnikModel->find($IdK);
+		if ($korisnik->IdMod != null){
+			$korisnikModel->update($korisnik->IdMod, ['Stanje' => 'Uklonjen']);
+		}
+
+		//ako je uklonjeni korisnik bio moderator onda raskidamo vezu iz osnovnog naloga korisnika ka ovom moderatorskom
+		$rolaModel = new ModelRola();
+		$moderatorRola = $rolaModel->where('Opis', 'Moderator')->first();
+		if ($korisnik->IdR == $moderatorRola->IdR){
+			$osnovniKorisnik = $korisnikModel->where('IdMod', $IdK)->first();
+			if ($osnovniKorisnik!=null){
+				$korisnikModel->update($osnovniKorisnik->IdK, ['IdMod' => null]);
+				//sendmail ako je uklonjeni bio moderator onda na korisnikov
+				$message = "Zdravo " .$osnovniKorisnik->Ime. ",";
+				$message .= "\n\nNažalost, nadalje niste deo moderatorskog tima sajta bookking.com";
+				$message .= "\nVaš moderatorski nalog je uklonjen!";
+		
+				$email = \Config\Services::email();
+		
+				$email->setFrom('bookkingPSI@gmail.com', 'Bookking');
+				$email->setTo($osnovniKorisnik->Imejl);
+		
+				$email->setSubject('Uklanjanje moderatorskog naloga');
+				$email->setMessage($message);
+		
+				$result = $email->send();
+			}
+		}
 
 		$stanjeModel = new ModelStanje(); 
 		$stanje = $stanjeModel->where('Opis','Uklonjen')->first(); 
 
 		$oglasModel = new ModelOglas();
 		$oglasi = $oglasModel->dohvatiSveOglaseKorisnika($IdK);
-
+		//azuriranje stanja svih oglasa uklonjenog korisnika na Uklonjen
 		foreach ($oglasi as $oglas) {
 			$oglasModel->update($oglas->IdO, ['IdS' => $stanje->IdS]);
 		}
 
+		//odbijanje podnetog zahteva uklonjenog korisnika ako je on postojao
 		$zahtevVerModel = new ModelZahtevVer();
 		$zahtev = $zahtevVerModel->dohvatiPodnetZahtevKorisnika($IdK);
 		if ($zahtev != null){
@@ -202,6 +237,20 @@ class Admin extends BaseController
 			$zahtevVerModel->update($zahtev->IdZ, ['Stanje' => 'odbijen', 'Odobrio' => $odobrio]);
 		}
 
+		//sendmail na korisnikov mejl
+		$message = "Zdravo " .$korisnik->Ime. ",";
+		$message .= "\n\nNažalost,";
+		$message .= "\nVaš nalog i sve vezano za njega je uklonjeno sa sajta bookking.com!";
+
+		$email = \Config\Services::email();
+
+		$email->setFrom('bookkingPSI@gmail.com', 'Bookking');
+		$email->setTo($korisnik->Imejl);
+
+		$email->setSubject('Uklanjanje naloga');
+		$email->setMessage($message);
+
+		$result = $email->send();
 		return redirect()->to(site_url("/bookking/Impl/public/Admin/"));
 	}
 
@@ -222,6 +271,57 @@ class Admin extends BaseController
 			'trazeno' => $this->request->getVar('pretraga')
         ];
 		return $this->pozovi('nalog/nalog_svi', $data);
+	}
+
+	public function nalog_promocija($IdK){
+		$this->pozovi('nalog/promocija', ['IdK'=>$IdK]);
+	}
+
+	public function nalog_promocija_action($IdK){
+		$korisnikModel = new ModelKorisnik();
+		$brModeratora = count($korisnikModel->like('Imejl', 'moderator')->findAll()) + 1;
+		$imejl = "moderator".$brModeratora."@bookking.com";
+
+		$rolaModel = new ModelRola();
+		$rola = $rolaModel->where('Opis', 'Moderator')->first();
+
+		$promovisaniKorisnik = $korisnikModel->find($IdK);
+
+		$korisnikModel->save([
+			'Imejl'  => $imejl,
+			'Sifra'  => $promovisaniKorisnik->Sifra,
+			'Ime'  => $promovisaniKorisnik->Ime,
+			'Prezime'  => $promovisaniKorisnik->Prezime,
+			'Adresa'  => 'X',
+			'Grad'  => 'X',
+			'Drzava'  => 'X',
+			'PostBroj'  => 11000,
+			'Stanje' => 'Vazeci',
+			'IdR'  => $rola->IdR,
+		]);
+		
+		$noviModerator = $korisnikModel->where('Imejl', $imejl)->first();
+		
+		$korisnikModel->update($promovisaniKorisnik->IdK, ['IdMod' => $noviModerator->IdK]);
+
+		//sendmail
+		$message = "Zdravo " .$promovisaniKorisnik->Ime. ",";
+		$message .= "\n\nČestitamo! Postali ste deo moderatorskom tima sajta bookking.com!";
+		$message .= "\nPodaci o novom moderatorskom nalogu nalaze se dalje u mejlu.";
+		$message .= "\n\nImejl: ". $imejl;
+		$message .= "\nŠifra: ". $promovisaniKorisnik->Sifra;
+
+		$email = \Config\Services::email();
+
+		$email->setFrom('bookkingPSI@gmail.com', 'Bookking');
+		$email->setTo($promovisaniKorisnik->Imejl);
+
+		$email->setSubject('Promocija u moderatora');
+		$email->setMessage($message);
+
+		$result = $email->send();
+
+		return redirect()->to(site_url("/bookking/Impl/public/Admin/"));
 	}
 	
 }

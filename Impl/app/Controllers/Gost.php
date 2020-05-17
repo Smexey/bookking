@@ -190,7 +190,7 @@ class Gost extends BaseController
 		}
 
 		$message = "Zdravo " . $ime . ",";
-		$message .= "\n\nOvaj mejl je poslat na zahtev registracije naloga na sajta bookking.com. Kod koji je potrebno da potvrdite nalazi se na dnu imejla.";
+		$message .= "\n\nOvaj mejl je poslat na zahtev registracije naloga na sajta bookking.com. Kod koji je potrebno da potvrdite nalazi se na dnu mejla.";
 		$message .= "\nKod: " . $code;
 
 		
