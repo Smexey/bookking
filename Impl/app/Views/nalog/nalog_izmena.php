@@ -29,10 +29,6 @@
                         <td class="text-center"><input name="prezime" value="<?php echo $prezime; ?>"></td>
                     </tr>
                     <tr>
-                        <td class="blueColor">Imejl:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                        <td class="text-center"><input name="imejl" value="<?php echo $imejl; ?>"></td>
-                    </tr>
-                    <tr>
                         <td class="blueColor">Šifra:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
                         <td class="text-center"><input name="sifra" value="<?php echo $sifra; ?>"></td>
                     </tr>

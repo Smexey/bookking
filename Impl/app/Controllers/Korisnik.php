@@ -434,7 +434,6 @@ class Korisnik extends BaseController
 	public function nalog_izmena_action()
 	{
 		$ime = $_POST['ime'];
-		$imejl = $_POST['imejl'];
 		$sifra = $_POST['sifra'];
 		$prezime = $_POST['prezime'];
 		$adresa = $_POST['adresa'];
@@ -448,7 +447,6 @@ class Korisnik extends BaseController
 		$data = [
 			'Ime' => $ime,
 			'Prezime'  => $prezime,
-			'Imejl'  => $imejl,
 			'Sifra'  => $sifra,
 			'Adresa'  => $adresa,
 			'Grad'  => $grad,

@@ -66,7 +66,7 @@ class Gost extends BaseController
 		$imejl = $_POST["imejl"];
 
 		$korisnikModel = new ModelKorisnik();
-		$korisnik = $korisnikModel->where('Imejl', $imejl)->first();
+		$korisnik = $korisnikModel->where(['Imejl' => $imejl, 'Stanje' => 'Vazeci'])->first();
 
 		if ($korisnik != null) {
 			$message = "Zdravo " . $korisnik->Ime . ",";
