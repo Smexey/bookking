@@ -3,10 +3,17 @@
     <br><br>
     <div class="row">
         <div class="offset-sm-2 col-sm-8">
-            <form name="pretragavesti" method="get" action="<?= site_url("$controller/pretraga") ?>">
-                Pretraga: <input type="text" name="pretraga">
-                <input class='btn' name="Trazi" type="submit" value="Trazi"><br>
-            </form>
+            <?php if ($mojiOglasi == true):?>
+                <form name="pretragavesti" method="get" action="<?= site_url("$controller/moji_oglasi") ?>">
+                    Pretraga: <input type="text" name="pretraga">
+                    <input class='btn' value='Traži' type="submit"><br>
+                </form>
+            <?php else: ?>
+                <form name="pretragavesti" method="get" action="<?= site_url("$controller/pretraga") ?>">
+                    Pretraga: <input type="text" name="pretraga">
+                    <input class='btn' value='Traži' type="submit"><br>
+                </form>
+            <?php endif; ?>
             <?php
             if (!empty($trazeno))
                 echo "<h3>Rezultati pretrage $trazeno:</h3>";

@@ -48,15 +48,36 @@ class Moderator extends BaseController
 		$poruka = $_POST['poruka'];
 
 		if ($imejl == "") return $this->pozovi('o_nama/o_nama_error');
-		else return $this->pozovi('o_nama/o_nama_success');
+		else{
+			
+			$email = \Config\Services::email();
+
+			$email->setFrom($imejl, $imejl);
+			$email->setTo("bookkingPSI@gmail.com");
+
+			$email->setSubject('Žalba korisnika');
+			$email->setMessage($poruka);
+
+			$result = $email->send();
+			return $this->pozovi('o_nama/o_nama_success');
+		}
 	}
 
 	
 	public function prikaz_zahtevi(){
-		$zahtevVerModel = new \App\Models\ModelZahtevVer();
+		$zahtevVerModel = new ModelZahtevVer();
+		$tekst = $this->request->getVar('pretraga');
+		if ($tekst != null) {
+			$zahtevi = $zahtevVerModel->where("Stanje='podnet' AND (Podneo IN (SELECT IdK FROM korisnik WHERE Imejl LIKE '%$tekst%' OR Ime LIKE '%$tekst%' OR Prezime LIKE '%$tekst%'))")
+				->paginate(6, 'zahtevi');
+		} else {
+			$zahtevi = $zahtevVerModel->where('Stanje', 'podnet')->paginate(6, 'zahtevi');
+		}
 		$data = [
-            'zahtevi' => $zahtevVerModel->where(['Stanje' => 'podnet'])->paginate(6, 'zahtevi'),
-            'pager' => $zahtevVerModel->pager
+            'zahtevi' => $zahtevi,
+			'pager' => $zahtevVerModel->pager,
+			'trazeno' => $this->request->getVar('pretraga'),
+			'trenutni_korisnik' => 'Moderator'
         ];
 		$this->pozovi('zahtev_ver/prikaz_zahtevi', $data);
 	}
@@ -64,13 +85,13 @@ class Moderator extends BaseController
 	public function prikaz_zahtev($IdZ){
 		$zahtevVerModel = new ModelZahtevVer();
 		$zahtev = $zahtevVerModel->find($IdZ);
-		$this->pozovi('zahtev_ver/prikaz_zahtev', ['zahtev'=>$zahtev]);
+		$this->pozovi('zahtev_ver/prikaz_zahtev', ['zahtev' => $zahtev]);
 	}
 
 	public function prikaz_zahtev_fajl($IdZ){
 		$zahtevVerModel = new ModelZahtevVer();
 		$zahtev= $zahtevVerModel->find($IdZ);
-		echo view('zahtev_ver/prikaz_zahtev_fajl', ['zahtev'=>$zahtev]);
+		echo view('zahtev_ver/prikaz_zahtev_fajl', ['zahtev' => $zahtev]);
 	}
 
 	public function razmotri_zahtev($IdZ){
@@ -136,7 +157,8 @@ class Moderator extends BaseController
 		$this->pozovi('pretraga/pretraga',[
 			'oglasi' => $oglasi,
 			"trazeno"=>$this->request->getVar('pretraga'),
-			'pager' => $oglasModel->pager
+			'pager' => $oglasModel->pager,
+			'mojiOglasi' => false
 		]);
 	}
 	

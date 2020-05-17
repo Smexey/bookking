@@ -1,6 +1,6 @@
 <html>
     <body>
-        <div class="container text-center"  style="height:100%">
+        <div class="container text-center">
             
             <form action="<?php echo site_url("$controller/razmotri_zahtev/{$zahtev->IdZ}"); ?>" method="POST">
                 <br><br><br>
@@ -22,9 +22,16 @@
                         
                     ?>
                     <br><br>
-                    <button type="submit" name="zahtev_dugme" value="odobri" class='btn btn-primarly'>&nbsp;&nbsp;&nbsp;Odobri zahtev&nbsp;&nbsp;&nbsp;</button>
-                    &nbsp;&nbsp;
-                    <button type="submit" name="zahtev_dugme" value="odbij" class='btn btn-primarly'>&nbsp;&nbsp;&nbsp;Odbij zahtev&nbsp;&nbsp;&nbsp;</button>
+                    <?php if($zahtev->Odobrio == null):?>
+                        
+                        <button type="submit" name="zahtev_dugme" value="odobri" class='btn btn-primarly'>&nbsp;&nbsp;&nbsp;Odobri zahtev&nbsp;&nbsp;&nbsp;</button>
+                        &nbsp;&nbsp;
+                        <button type="submit" name="zahtev_dugme" value="odbij" class='btn btn-primarly'>&nbsp;&nbsp;&nbsp;Odbij zahtev&nbsp;&nbsp;&nbsp;</button>
+                
+                    <?php else: ?>
+                        <h3>Stanje zahteva: <?= $zahtev->Stanje ?></h3>
+                        <h3>Zahtev pregledao: <?= $korisnikModel->find($zahtev->Odobrio)->Imejl ?></h3>
+                    <?php endif; ?>
                 </div>
 
             </form>

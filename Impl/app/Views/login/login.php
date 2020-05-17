@@ -40,9 +40,7 @@
                 <a href="<?php echo site_url("Gost/registracija"); ?>" >Nemate nalog?</a>
                 <a href="<?php echo site_url("Gost/oporavak"); ?>" >Zaboravili ste šifru?</a>
             
-                <br><br><br><br><br>
-                <br><br><br><br><br>
-                <br><br>
+
 
             </form>
         </div>

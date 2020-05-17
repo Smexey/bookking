@@ -1,6 +1,6 @@
 <html>
     <body>
-        <div class="container text-center"  style="height:100%">
+        <div class="container text-center">
             
             <form>
                 <br><br><br>

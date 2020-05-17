@@ -4,7 +4,10 @@ namespace App\Controllers;
 
 use App\Models\ModelKorisnik;
 use App\Models\ModelOglas;
+use App\Models\ModelOglasTag;
+use App\Models\ModelPrijava;
 use App\Models\ModelStanje;
+use App\Models\ModelTag;
 
 class Verifikovani extends BaseController
 {
@@ -45,32 +48,41 @@ class Verifikovani extends BaseController
 		$poruka = $_POST['poruka'];
 
 		if ($imejl == "") return $this->pozovi('o_nama/o_nama_error');
-		else return $this->pozovi('o_nama/o_nama_success');
+		else{
+			
+			$email = \Config\Services::email();
+
+			$email->setFrom($imejl, $imejl);
+			$email->setTo("bookkingPSI@gmail.com");
+
+			$email->setSubject('Žalba korisnika');
+			$email->setMessage($poruka);
+
+			$result = $email->send();
+			return $this->pozovi('o_nama/o_nama_success');
+		}
 	}
 	
 	//Rade
-	public function moji_oglasi(){
+	public function moji_oglasi()
+	{
 		$korisnik = $this->session->get("korisnik");
-		$oglasModel = new ModelOglas(); 
+		$oglasModel = new ModelOglas();
 		$stanjeModel = new ModelStanje();
-		$stanje = $stanjeModel->where(['Opis'=>'Okacen'])->first();
-		$tekst = $this->request->getVar('pretraga'); 
-		if($tekst != null){
-			$oglasi = $oglasModel ->like('Naslov',$tekst)
-			->orLike('Autor',$tekst)
-			->orLike('Opis',$tekst)
-			->where('IdS',$stanje->IdS)
-			->where('IdK',$korisnik->IdK)
-			->paginate(8, 'oglasi');
-		}else {
-			$oglasi = $oglasModel->where('IdS',$stanje->IdS)
-			->where('IdK',$korisnik->IdK)->paginate(8, 'oglasi');
+		$stanje = $stanjeModel->where(['Opis' => 'Okacen'])->first();
+		$tekst = $this->request->getVar('pretraga');
+		if ($tekst != null) {
+			$oglasi = $oglasModel->where("IdS=$stanje->IdS AND IdK=$korisnik->IdK AND (Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%')")
+				->paginate(8, 'oglasi');
+		} else {
+			$oglasi = $oglasModel->where(['IdS' => $stanje->IdS, 'IdK' => $korisnik->IdK])->paginate(8, 'oglasi');
 		}
-		$this->pozovi('pretraga/pretraga',[
-            'oglasi' => $oglasi,
-			"trazeno"=>$this->request->getVar('pretraga'),
-            'pager' => $oglasModel->pager
-        ]);
+		$this->pozovi('pretraga/pretraga', [
+			'oglasi' => $oglasi,
+			'trazeno' => $this->request->getVar('pretraga'),
+			'pager' => $oglasModel->pager,
+			'mojiOglasi' => true
+		]);
 	}
 
 	//Rade
@@ -189,28 +201,37 @@ class Verifikovani extends BaseController
 			['oglas'=>$oglas,'errors'=>$this->validator->listErrors()]);
 		else{
 			//return $this->pozovi('pretraga/pretraga',[]);
-			$db      = \Config\Database::connect();
-			$builder = $db->table('oglas');
+			$kupac = $this->session->get('korisnik');
+			$kupovinaModel = new ModelKupovina();
+			$nacinKupovineModel = new ModelNacinKupovine();
 			$nacin = $this->session->get('nacin');
-			if('sajt'==$nacin) 
-				$opisKupovine='KupljenPrekoSajta';
-			else if('middleman'==$nacin) 
-				$opisKupovine='KupljenPrekoMiddlema';
-			// else $opisKupovine='Kupljen';
-			$stanjeModel = new ModelStanje();
-			$stanje = $stanjeModel->where(['Opis'=>$opisKupovine])->first();
-			$oglas = $this->session->get('oglas');
-			$data = [
-				'IdS' => $stanje->IdS 
-			]; 
-			$builder->where('IdO', $oglas->IdO);
-			$builder->update($data);
-			// $oglasModel = new ModelOglas();
-			// $oglasModel->find($korisnik->IdK)->update(['IdS'=>$stanje->IdS]);
+			
+			if ('sajt' == $nacin){
+				$nacinKupovine = $nacinKupovineModel->where('Opis', 'Preko sajta')->first();
+				//stanje oglasa se ne menja jer verifikovani 
+				//ima vise knjiga za isti oglas i sam upravlja uklanjanjem oglasa
+			}
+			else if ('middleman' == $nacin){
+				$nacinKupovine = $nacinKupovineModel->where('Opis', 'Preko middlemana')->first();
+				$oglasModel = new ModelOglas();
+				$stanjeModel = new ModelStanje();
+				$stanjeOglasa = $stanjeModel->where('Opis', 'Kupljen')->first();
+				//azuriranje stanja oglasa da je kupljen
+				$oglasModel->update($oglas->IdO, ['IdS' => $stanjeOglasa->IdS]);
+			}
+
+			$kupovinaModel->save([
+				'IdK' => $kupac->IdK,
+				'IdO' => $oglas->IdO,
+				'IdN' => $nacinKupovine->IdN
+			]);
+			
 			$message = "Usesno obavljena kupovina! Očekujte dalja obavestenja preko email-a";
 			//poslati mejlove kome gde treba(ima oglas u sesiji pa se izvuce idk->imejl)
-			$this->pozovi('kupovina/kupljeno',
-			['message'=>$message]);
+			$this->pozovi(
+				'kupovina/kupljeno',
+				['message' => $message]
+			);
 		}
 	}
 		
@@ -327,6 +348,7 @@ class Verifikovani extends BaseController
 		$data['adresa'] = $korisnik->Adresa;
 		$data['drzava'] = $korisnik->Drzava;
 		$data['postBroj'] = $korisnik->PostBroj;
+		$data['rola'] = 'Verifikovani';
 		$this->pozovi('nalog/nalog',$data);	
 	}
 

@@ -43,30 +43,68 @@ class Admin extends BaseController
 		$this->pozovi('o_nama/o_nama');
 	}
 
-
 	public function o_nama_action()
 	{
 		$imejl = $_POST['imejl'];
 		$poruka = $_POST['poruka'];
 
 		if ($imejl == "") return $this->pozovi('o_nama/o_nama_error');
-		else return $this->pozovi('o_nama/o_nama_success');
+		else{
+			
+			$email = \Config\Services::email();
+
+			$email->setFrom($imejl, $imejl);
+			$email->setTo("bookkingPSI@gmail.com");
+
+			$email->setSubject('Žalba korisnika');
+			$email->setMessage($poruka);
+
+			$result = $email->send();
+			return $this->pozovi('o_nama/o_nama_success');
+		}
 	}
 
+	//Janko
+	public function pretraga()
+	{
+		$oglasModel = new ModelOglas();
+		$tekst = $this->request->getVar('pretraga');
+		if ($tekst != null) {
+			$oglasi = $oglasModel->where("Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%' OR IdS IN (SELECT IdS FROM stanjeoglasa WHERE Opis LIKE '%$tekst%')")
+				->paginate(8, 'oglasi');
+		} else {
+			$oglasi = $oglasModel->paginate(8, 'oglasi');
+		}
+		$this->pozovi('pretraga/pretraga', [
+			'oglasi' => $oglasi,
+			'trazeno' => $this->request->getVar('pretraga'),
+			'pager' => $oglasModel->pager,
+			'mojiOglasi' => false
+		]);
+	}
 	
 	public function prikaz_zahtevi(){
-		$zahtevVerModel = new \App\Models\ModelZahtevVer();
+		$zahtevVerModel = new ModelZahtevVer();
+		$tekst = $this->request->getVar('pretraga');
+		if ($tekst != null) {
+			$zahtevi = $zahtevVerModel->where("Stanje LIKE '%$tekst%' OR (Podneo IN (SELECT IdK FROM korisnik WHERE Imejl LIKE '%$tekst%' OR Ime LIKE '%$tekst%' OR Prezime LIKE '%$tekst%'))")
+				->paginate(6, 'zahtevi');
+		} else {
+			$zahtevi = $zahtevVerModel->paginate(6, 'zahtevi');
+		}
 		$data = [
-            'zahtevi' => $zahtevVerModel->where(['Stanje' => 'podnet'])->paginate(6, 'zahtevi'),
-            'pager' => $zahtevVerModel->pager
+            'zahtevi' => $zahtevi,
+			'pager' => $zahtevVerModel->pager,
+			'trazeno' => $this->request->getVar('pretraga'),
+			'trenutni_korisnik' => 'Admin'
         ];
-		return $this->pozovi('zahtev_ver/prikaz_zahtevi', $data);
+		$this->pozovi('zahtev_ver/prikaz_zahtevi', $data);
 	}
 
 	public function prikaz_zahtev($IdZ){
 		$zahtevVerModel = new ModelZahtevVer();
 		$zahtev = $zahtevVerModel->find($IdZ);
-		return $this->pozovi('zahtev_ver/prikaz_zahtev', ['zahtev'=>$zahtev]);
+		$this->pozovi('zahtev_ver/prikaz_zahtev', ['zahtev' => $zahtev]);
 	}
 
 	public function prikaz_zahtev_fajl($IdZ){
@@ -171,9 +209,17 @@ class Admin extends BaseController
 		$rolaModel = new ModelRola();
 		$rola = $rolaModel->where('Opis', 'Admin')->first();
 		$korisnikModel = new ModelKorisnik();
+		$tekst = $this->request->getVar('pretraga');
+		if ($tekst != null) {
+			$nalozi = $korisnikModel->where("Stanje='Vazeci' AND IdR!=$rola->IdR AND (Imejl LIKE '%$tekst%' OR Ime LIKE '%$tekst%' OR Prezime LIKE '%$tekst%')")
+				->paginate(6, 'nalozi');
+		} else {
+			$nalozi = $korisnikModel->where(['Stanje' => 'Vazeci', 'IdR !=' => $rola->IdR ])->paginate(6, 'nalozi');
+		}
 		$data = [
-            'nalozi' => $korisnikModel->where(['Stanje' => 'Vazeci', 'IdR !=' => $rola->IdR ])->paginate(6, 'nalozi'),
-            'pager' => $korisnikModel->pager
+            'nalozi' => $nalozi,
+			'pager' => $korisnikModel->pager,
+			'trazeno' => $this->request->getVar('pretraga')
         ];
 		return $this->pozovi('nalog/nalog_svi', $data);
 	}
