@@ -13,8 +13,8 @@
             <input class="form-control" type="text" placeholder="Autor" aria-label="Autor" style="width: 60%;" name="autor" value="<?= set_value('autor') ?>">
             <input class="form-control" type="text" placeholder="Cena" aria-label="Cena" style="width: 60%;" name="cena" value="<?= set_value('cena') ?>">
             <label for="textArea">Tagovi</label>
-            <textarea id="textArea" rows="4" cols="50" name="tags" value="<?= set_value('tags') ?>"></textarea>
+            <textarea style="resize:none" id="textArea" rows="4" cols="50" name="tags" value="<?= set_value('tags') ?>"></textarea>
         </div>
-        <input class="btn btn-primary" name="Potvrdi" type="submit" value="Potvrdi" style="width: 100%">
+        <input class="btn btn-primarly" name="Potvrdi" type="submit" value="Potvrdi" style="width: 100%">
     </form>
 </div>

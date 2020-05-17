@@ -16,7 +16,7 @@ echo "<br/><br/>";
                 echo "<br>Naslov:<br/>";
                 echo form_input("naslov", set_value("naslov"));
                 echo "<br>Opis:<br/>";
-                echo form_textarea("opis", set_value("opis"));
+                echo form_textarea("opis", set_value("opis"), 'style="resize:none"');
                 ?>
         </div>
         <div class="col-sm-6">
@@ -26,12 +26,12 @@ echo "<br/><br/>";
             echo "<br>Cena:<br/>";
             echo form_input("cena", set_value("cena"));
             echo "<br>Tagovi:<br/>";
-            echo form_textarea("tags", set_value("tags"));
+            echo form_textarea("tags", set_value("tags"), 'style="resize:none"');
             ?>
         </div>
         <?php
         echo form_submit("dodaj", "Dodaj", [
-            'class' => 'btn btn-primary',
+            'class' => 'btn btn-primarly',
             'style' => 'width:100%; height:50px;
                                                             margin-top:10px'
         ]);

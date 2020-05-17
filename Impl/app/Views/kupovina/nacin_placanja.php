@@ -24,7 +24,7 @@
             </td></tr>
             <tr>
                 <td>
-                    <button type="submit" class="btn btn-primary">Dalje</button>
+                    <button type="submit" class="btn btn-primarly">Dalje</button>
                 </td>
             </tr>
         </table> <hr /> <br />

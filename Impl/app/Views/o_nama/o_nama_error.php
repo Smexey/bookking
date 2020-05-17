@@ -36,7 +36,7 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <textarea class="form-control" rows="5" name="poruka" placeholder="Poruka"></textarea>
+                <textarea class="form-control" style="resize:none" rows="5" name="poruka" placeholder="Poruka"></textarea>
             </div>
         </div>
 

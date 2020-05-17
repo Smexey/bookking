@@ -36,7 +36,7 @@
                 <br />
             <div class = "row">
                 <div class="col" align = "center">
-                    <button type="submit" class="btn btn-primary" style="width: 20%;">Potvrdi</button>
+                    <button type="submit" class="btn btn-primarly" style="width: 20%;">Potvrdi</button>
                 </div> 
             </div>
             </td></tr>
