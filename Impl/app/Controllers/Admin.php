@@ -179,15 +179,32 @@ class Admin extends BaseController
 	}
 	//Rade
 	public function obrisi($id){
-		$db      = \Config\Database::connect();
-		$builder = $db->table('oglas'); 
+		$oglasModel = new ModelOglas();
 		$stanjeModel = new ModelStanje(); 
-		$stanje = $stanjeModel->where('Opis','Uklonjen')->first(); 
+		$stanje = $stanjeModel->where('Opis', 'Uklonjen')->first(); 
 		$data = [
 			'IdS' => $stanje->IdS 
 		]; 
-		$builder->where('IdO', $id);
-		$builder->update($data);
+		$oglasModel->update($id, $data);
+
+		$oglas = $oglasModel->find($id);
+		$korisnikModel = new ModelKorisnik();
+		$prodavac = $korisnikModel->find($oglas->IdK);
+
+		//sendmail
+		$message = "Zdravo " .$prodavac->Ime. ",";
+		$message .= "\n\nNažalost, Vaš oglas je uklonjen sa sajta bookking.com.";
+
+		$email = \Config\Services::email();
+
+		$email->setFrom('bookkingPSI@gmail.com', 'Bookking');
+		$email->setTo($prodavac->Imejl);
+
+		$email->setSubject('Uklanjanje oglasa');
+		$email->setMessage($message);
+
+		$result = $email->send();
+
 		return redirect()->to(site_url("/bookking/Impl/public/Admin/pretraga/"));
 	}
 

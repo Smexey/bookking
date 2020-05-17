@@ -255,16 +255,19 @@ class Korisnik extends BaseController
 	//Rade
 	public function obrisi($id)
 	{
-		$db      = \Config\Database::connect();
-		$builder = $db->table('oglas');
-		$stanjeModel = new ModelStanje();
-		$stanje = $stanjeModel->where('Opis', 'Korisnik uklonio')->first();
+		$oglasModel = new ModelOglas();
+		$stanjeModel = new ModelStanje(); 
+		$stanje = $stanjeModel->where('Opis', 'Korisnik uklonio')->first(); 
 		$data = [
-			'IdS' => $stanje->IdS
-		];
-		$builder->where('IdO', $id);
-		$builder->update($data);
-		return redirect()->to(site_url("/bookking/Impl/public/Korisnik/pretraga/"));
+			'IdS' => $stanje->IdS 
+		]; 
+		$oglasModel->update($id, $data);
+
+		$oglas = $oglasModel->find($id);
+		$korisnikModel = new ModelKorisnik();
+		$prodavac = $korisnikModel->find($oglas->IdK);
+
+		return redirect()->to(site_url("/bookking/Impl/public/Admin/pretraga/"));
 	}
 	//Rade
 	public function kupovina()

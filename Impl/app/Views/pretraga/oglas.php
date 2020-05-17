@@ -76,8 +76,8 @@
                     $rola->Opis == "Verifikovani") &&
                 $trenutni_korisnik->IdK != $oglas->IdK
             ) //provera korisnik
-                echo '<input class="btn" name="Kupi" type="submit" 
-                        value="Kupi" style="margin-left:100">';
+                echo '<input class="btn btn-primarly" type="submit" 
+                        value=\'Kupi\' style="margin-left:100">';
         }
         ?>
     </form>
@@ -88,8 +88,8 @@
                     $rola->Opis == "Verifikovani") &&
                 $trenutni_korisnik->IdK != $oglas->IdK
             ) //provera korisnik
-                echo '<input class="btn" name="Prijavi" type="submit" 
-                        value="Prijavi" style="margin-left:100">';
+                echo '<input class="btn btn-primarly" type="submit" 
+                        value=\'Prijavi\' style="margin-left:100">';
         }
         ?>
     </form>
@@ -97,12 +97,12 @@
         <?php
         if (isset($trenutni_korisnik)) {
             if (
-                $rola->Opis == "Admin" ||
-                $rola->Opis == "Moderator" ||
-                $trenutni_korisnik->IdK == $oglas->IdK
+                (($rola->Opis == "Admin" || $rola->Opis == "Moderator") 
+                && $oglas->IdS == $stanjeModel->where('Opis', 'Okacen')->first()->IdS) 
+                || $trenutni_korisnik->IdK == $oglas->IdK
             ) //provera mod ili admin
-                echo '<input class="btn" name="Obrisi" type="submit" 
-                        value="Obrisi" style="margin-left:100">';
+                echo '<input class="btn btn-primarly" type="submit" 
+                        value=\'Ukloni\' style="margin-left:100">';
         }
         ?>
     </form>

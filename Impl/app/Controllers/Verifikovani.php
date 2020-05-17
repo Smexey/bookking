@@ -162,20 +162,25 @@ class Verifikovani extends BaseController
 		$this->pozovi('pretraga/brisanje', ['IdO'=>$id]);
 	}
 	//Rade
-	public function obrisi($id){
-		$db      = \Config\Database::connect();
-		$builder = $db->table('oglas'); 
+	public function obrisi($id)
+	{
+		$oglasModel = new ModelOglas();
 		$stanjeModel = new ModelStanje(); 
-		$stanje = $stanjeModel->where('Opis','Uklonjen')->first(); 
+		$stanje = $stanjeModel->where('Opis', 'Korisnik uklonio')->first(); 
 		$data = [
 			'IdS' => $stanje->IdS 
 		]; 
-		$builder->where('IdO', $id);
-		$builder->update($data);
-		return redirect()->to(site_url("/bookking/Impl/public/Verifikovani/pretraga/"));
+		$oglasModel->update($id, $data);
+
+		$oglas = $oglasModel->find($id);
+		$korisnikModel = new ModelKorisnik();
+		$prodavac = $korisnikModel->find($oglas->IdK);
+
+		return redirect()->to(site_url("/bookking/Impl/public/Admin/pretraga/"));
 	}
 	//Rade
-	public function kupovina(){
+	public function kupovina()
+	{
 		$oglas = $this->session->get('oglas');
 		$this->pozovi("kupovina/nacin_placanja", ['oglas'=>$oglas]);
 	}
