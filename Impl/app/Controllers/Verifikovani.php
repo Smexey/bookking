@@ -202,14 +202,40 @@ class Verifikovani extends BaseController
 		$korisnikModel = new ModelKorisnik();
 		$prodavac = $korisnikModel->find($oglas->IdK);
 
-		if($this->request->getVar('placanje')=='Kartica'
-		&& !$this->validate(['cardholder'=>'required|min_length[2]|max_length[50]',
-							'brK'=>'required|min_length[12]|max_length[12]|numeric',
-							'validThu'=>'required|min_length[5]|max_length[5]',
-							'cvv'=>'required|min_length[2]|max_length[50]',
-						]))//srediti ove provere
-			return $this->pozovi('kupovina/forma',
-			['oglas'=>$oglas,'errors'=>$this->validator->listErrors()]);
+		if (
+			$this->request->getVar('placanje') == 'Kartica'
+			&& !$this->validate([
+				'cardholder' => 'required|min_length[2]|max_length[50]|alpha_numeric',
+				// 'brK'=>'required|valid_cc_number[amex]|
+				// valid_cc_number[maestro]|valid_cc_number[visa]',
+				'brK' => 'required|regex_match[/^[0-9]{12,12}$/]',
+				'validThu' => 'required|regex_match[/(?:0[1-9]|1[0-2])\/[0-9]{2}/]',
+				'cvv' => 'required|regex_match[/^[0-9]{3,4}$/]',
+			],[
+				'cardholder' => [
+					'required' => 'Potrebno je uneti ime i prezime!',
+					'min_length' => 'Minimalna dužina polja ime i prezime je 2 karaktera!',
+					'max_length' => 'Maksimalna dužina polja ime i prezime je 50 karaktera!',
+					'alpha_numeric' => 'Ime i prezime mora biti alfanumeričkog tipa!'
+				],
+				'brK' => [
+					'required' => 'Potrebno je uneti broj kartice!',
+					'regex_match' => 'Broj kartice nije u željenom formatu!'
+				],
+				'validThu' => [
+					'required' => 'Potrebno je uneti validnost!',
+					'regex_match' => 'Validnost nije u željenom formatu!'
+				],
+				'cvv' => [
+					'required' => 'Potrebno je uneti CVV/CVC!',
+					'regex_match' => 'CVV/CVC nije u željenom formatu!'
+				]
+			]) 
+		) //srediti ove provere
+			return $this->pozovi(
+				'kupovina/forma',
+				['oglas' => $oglas, 'errors' => $this->validator->getErrors()]
+			);
 		else{
 			//return $this->pozovi('pretraga/pretraga',[]);
 			$kupac = $this->session->get('korisnik');
