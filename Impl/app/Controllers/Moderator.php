@@ -208,7 +208,8 @@ class Moderator extends BaseController
 			'oglasi' => $oglasi,
 			"trazeno"=>$this->request->getVar('pretraga'),
 			'pager' => $oglasModel->pager,
-			'mojiOglasi' => false
+			'mojiOglasi' => false,
+			'stanja' => []
 		]);
 	}
 	

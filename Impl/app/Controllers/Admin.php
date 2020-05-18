@@ -68,29 +68,45 @@ class Admin extends BaseController
 	public function pretraga()
 	{
 		$oglasModel = new ModelOglas();
+		$stanjeModel = new Modelstanje();
+		$stanja = $stanjeModel->findAll();
+
 		$tekst = $this->request->getVar('pretraga');
-		if ($tekst != null) {
-			$oglasi = $oglasModel->where("Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%' OR IdS IN (SELECT IdS FROM stanjeoglasa WHERE Opis LIKE '%$tekst%')")
+		$IdS = $this->request->getVar('stanje');
+
+		if ($tekst != null && $IdS != null) {
+			$oglasi = $oglasModel->where("IdS=$IdS AND (Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%')")
 				->paginate(8, 'oglasi');
-		} else {
+		}
+		else if ($tekst!=null){
+			$oglasi = $oglasModel->where("Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%'")
+			->paginate(8, 'oglasi');
+		}
+		else if ($IdS!=null){
+			$oglasi = $oglasModel->where("IdS=$IdS")->paginate(8, 'oglasi');
+		}
+		else {
 			$oglasi = $oglasModel->paginate(8, 'oglasi');
 		}
+
 		$this->pozovi('pretraga/pretraga', [
 			'oglasi' => $oglasi,
 			'trazeno' => $this->request->getVar('pretraga'),
 			'pager' => $oglasModel->pager,
-			'mojiOglasi' => false
+			'mojiOglasi' => false,
+			'stanja' => $stanja
 		]);
 	}
 	
 	public function prikaz_zahtevi(){
 		$zahtevVerModel = new ModelZahtevVer();
 		$tekst = $this->request->getVar('pretraga');
+		$stanje = $this->request->getVar('stanje');
 		if ($tekst != null) {
-			$zahtevi = $zahtevVerModel->where("Stanje LIKE '%$tekst%' OR (Podneo IN (SELECT IdK FROM korisnik WHERE Imejl LIKE '%$tekst%' OR Ime LIKE '%$tekst%' OR Prezime LIKE '%$tekst%'))")
+			$zahtevi = $zahtevVerModel->where("Stanje LIKE '%$stanje%' AND (Podneo IN (SELECT IdK FROM korisnik WHERE Imejl LIKE '%$tekst%' OR Ime LIKE '%$tekst%' OR Prezime LIKE '%$tekst%'))")
 				->paginate(6, 'zahtevi');
 		} else {
-			$zahtevi = $zahtevVerModel->paginate(6, 'zahtevi');
+			$zahtevi = $zahtevVerModel->where("Stanje LIKE '%$stanje%'")->paginate(6, 'zahtevi');
 		}
 		$data = [
             'zahtevi' => $zahtevi,

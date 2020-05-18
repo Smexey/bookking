@@ -8,6 +8,15 @@
             <form name="pretraganalozi" method="get" action="<?= site_url("$controller/prikaz_zahtevi") ?>">
                 Pretraga: <input type="text" name="pretraga">
                 <input class='btn' value='Traži' type="submit"><br>
+                <?php if($trenutni_korisnik == 'Admin'): ?>
+                    Stanje zahteva:
+                    <select name='stanje'>
+                        <option></option>
+                        <option value='podnet'>Podnet</option>
+                        <option value='odbijen'>Odbijen</option>
+                        <option value='odobren'>Odobren</option>
+                    </select>
+                <?php endif; ?>
             </form>
             <?php
                 if (!empty($trazeno))

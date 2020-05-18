@@ -11,7 +11,18 @@
             <?php else: ?>
                 <form name="pretragavesti" method="get" action="<?= site_url("$controller/pretraga") ?>">
                     Pretraga: <input type="text" name="pretraga">
-                    <input class='btn' value='Traži' type="submit"><br>
+                    <input class='btn' value='Traži' type="submit"><br>          
+                <?php if (count($stanja) > 0): ?>
+                    Stanje oglasa:
+                    <select name='stanje'>
+                        <option></option>
+                        <?php
+                            foreach ($stanja as $stanje) {
+                                echo "<option value={$stanje->IdS}>".$stanje->Opis."</option>";
+                            }
+                        ?>
+                    </select>
+                <?php endif; ?>
                 </form>
             <?php endif; ?>
             <?php

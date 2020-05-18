@@ -74,7 +74,8 @@ class BaseController extends Controller
 			'oglasi' => $oglasi,
 			'trazeno' => $this->request->getVar('pretraga'),
 			'pager' => $oglasModel->pager,
-			'mojiOglasi' => false
+			'mojiOglasi' => false,
+			'stanja' => []
 		]);
 	}
 	//Rade
