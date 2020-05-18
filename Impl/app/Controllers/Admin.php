@@ -252,7 +252,10 @@ class Admin extends BaseController
 		$data['adresa'] = $korisnik->Adresa;
 		$data['drzava'] = $korisnik->Drzava;
 		$data['postBroj'] = $korisnik->PostBroj;
-		$data['rola'] = 'Admin';
+		if ($korisnik->Stanje == 'Vazeci')
+			$data['rola'] = 'Admin';
+		else 
+			$data['rola'] = 'Pregled';
 		$data['IdK'] = $IdK;
 		$data['IdMod'] = $korisnik->IdMod;
 		$data['opisRole'] = $rola->Opis;
