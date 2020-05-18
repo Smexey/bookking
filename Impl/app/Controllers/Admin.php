@@ -322,19 +322,32 @@ class Admin extends BaseController
 
 	public function svi_nalozi(){
 		$rolaModel = new ModelRola();
-		$rola = $rolaModel->where('Opis', 'Admin')->first();
+		$role = $rolaModel->where('Opis !=', 'Admin')->findAll();
+		$adminRola = $rolaModel->where('Opis', 'Admin')->first();
 		$korisnikModel = new ModelKorisnik();
+
 		$tekst = $this->request->getVar('pretraga');
-		if ($tekst != null) {
-			$nalozi = $korisnikModel->where("Stanje='Vazeci' AND IdR!=$rola->IdR AND (Imejl LIKE '%$tekst%' OR Ime LIKE '%$tekst%' OR Prezime LIKE '%$tekst%')")
+		$IdR = $this->request->getVar('rola');
+
+		if ($tekst != null && $IdR != null) {
+			$nalozi = $korisnikModel->where("Stanje='Vazeci' AND IdR=$IdR AND (Imejl LIKE '%$tekst%' OR Ime LIKE '%$tekst%' OR Prezime LIKE '%$tekst%')")
 				->paginate(6, 'nalozi');
-		} else {
-			$nalozi = $korisnikModel->where(['Stanje' => 'Vazeci', 'IdR !=' => $rola->IdR ])->paginate(6, 'nalozi');
+		} 
+		else if ($tekst != null){
+			$nalozi = $korisnikModel->where("Stanje='Vazeci' AND IdR!=$adminRola->IdR AND (Imejl LIKE '%$tekst%' OR Ime LIKE '%$tekst%' OR Prezime LIKE '%$tekst%')")
+				->paginate(6, 'nalozi');
+		}
+		else if ($IdR != null){
+			$nalozi = $korisnikModel->where(['Stanje' => 'Vazeci', 'IdR' => $IdR ])->paginate(6, 'nalozi');
+		}
+		else {
+			$nalozi = $korisnikModel->where(['Stanje' => 'Vazeci', 'IdR !=' => $adminRola->IdR ])->paginate(6, 'nalozi');
 		}
 		$data = [
             'nalozi' => $nalozi,
 			'pager' => $korisnikModel->pager,
-			'trazeno' => $this->request->getVar('pretraga')
+			'trazeno' => $this->request->getVar('pretraga'),
+			'role' => $role
         ];
 		return $this->pozovi('nalog/nalog_svi', $data);
 	}

@@ -8,6 +8,15 @@
         <form name="pretraganalozi" method="get" action="<?= site_url("$controller/svi_nalozi") ?>">
             Pretraga: <input type="text" name="pretraga">
             <input class='btn' value='Traži' type="submit"><br>
+            Rola korisnika:
+            <select name='rola'>
+                <option></option>
+                <?php
+                    foreach ($role as $rola) {
+                        echo "<option value={$rola->IdR}>".$rola->Opis."</option>";
+                    }
+                ?>
+            </select>
         </form>
         <?php
             if (!empty($trazeno))

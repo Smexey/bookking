@@ -36,9 +36,11 @@
             $korisnik = $korisnikModel->find($oglas->IdK);
             $tagovi = $oglastagModel->where('IdO', $oglas->IdO)->findAll();
             echo "<ul>
-                <li>Korisnik: {$korisnik->Ime} {$korisnik->Prezime}</li>
-                <li>Stanje: {$stanje->Opis}</li>
-                <li>Opis: {$oglas->Opis}</li>
+                <li>Korisnik: {$korisnik->Ime} {$korisnik->Prezime}</li>";
+                if (isset($trenutni_korisnik) && $rola->Opis == "Admin")
+                    echo "<li>Stanje: {$stanje->Opis}</li>";
+            echo 
+                "<li>Opis: {$oglas->Opis}</li>
                 <li>Cena: {$oglas->Cena} din.</li>";
             if (!empty($tagovi)) {
                 echo "<li>Tagovi:</li>    
