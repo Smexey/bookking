@@ -65,8 +65,15 @@ class BaseController extends Controller
 		$stanje = $stanjeModel->where(['Opis' => 'Okacen'])->first();
 		$tekst = $this->request->getVar('pretraga');
 		if ($tekst != null) {
-			$oglasi = $oglasModel->where("IdS=$stanje->IdS AND (Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%')")
-				->paginate(8, 'oglasi');
+			if ($tekst[0] !== '#'){
+				$oglasi = $oglasModel->where("IdS=$stanje->IdS AND (Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%')")
+					->paginate(8, 'oglasi');
+			}
+			else{
+				$tagOpis = substr($tekst, 1);
+				$oglasi = $oglasModel->where("IdS=$stanje->IdS AND IdO IN (SELECT oglastag.IdO FROM oglastag WHERE oglastag.IdT IN (SELECT tag.IdT FROM tag WHERE tag.Opis LIKE '%$tagOpis%'))")
+					->paginate(8, 'oglasi');
+			}
 		} else {
 			$oglasi = $oglasModel->where('IdS', $stanje->IdS)->paginate(8, 'oglasi');
 		}
