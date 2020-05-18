@@ -185,15 +185,20 @@ class Verifikovani extends BaseController
 		$this->pozovi("kupovina/nacin_placanja", ['oglas'=>$oglas]);
 	}
 	//Rade
-	public function kupovina_dalje(){
+	public function kupovina_dalje()
+	{
 		$oglas = $this->session->get('oglas');
-		$this->session->set('nacin',$this->request->getVar('a'));
-		if("poruka"==$this->request->getVar('a')){
-			//redirect na prodavca
-			// $this->pozovi('kupovina/forma',['oglas'=>$oglas, 'a'=> 'cao']);
-		}else{
-			$this->pozovi('kupovina/forma',['oglas'=>$oglas, 
-											'a'=> $this->request->getVar('a')]);
+		$this->session->set('nacin', $this->request->getVar('a'));
+		if ("poruka" == $this->request->getVar('a')) {
+			//redirect na prodavca 
+			$_POST['knjiga'] = "Zdravo, želim da kupim knjigu \"" . $oglas->Naslov ."\"";
+			$_POST['primalac'] = $oglas->IdK;
+			$this->zapocniKonverzaciju();
+		} else {
+			$this->pozovi('kupovina/forma', [
+				'oglas' => $oglas,
+				'a' => $this->request->getVar('a')
+			]);
 		}
 	}
 	//Rade
