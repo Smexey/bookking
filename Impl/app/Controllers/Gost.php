@@ -146,6 +146,10 @@ class Gost extends BaseController
 		$korisnik = $korisnikModel->find($maxId + 1);
 		$this->session->set('korisnik', $korisnik);
 
+		$pregledModel = new ModelPregled();
+		$pregled = $pregledModel->where('IdPr!=', 1)->orderBy('IdPr', 'DESC')->findAll(1, 0);
+		$pregledModel->update($pregled[0]->IdPr, ['BrLogovanja' => $pregled[0]->BrLogovanja + 1]);
+
 		return redirect()->to(site_url('Korisnik'));
 	}
 
