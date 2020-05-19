@@ -426,6 +426,12 @@ class Admin extends BaseController
 		$pregledModel = new ModelPregled();
 		$generalniPregled = $pregledModel->find(1);
 		$dnevniPregledi = $pregledModel->where('IdPr!=', 1)->orderBy('IdPr', 'DESC')->FindAll(7, 0);
+
+		$generalniPregled->BrKupovina += $dnevniPregledi[0]->BrKupovina;
+		$generalniPregled->BrOglasa += $dnevniPregledi[0]->BrOglasa;
+		$generalniPregled->BrKorisnika += $dnevniPregledi[0]->BrKorisnika;
+		$generalniPregled->BrLogovanja += $dnevniPregledi[0]->BrLogovanja;
+
 		$korisnikModel = new ModelKorisnik();
 		$najKupac = $korisnikModel->find($dnevniPregledi[0]->NajKupac);
 		if ($najKupac == null){
