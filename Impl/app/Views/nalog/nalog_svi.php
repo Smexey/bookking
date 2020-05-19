@@ -43,7 +43,7 @@
             <tbody>
                 <?php
                 foreach ($nalozi as $nalog) {
-                    $imgsrcProfil = base_url('/assets/images/zahtev_profil.png');
+                    $imgsrcProfil = base_url('/assets/images/nalog'.$nalog->IdA.'.png');
                     $imgProfil = array(
                         'src' => $imgsrcProfil,
                         'alt' => 'Profil',

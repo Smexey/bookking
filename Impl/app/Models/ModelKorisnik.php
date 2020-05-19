@@ -9,7 +9,7 @@ class ModelKorisnik extends Model
     protected $table      = 'korisnik';
     protected $primaryKey = 'IdK';
     protected $returnType = 'App\Entities\Korisnik';
-    protected $allowedFields = ['IdK', 'Imejl', 'Sifra', 'Ime', 'Prezime', 'Adresa', 'Grad', 'Drzava', 'PostBroj', 'Stanje', 'IdR', 'IdMod'];
+    protected $allowedFields = ['IdK', 'Imejl', 'Sifra', 'Ime', 'Prezime', 'Adresa', 'Grad', 'Drzava', 'PostBroj', 'Stanje', 'IdR', 'IdMod', 'IdA'];
 
     public function pretraga($tekst)
     {

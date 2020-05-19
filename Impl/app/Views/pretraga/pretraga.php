@@ -55,14 +55,15 @@
                         foreach ($oglasi as $oglas) {
                             // $korisnikModel = new \App\Models\ModelKorisnik();
                             // $podneo = $korisnikModel->find($zahtev->Podneo);
-
+                            $korisnikModel = new App\Models\ModelKorisnik();
+                            $korisnik = $korisnikModel->find($oglas->IdK);
                             echo "<tr><td>" . anchor("$controller/oglas/{$oglas->IdO}", '<img src="data:image/jpeg;base64,'
                                 . base64_encode($oglas->Naslovnica) . '" height=100 width=100>') . "</td>";
 
                             echo "<td style='display: table-cell;vertical-align: middle;'>{$oglas->Naslov}</td>";
                             echo "<td style='display: table-cell;vertical-align: middle;'>{$oglas->Autor}</td>";
                             if ($controller !== 'Gost') {
-                                $imgsrcProfil = base_url('/assets/images/zahtev_profil.png');
+                                $imgsrcProfil = base_url('/assets/images/nalog'.$korisnik->IdA.'.png');
                                 $imgProfil = array(
                                     'src' => $imgsrcProfil,
                                     'alt' => 'Profil',

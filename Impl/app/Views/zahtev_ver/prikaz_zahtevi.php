@@ -49,7 +49,7 @@
                         $korisnikModel = new \App\Models\ModelKorisnik();
                         $podneo = $korisnikModel->find($zahtev->Podneo);
 
-                        $imgsrcProfil = base_url('/assets/images/zahtev_profil.png');
+                        $imgsrcProfil = base_url('/assets/images/nalog'.$podneo->IdA.'.png');
                         $imgProfil = array(
                             'src' => $imgsrcProfil,
                             'alt' => 'Profil',

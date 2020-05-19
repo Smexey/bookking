@@ -8,6 +8,7 @@ use App\Models\ModelRola;
 use App\Models\ModelOglas;
 use App\Models\ModelPrijava;
 use App\Models\ModelStanje;
+use App\Models\ModelPregled;
 
 
 class Admin extends BaseController
@@ -420,4 +421,39 @@ class Admin extends BaseController
 		return redirect()->to(site_url("/bookking/Impl/public/Admin/"));
 	}
 	
+	//Janko
+	public function admin_pregled($zaPrikaz = null){
+		$pregledModel = new ModelPregled();
+		$generalniPregled = $pregledModel->find(1);
+		$dnevniPregledi = $pregledModel->where('IdPr!=', 1)->orderBy('IdPr', 'DESC')->FindAll(7, 0);
+		$korisnikModel = new ModelKorisnik();
+		$najKupac = $korisnikModel->find($dnevniPregledi[0]->NajKupac);
+		if ($najKupac == null){
+			$najKupacImejl = 'Nema';
+			$najKupacIdK = null;
+		}
+		else{
+			$najKupacImejl = $najKupac->Imejl;
+			$najKupacIdK = $najKupac->IdK;
+		}
+		$najProdavac = $korisnikModel->find($dnevniPregledi[0]->NajProdavac);
+		if ($najProdavac == null){
+			$najProdavacImejl = 'Nema';
+			$najProdavacIdK = null;
+		}
+		else{
+			$najProdavacImejl = $najProdavac->Imejl;
+			$najProdavacIdK = $najProdavac->IdK;
+		}
+		$data = [
+			'generalniPregled' => $generalniPregled,
+			'pregledi' => $dnevniPregledi,
+			'zaPrikaz' => $zaPrikaz,
+			'najKupacImejl' => $najKupacImejl,
+			'najKupacIdK' => $najKupacIdK,
+			'najProdavacImejl' => $najProdavacImejl,
+			'najProdavacIdK' => $najProdavacIdK
+		];
+		$this->pozovi('admin/pregled', $data);
+	}
 }

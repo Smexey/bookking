@@ -99,6 +99,10 @@
         <div class="collapse navbar-collapse homePageMenu" id="navbarNav">
             <ul class="navbar-nav ml-lg-auto">
                 <li class="nav-item">
+                    <a href="<?php echo site_url("Admin/admin_pregled"); ?>" class="nav-link smoothScroll">Pregled</a>
+                </li>
+
+                <li class="nav-item">
                     <a href="<?php echo site_url("Admin/pretraga"); ?>" class="nav-link smoothScroll">Pretraga</a>
                 </li>
 

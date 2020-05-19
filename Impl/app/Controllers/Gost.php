@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\ModelKorisnik;
 use App\Models\ModelRola;
+use App\Models\ModelPregled;
 
 class Gost extends BaseController
 {
@@ -39,6 +40,10 @@ class Gost extends BaseController
 		if ($korisnik != null) {
 			$rolaModel = new ModelRola();
 			$rola = $rolaModel->where('IdR', $korisnik->IdR)->first();
+
+			$pregledModel = new ModelPregled();
+			$pregled = $pregledModel->where('IdPr!=', 1)->orderBy('IdPr', 'DESC')->findAll(1, 0);
+			$pregledModel->update($pregled[0]->IdPr, ['BrLogovanja' => $pregled[0]->BrLogovanja + 1]);
 
 			$this->session->set('korisnik', $korisnik);
 
