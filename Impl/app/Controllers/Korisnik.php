@@ -309,7 +309,7 @@ class Korisnik extends BaseController
 		if (
 			$this->request->getVar('placanje') == 'Kartica'
 			&& !$this->validate([
-				'cardholder' => 'required|min_length[2]|max_length[50]|alpha_numeric',
+				'cardholder' => 'required|min_length[2]|max_length[50]',
 				// 'brK'=>'required|valid_cc_number[amex]|
 				// valid_cc_number[maestro]|valid_cc_number[visa]',
 				'brK' => 'required|regex_match[/^[0-9]{12,12}$/]',
@@ -319,8 +319,7 @@ class Korisnik extends BaseController
 				'cardholder' => [
 					'required' => 'Potrebno je uneti ime i prezime!',
 					'min_length' => 'Minimalna dužina polja ime i prezime je 2 karaktera!',
-					'max_length' => 'Maksimalna dužina polja ime i prezime je 50 karaktera!',
-					'alpha_numeric' => 'Ime i prezime mora biti alfanumeričkog tipa!'
+					'max_length' => 'Maksimalna dužina polja ime i prezime je 50 karaktera!'
 				],
 				'brK' => [
 					'required' => 'Potrebno je uneti broj kartice!',
