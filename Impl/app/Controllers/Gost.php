@@ -42,7 +42,7 @@ class Gost extends BaseController
 			$rola = $rolaModel->where('IdR', $korisnik->IdR)->first();
 
 			$pregledModel = new ModelPregled();
-			$pregled = $pregledModel->where('IdPr!=', 1)->orderBy('IdPr', 'DESC')->findAll(1, 0);
+			$pregled = $pregledModel->orderBy('IdPr', 'DESC')->findAll(1, 0);
 			$pregledModel->update($pregled[0]->IdPr, ['BrLogovanja' => $pregled[0]->BrLogovanja + 1]);
 
 			$this->session->set('korisnik', $korisnik);
@@ -147,7 +147,7 @@ class Gost extends BaseController
 		$this->session->set('korisnik', $korisnik);
 
 		$pregledModel = new ModelPregled();
-		$pregled = $pregledModel->where('IdPr!=', 1)->orderBy('IdPr', 'DESC')->findAll(1, 0);
+		$pregled = $pregledModel->orderBy('IdPr', 'DESC')->findAll(1, 0);
 		$pregledModel->update($pregled[0]->IdPr, ['BrLogovanja' => $pregled[0]->BrLogovanja + 1]);
 
 		return redirect()->to(site_url('Korisnik'));

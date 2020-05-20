@@ -9,6 +9,7 @@ use App\Models\ModelOglas;
 use App\Models\ModelPrijava;
 use App\Models\ModelStanje;
 use App\Models\ModelPregled;
+use App\Models\ModelPregledUkupno;
 
 
 class Admin extends BaseController
@@ -423,9 +424,10 @@ class Admin extends BaseController
 	
 	//Janko
 	public function admin_pregled($zaPrikaz = null){
+		$pregledUkupnoModel = new ModelPregledUkupno();
+		$generalniPregled = $pregledUkupnoModel->find(1);
 		$pregledModel = new ModelPregled();
-		$generalniPregled = $pregledModel->find(1);
-		$dnevniPregledi = $pregledModel->where('IdPr!=', 1)->orderBy('IdPr', 'DESC')->FindAll(7, 0);
+		$dnevniPregledi = $pregledModel->orderBy('IdPr', 'DESC')->FindAll(7, 0);
 
 		$generalniPregled->BrKupovina += $dnevniPregledi[0]->BrKupovina;
 		$generalniPregled->BrOglasa += $dnevniPregledi[0]->BrOglasa;
