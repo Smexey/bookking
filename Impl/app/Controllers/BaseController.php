@@ -65,11 +65,10 @@ class BaseController extends Controller
 		$stanje = $stanjeModel->where(['Opis' => 'Okacen'])->first();
 		$tekst = $this->request->getVar('pretraga');
 		if ($tekst != null) {
-			if ($tekst[0] !== '#'){
+			if ($tekst[0] !== '#') {
 				$oglasi = $oglasModel->where("IdS=$stanje->IdS AND (Naslov LIKE '%$tekst%' OR Autor LIKE '%$tekst%' OR Opis LIKE '%$tekst%')")
 					->paginate(8, 'oglasi');
-			}
-			else{
+			} else {
 				$tagOpis = substr($tekst, 1);
 				$oglasi = $oglasModel->where("IdS=$stanje->IdS AND IdO IN (SELECT oglastag.IdO FROM oglastag WHERE oglastag.IdT IN (SELECT tag.IdT FROM tag WHERE tag.Opis LIKE '%$tagOpis%'))")
 					->paginate(8, 'oglasi');
@@ -190,17 +189,16 @@ class BaseController extends Controller
 
 		$razgModel = new ModelRazgovor();
 
-		if ($razgModel->where("Korisnik1", $korisnik1)->first() == null) {
-			$razgModel->save([
-				'Korisnik1'  => $korisnik1,
-				'Korisnik2'  => $korisnik2,
-			]);
-			$razgModel->save([
-				'Korisnik1'  => $korisnik2,
-				'Korisnik2'  => $korisnik1,
-			]);
-		}
+		//insert or ignore insert if exists
+		$razgModel->ignore(true)->insert([
+			'Korisnik1'  => $korisnik1,
+			'Korisnik2'  => $korisnik2,
+		]);
 
+		$razgModel->ignore(true)->insert([
+			'Korisnik1'  => $korisnik2,
+			'Korisnik2'  => $korisnik1,
+		]);
 
 
 		$porModel = new ModelPoruka();
