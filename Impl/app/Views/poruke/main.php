@@ -69,11 +69,12 @@
 
                                 $ret .=  "<p>";
                                 $ret .= $por->Tekst;
-                                $ret .= "</p>";
-
                                 $ret .= "<span class = 'time_date'>";
                                 $ret .= $por->Datum;
                                 $ret .= "</span>";
+                                $ret .= "</p>";
+
+
 
                                 $ret .= "</div>";
                                 $ret .= "</div>";
