@@ -54,6 +54,7 @@
                     <div class="msg_history">
 
                         <?php
+
                         if (isset($currentPoruke)) {
                             foreach ($currentPoruke as $por) {
                                 $ret = "";
@@ -69,8 +70,15 @@
                                 $ret .=  "<p>";
                                 $ret .= $por->Tekst;
                                 $ret .= "</p>";
+
+                                $ret .= "<span class = 'time_date'>";
+                                $ret .= $por->Datum;
+                                $ret .= "</span>";
+
                                 $ret .= "</div>";
                                 $ret .= "</div>";
+
+                                $prevPor = $por;
                                 echo $ret;
                             }
                         }
