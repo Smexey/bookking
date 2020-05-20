@@ -28,16 +28,28 @@
                             $ret .= "<form class='porform' action=" . site_url("$controller/otvoriKonverzaciju_action") . " method='POST'>";
 
                             $ret .= "<button class='chat_list";
-                            if (isset($selected) && $kor->IdK == $selected) {
+                            if (isset($selected) && $kor["Kor"]->IdK == $selected) {
                                 $ret .= " active_chat";
                             }
                             $ret .= "' type='submit'> ";
 
                             $ret .= " <div class='chat_people'> ";
                             $ret .= " <div class='chat_ib'> ";
-                            $ret .= "<input type='hidden' name='korisnikPrimalac' value='" . $kor->IdK . "'>";
+                            $ret .= "<input type='hidden' name='korisnikPrimalac' value='" . $kor["Kor"]->IdK . "'>";
+                            $ret .= "<h5>";
+                            $ret .= "<b>";
+                            $ret .= $kor["Kor"]->Ime;
+                            $ret .= "</b>";
+                            $ret .= "<span class='chat_date'>";
 
-                            $ret .= $kor->Ime;
+                            $ret .= date('D M d', strtotime($kor["Datum"]));
+
+                            $ret .= "</span>";
+                            $ret .= "</h5>";
+
+                            $ret .= "<p>";
+                            $ret .= $kor["LastPoruka"];
+                            $ret .= "</p>";
 
                             $ret .= " </div> ";
                             $ret .= " </div> ";

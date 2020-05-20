@@ -102,17 +102,28 @@ class BaseController extends Controller
 
 	public function getNizKorisnika($IdK)
 	{
-		$razgModel = new ModelRazgovor();
+		$modelRazg = new ModelRazgovor();
 		$modelKorisnik = new ModelKorisnik();
-		$niz = $razgModel->where("Korisnik1", $IdK)->findAll();
+		$modelPoruka = new ModelPoruka();
+
+		$niz = $modelRazg->where("Korisnik1", $IdK)->findAll();
 		foreach ($niz as $key => $el) {
 			if ($modelKorisnik->find($el->Korisnik2)->Stanje != "Vazeci") {
 				unset($niz[$key]);
 			}
 		}
+
 		$ret = [];
 		foreach ($niz as $konv) {
-			array_push($ret, $modelKorisnik->find($konv->Korisnik2));
+			$por = $modelPoruka->find($konv->IdPo);
+			array_push(
+				$ret,
+				[
+					"Kor" => $modelKorisnik->find($konv->Korisnik2),
+					"Datum" => $por->Datum,
+					"LastPoruka" => $por->Tekst
+				]
+			);
 		}
 
 		return $ret;
