@@ -436,7 +436,8 @@ class Admin extends BaseController
 
 		$korisnikModel = new ModelKorisnik();
 		$najKupac = $korisnikModel->find($dnevniPregledi[0]->NajKupac);
-		if ($najKupac == null){
+		//find vraca findall ako je parametar-id jednak null ili ako ga nema
+		if (is_array($najKupac)){
 			$najKupacImejl = 'Nema';
 			$najKupacIdK = null;
 		}
@@ -445,7 +446,7 @@ class Admin extends BaseController
 			$najKupacIdK = $najKupac->IdK;
 		}
 		$najProdavac = $korisnikModel->find($dnevniPregledi[0]->NajProdavac);
-		if ($najProdavac == null){
+		if (is_array($najProdavac)){
 			$najProdavacImejl = 'Nema';
 			$najProdavacIdK = null;
 		}
