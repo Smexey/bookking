@@ -187,16 +187,58 @@ class Korisnik extends BaseController
 	public function nova_vest()
 	{
 		if (!$this->validate([
-			'naslovnica' => 'uploaded[naslovnica]|max_size[naslovnica,1024]',
-			'naslov' => 'required|min_length[2]|max_length[50]',
-			'opis' => 'required|min_length[5]',
-			'autor' => 'required|min_length[5]',
-			'cena' => 'required|numeric'
+			'naslovnica' => 'uploaded[naslovnica]|max_size[naslovnica,1024]|mime_in[naslovnica,image/png,image/jpeg]',
+			'naslov' => 'required|max_length[40]',
+			'opis' => 'required|min_length[5]|max_length[200]',
+			'autor' => 'required|max_length[50]',
+			'cena' => 'required|regex_match[/^[0-9]{1,8}(\.[0-9]{2,2})?$/]'
+		],
+		[
+			'naslovnica' => [
+				'uploaded' => 'Potrebno je priložiti sliku naslovnice!',
+				'max_size' => 'Prekoračena je maksimalna veličina slike(1 MB)!',
+				'mime_in' => 'Prilog mora biti u obliku slike'
+			],
+			'naslov' => [
+				'required' => 'Potrebno je uneti naslov!',
+				'max_length' => 'Maksimalna dužina polja naslov je 40 karaktera!'
+			],
+			'opis' => [
+				'required' => 'Potrebno je uneti opis!',
+				'min_length' => 'Minimalna dužina polja opis je 5 karaktera!',
+				'max_length' => 'Maksimalna dužina polja opis je 200 karaktera!'
+			],
+			'autor' => [
+				'required' => 'Potrebno je uneti autora!',
+				'max_length' => 'Maksimalna dužina polja autor je 50 karaktera!'
+			],
+			'cena' => [
+				'required' => 'Potrebno je uneti cenu!',
+				'regex_match' => 'Cena je ceo broj do 8 cifara ili broj na dve decimalne cifre!'
+			]
 		]))
 			return $this->pozovi(
 				'pretraga/dodajOglas',
-				['errors' => $this->validator->listErrors()]
+				['errors' => $this->validator->getErrors()]
 			);
+		$tags = $this->request->getVar('tags');
+		// $tags = strtolower($tags);
+		$tags = preg_split("/[\s,]+/", $tags);
+		if(count($tags) > 10){
+			return $this->pozovi(
+				'pretraga/dodajOglas',
+				['errors' => ['Maksimalni broj tagova za jedan oglas je 10']]
+			);
+		}
+		
+		foreach ($tags as $tag) {
+			if(strlen($tag) > 20){
+				return $this->pozovi(
+					'pretraga/dodajOglas',
+					['errors' => ['Maksimalna dužina jednog taga je 20 karaktera']]
+				);
+			}
+		}
 		$stanjeModel = new ModelStanje();
 		$stanje = $stanjeModel->where(['Opis' => 'Okacen'])->first();
 		$korisnik = $this->session->get("korisnik");
@@ -212,9 +254,7 @@ class Korisnik extends BaseController
 			'Naslovnica' => file_get_contents($_FILES['naslovnica']['tmp_name'])
 		]);
 		$lastOglasID = $oglasModel->getInsertID();
-		$tags = $this->request->getVar('tags');
-		// $tags = strtolower($tags);
-		$tags = preg_split("/[\s,]+/", $tags);
+
 		// $tags = preg_match("/[\w]+/g",$tags);
 		$tagModel = new ModelTag();
 		$oglasTagModel = new ModelOglasTag();
@@ -519,6 +559,80 @@ class Korisnik extends BaseController
 
 	public function nalog_izmena_action()
 	{
+
+		if (!$this->validate([
+			'ime' => 'required',
+			'prezime' => 'required',
+			'sifra' =>  'required',
+			'adresa' => 'required',
+			'grad' => 'required',
+			'drzava' => 'required',
+			'postBroj' => 'required',
+		])
+		){
+			$korisnik = $this->session->get("korisnik");
+			$id = $korisnik->IdK;
+			$data['ime'] = $korisnik->Ime;
+			$data['prezime'] = $korisnik->Prezime;
+			$data['imejl'] = $korisnik->Imejl;
+			$data['grad'] = $korisnik->Grad;
+			$data['sifra'] = $korisnik->Sifra;
+			$data['adresa'] = $korisnik->Adresa;
+			$data['drzava'] = $korisnik->Drzava;
+			$data['postBroj'] = $korisnik->PostBroj;
+			$data['rola'] = 'Korisnik';
+			$data['errors'] = ['Sva polja su obavezna!'];
+			return $this->pozovi('nalog/nalog_izmena', $data);
+		}
+		else if (!$this->validate([
+			'ime' => 'max_length[30]',
+			'prezime' => 'max_length[30]',
+			'sifra' =>  'max_length[30]',
+			'adresa' => 'max_length[30]',
+			'grad' => 'max_length[30]',
+			'drzava' => 'max_length[30]',
+			'postBroj' => 'max_length[9]|numeric',
+		],
+		[
+			'ime' => [
+				'max_length' => 'Maksimalna dužina polja Ime je 30 karaktera!'
+			],
+			'prezime' => [
+				'max_length' => 'Maksimalna dužina polja Prezime je 30 karaktera!'
+			],
+			'sifra' => [
+				'max_length' => 'Maksimalna dužina polja Šifra je 30 karaktera!'
+			],
+			'adresa' => [
+				'max_length' => 'Maksimalna dužina polja Adresa je 30 karaktera!'
+			],
+			'grad' => [
+				'max_length' => 'Maksimalna dužina polja Grad je 30 karaktera!'
+			],
+			'drzava' => [
+				'max_length' => 'Maksimalna dužina polja Država je 30 karaktera!'
+			],
+			'postBroj' => [
+				'max_length' => 'Maksimalna dužina polja Poštanski broj je 9 karaktera!',
+				'numeric' => 'Poštanski broj sadrži samo cifre!'
+			]
+		])
+		){
+			$korisnik = $this->session->get("korisnik");
+			$id = $korisnik->IdK;
+			$data['ime'] = $korisnik->Ime;
+			$data['prezime'] = $korisnik->Prezime;
+			$data['imejl'] = $korisnik->Imejl;
+			$data['grad'] = $korisnik->Grad;
+			$data['sifra'] = $korisnik->Sifra;
+			$data['adresa'] = $korisnik->Adresa;
+			$data['drzava'] = $korisnik->Drzava;
+			$data['postBroj'] = $korisnik->PostBroj;
+			$data['rola'] = 'Korisnik';
+			$data['errors'] =  $this->validator->getErrors();
+			return $this->pozovi('nalog/nalog_izmena', $data);
+		}
+
 		$ime = $_POST['ime'];
 		$sifra = $_POST['sifra'];
 		$prezime = $_POST['prezime'];

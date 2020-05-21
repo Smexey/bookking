@@ -9,10 +9,9 @@ use App\Models\ModelPregled;
 class Gost extends BaseController
 {
 
-	protected function pozovi($akcija, $data=[], $error_msg = "")
+	protected function pozovi($akcija, $data=[])
 	{
 		$data['controller'] = 'Gost';
-		$data['error_msg'] = $error_msg;
 		echo view('pocetna/header_gost.php', $data);
 		echo view($akcija, $data);
 		echo view('pocetna/footer.php', $data);
@@ -155,6 +154,65 @@ class Gost extends BaseController
 
 	public function registracija_action()
 	{
+		
+		if (!$this->validate([
+			'imejl' => 'required',
+			'sifra' =>  'required',
+			'sifraPonovo' =>  'required',
+			'ime' => 'required',
+			'prezime' => 'required',
+			'adresa' => 'required',
+			'grad' => 'required',
+			'drzava' => 'required',
+			'postBroj' => 'required',
+		])
+		){
+			return $this->pozovi('registracija/registracija', ['errors' => ['Sva polja su obavezna!']]);
+		}
+		else if (!$this->validate([
+			'ime' => 'max_length[30]',
+			'prezime' => 'max_length[30]',
+			'imejl' => 'max_length[50]',
+			'sifra' =>  'max_length[30]',
+			'sifraPonovo' =>  'max_length[30]',
+			'adresa' => 'max_length[30]',
+			'grad' => 'max_length[30]',
+			'drzava' => 'max_length[30]',
+			'postBroj' => 'max_length[9]|numeric',
+		],
+		[
+			'ime' => [
+				'max_length' => 'Maksimalna dužina polja Ime je 30 karaktera!'
+			],
+			'prezime' => [
+				'max_length' => 'Maksimalna dužina polja Prezime je 30 karaktera!'
+			],
+			'imejl' => [
+				'max_length' => 'Maksimalna dužina polja Imejl je 50 karaktera!'
+			],
+			'sifra' => [
+				'max_length' => 'Maksimalna dužina polja Šifra je 30 karaktera!'
+			],
+			'sifraPonovo' => [
+				'max_length' => 'Maksimalna dužina polja Potvrdi Šifru je 30 karaktera!'
+			],
+			'adresa' => [
+				'max_length' => 'Maksimalna dužina polja Adresa je 30 karaktera!'
+			],
+			'grad' => [
+				'max_length' => 'Maksimalna dužina polja Grad je 30 karaktera!'
+			],
+			'drzava' => [
+				'max_length' => 'Maksimalna dužina polja Država je 30 karaktera!'
+			],
+			'postBroj' => [
+				'max_length' => 'Maksimalna dužina polja Poštanski broj je 9 karaktera!',
+				'numeric' => 'Poštanski broj sadrži samo cifre!'
+			]
+		])
+		){
+			return $this->pozovi('registracija/registracija', ['errors' => $this->validator->getErrors()]);
+		}
 		$ime = $_POST['ime'];
 		$imejl = $_POST['imejl'];
 		$sifra = $_POST['sifra'];
@@ -168,18 +226,18 @@ class Gost extends BaseController
 		$sifra2 = $_POST['sifraPonovo'];
 		$korisnikModel = new ModelKorisnik();
 		$korisnik = new Korisnik();
-
+		
 		if ($sifra != $sifra2) {
 			$_POST['sifra'] = "";
 			$_POST['sifraPonovo'] = "";
-			return $this->pozovi('registracija/registracija_error', 'Niste uneli identičnu šifru potvrde, pokušajte ponovo.');
+			return $this->pozovi('registracija/registracija', ['errors' => ['Niste uneli identičnu šifru potvrde, pokušajte ponovo.']]);
 		}
 
 		$provera = $korisnikModel->where("Imejl", $imejl)->first();
 
 		if ($provera != null) {
 			$_POST['imejl'] = "";
-			return $this->pozovi('registracija/registracija_error', 'Već postoji korisnik sa identičnim imejlom. Molim vas da se unesete drugi imejl ili da se ulogujete na već postojeći profil. ');
+			return $this->pozovi('registracija/registracija', ['errors' => ['Već postoji korisnik sa identičnim imejlom. Molim vas da se unesete drugi imejl ili da se ulogujete na već postojeći profil.']]);
 		}
 
 
