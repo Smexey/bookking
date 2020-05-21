@@ -12,53 +12,59 @@
         <div class="messaging">
             <div class="inbox_msg">
                 <div class="inbox_people">
-                    <div class="headind_srch">
-                        <div class="recent_heading">
-                            <h4>Messages</h4>
+                    <div class="row">
+                        <div class="headind_srch">
+                            <div class="recent_heading">
+                                <h4>&nbsp;&nbsp;&nbsp;&nbsp;Messages</h4>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="inbox_chat">
-                        <?php
+                    <div class="row">
 
-                        foreach ($korisnici as $kor) {
+                        <div class="inbox_chat">
+                            <?php
+
+                            foreach ($korisnici as $kor) {
 
 
-                            $ret = "";
-                            $ret .= "<form class='porform' action=" . site_url("$controller/otvoriKonverzaciju_action") . " method='POST'>";
+                                $ret = "";
+                                $ret .= "<form class='porform' action=" . site_url("$controller/otvoriKonverzaciju_action") . " method='POST'>";
 
-                            $ret .= "<button class='chat_list";
-                            if (isset($selected) && $kor["Kor"]->IdK == $selected) {
-                                $ret .= " active_chat";
+                                $ret .= "<button class='chat_list";
+                                if (isset($selected) && $kor["Kor"]->IdK == $selected) {
+                                    $ret .= " active_chat";
+                                }
+                                $ret .= "' type='submit'> ";
+
+                                $ret .= " <div class='chat_people'> ";
+                                $ret .= " <div class='chat_ib'> ";
+                                $ret .= "<input type='hidden' name='korisnikPrimalac' value='" . $kor["Kor"]->IdK . "'>";
+
+                                $ret .= "<h5>";
+                                $ret .= "<b>";
+                                $ret .= $kor["Kor"]->Ime;
+                                $ret .= "</b>";
+                                $ret .= "<span class='chat_date'>";
+
+                                $ret .= date('D M d', strtotime($kor["Datum"]));
+
+                                $ret .= "</span>";
+                                $ret .= "</h5>";
+
+                                $ret .= "<p>";
+                                $ret .= $kor["LastPoruka"];
+                                $ret .= "</p>";
+
+                                $ret .= " </div> ";
+                                $ret .= " </div> ";
+                                $ret .= " </button> ";
+                                $ret .= " </form> ";
+
+                                echo $ret;
                             }
-                            $ret .= "' type='submit'> ";
-
-                            $ret .= " <div class='chat_people'> ";
-                            $ret .= " <div class='chat_ib'> ";
-                            $ret .= "<input type='hidden' name='korisnikPrimalac' value='" . $kor["Kor"]->IdK . "'>";
-                            $ret .= "<h5>";
-                            $ret .= "<b>";
-                            $ret .= $kor["Kor"]->Ime;
-                            $ret .= "</b>";
-                            $ret .= "<span class='chat_date'>";
-
-                            $ret .= date('D M d', strtotime($kor["Datum"]));
-
-                            $ret .= "</span>";
-                            $ret .= "</h5>";
-
-                            $ret .= "<p>";
-                            $ret .= $kor["LastPoruka"];
-                            $ret .= "</p>";
-
-                            $ret .= " </div> ";
-                            $ret .= " </div> ";
-                            $ret .= " </button> ";
-                            $ret .= " </form> ";
-
-                            echo $ret;
-                        }
-                        ?>
+                            ?>
+                        </div>
                     </div>
                 </div>
 
