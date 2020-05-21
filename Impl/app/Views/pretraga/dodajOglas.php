@@ -2,11 +2,22 @@
 echo "<br/><br/>";
 ?>
 <div class="container" style="padding-top:20px;">
-    <?php if (!empty($errors)) echo "<span style='color:red'>$errors</span>"; ?>
+    <?php if(!empty($errors)): ?>
+        <div class="row">
+            <div class="offset-sm-3 col-sm-6 text-center">
+                <div class="alert alert-danger">
+                <?php foreach ($errors as $error) : ?>
+                    <?= esc($error) ?><br>
+                <?php endforeach ?>
+                </div>
+            </div>
+        </div>
+    <?php endif;?>
+
     <div class="row">
 
         <div class="col-sm-6">
-            <form action="<?php echo site_url("Korisnik/nova_vest"); ?>" method="POST" enctype="multipart/form-data">
+            <form action="<?php echo site_url("{$controller}/nova_vest"); ?>" method="POST" enctype="multipart/form-data">
 
                 <?php
                 echo "<br/>Naslovnica:<br/>";

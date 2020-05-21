@@ -18,7 +18,7 @@
 
                 <div class="justify-content-center">
                     <h4>Prinesite dokaz za verifikaciju</h4>
-                    <input type="file" name="zahtevFajl">
+                    <input type="file" name="zahtevFajl" accept="application/pdf">
                     <br><br>
                     <button type="submit" class='btn btn-primarly'>&nbsp;&nbsp;&nbsp;Pošalji&nbsp;&nbsp;&nbsp;</button>
                 </div>

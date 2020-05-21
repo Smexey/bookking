@@ -101,16 +101,63 @@ class Verifikovani extends BaseController
 	}
 
 	//Rade
-	public function nova_vest(){
-		if(!$this->validate([ 
-							'naslov'=>'required|min_length[2]|max_length[50]',
-							'opis'=>'required|min_length[5]',
-							'autor'=>'required|min_length[5]',
-							'cena'=>'required|numeric']))
-			return $this->pozovi('pretraga/dodajOglas',
-				['errors'=>$this->validator->listErrors()]);
+	public function nova_vest()
+	{
+		if (!$this->validate([
+			'naslovnica' => 'uploaded[naslovnica]|max_size[naslovnica,1024]|mime_in[naslovnica,image/png,image/jpeg]',
+			'naslov' => 'required|max_length[40]',
+			'opis' => 'required|min_length[5]|max_length[200]',
+			'autor' => 'required|max_length[50]',
+			'cena' => 'required|numeric'
+		],
+		[
+			'naslovnica' => [
+				'uploaded' => 'Potrebno je priložiti sliku naslovnice!',
+				'max_size' => 'Prekoračena je maksimalna veličina slike(1 MB)!',
+				'mime_in' => 'Prilog mora biti u obliku slike'
+			],
+			'naslov' => [
+				'required' => 'Potrebno je uneti naslov!',
+				'max_length' => 'Maksimalna dužina polja naslov je 40 karaktera!'
+			],
+			'opis' => [
+				'required' => 'Potrebno je uneti opis!',
+				'min_length' => 'Minimalna dužina polja opis je 5 karaktera!',
+				'max_length' => 'Maksimalna dužina polja opis je 200 karaktera!'
+			],
+			'autor' => [
+				'required' => 'Potrebno je uneti autora!',
+				'max_length' => 'Maksimalna dužina polja autor je 50 karaktera!'
+			],
+			'cena' => [
+				'required' => 'Potrebno je uneti cenu!',
+				'numeric' => 'Cena sadrži samo cifre!'
+			]
+		]))
+			return $this->pozovi(
+				'pretraga/dodajOglas',
+				['errors' => $this->validator->getErrors()]
+			);
+		$tags = $this->request->getVar('tags');
+		// $tags = strtolower($tags);
+		$tags = preg_split("/[\s,]+/", $tags);
+		if(count($tags) > 10){
+			return $this->pozovi(
+				'pretraga/dodajOglas',
+				['errors' => ['Maksimalni broj tagova za jedan oglas je 10']]
+			);
+		}
+		
+		foreach ($tags as $tag) {
+			if(strlen($tag) > 20){
+				return $this->pozovi(
+					'pretraga/dodajOglas',
+					['errors' => ['Maksimalna dužina jednog taga je 20 karaktera']]
+				);
+			}
+		}
 		$stanjeModel = new ModelStanje();
-		$stanje = $stanjeModel->where(['Opis'=>'Okacen'])->first();
+		$stanje = $stanjeModel->where(['Opis' => 'Okacen'])->first();
 		$korisnik = $this->session->get("korisnik");
 		$oglasModel = new ModelOglas();
 		$file = $this->request->getPost('naslovnica');
@@ -124,40 +171,40 @@ class Verifikovani extends BaseController
 			'Naslovnica' => file_get_contents($_FILES['naslovnica']['tmp_name'])
 		]);
 		$lastOglasID = $oglasModel->getInsertID();
-		$tags = $this->request->getVar('tags');
-		// $tags = strtolower($tags);
-		$tags = preg_split("/[\s,]+/", $tags);
+
 		// $tags = preg_match("/[\w]+/g",$tags);
 		$tagModel = new ModelTag();
 		$oglasTagModel = new ModelOglasTag();
 		foreach ($tags as $tag) {
-			if($tag!=""){ 
-				$tagProvera = $tagModel->where(['Opis'=>$tag])->findAll();
+			if ($tag != "") {
+				$tagProvera = $tagModel->where(['Opis' => $tag])->findAll();
 				$ok = true;
-				foreach ($tagProvera as $tp) { 
-					if(count($tagProvera)!=0) {
-						$tagId = $tp->IdT; 
+				foreach ($tagProvera as $tp) {
+					if (count($tagProvera) != 0) {
+						$tagId = $tp->IdT;
 						$ok = false;
 					}
 					break;
 				}
-				if($ok){
-					$tagModel->save([ 
-						'Opis' => $tag 
-					]);  
-					$tagId = $tagModel->getInsertID(); 
+				if ($ok) {
+					$tagModel->save([
+						'Opis' => $tag
+					]);
+					$tagId = $tagModel->getInsertID();
 				}
-				$oglasTagProvera = $oglasTagModel->where(['IdT'=>$tagId,
-														'IdO'=>$lastOglasID])->findAll();
+				$oglasTagProvera = $oglasTagModel->where([
+					'IdT' => $tagId,
+					'IdO' => $lastOglasID
+				])->findAll();
 				$ok = true;
-				foreach ($oglasTagProvera as $otp) { 
+				foreach ($oglasTagProvera as $otp) {
 					$ok = false;
 					break;
 				}
-				if($ok){
-					$oglasTagModel->save([ 
+				if ($ok) {
+					$oglasTagModel->save([
 						'IdT' => $tagId,
-						'IdO' => $lastOglasID 
+						'IdO' => $lastOglasID
 					]);
 				}
 			}

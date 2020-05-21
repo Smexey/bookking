@@ -9,10 +9,9 @@ use App\Models\ModelPregled;
 class Gost extends BaseController
 {
 
-	protected function pozovi($akcija, $data=[], $error_msg = "")
+	protected function pozovi($akcija, $data=[])
 	{
 		$data['controller'] = 'Gost';
-		$data['error_msg'] = $error_msg;
 		echo view('pocetna/header_gost.php', $data);
 		echo view($akcija, $data);
 		echo view('pocetna/footer.php', $data);
