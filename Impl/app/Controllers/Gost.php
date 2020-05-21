@@ -178,7 +178,7 @@ class Gost extends BaseController
 			'adresa' => 'max_length[30]',
 			'grad' => 'max_length[30]',
 			'drzava' => 'max_length[30]',
-			'postBroj' => 'numeric',
+			'postBroj' => 'max_length[9]|numeric',
 		],
 		[
 			'ime' => [
@@ -206,6 +206,7 @@ class Gost extends BaseController
 				'max_length' => 'Maksimalna dužina polja Država je 30 karaktera!'
 			],
 			'postBroj' => [
+				'max_length' => 'Maksimalna dužina polja Poštanski broj je 9 karaktera!',
 				'numeric' => 'Poštanski broj sadrži samo cifre!'
 			]
 		])

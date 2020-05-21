@@ -16,6 +16,18 @@
             </div>
         </div>
 
+        <?php if(!empty($errors)): ?>
+        <div class="row">
+            <div class="offset-sm-3 col-sm-6 text-center">
+                <div class="alert alert-danger">
+                <?php foreach ($errors as $error) : ?>
+                    <?= esc($error) ?><br>
+                <?php endforeach ?>
+                </div>
+            </div>
+        </div>
+        <?php endif;?>
+
         <form action="<?php echo site_url("$controller/nalog_izmena_action"); ?>" method="POST">               
         <div class="row">
             <div class="offset-sm-4 col-sm-4">

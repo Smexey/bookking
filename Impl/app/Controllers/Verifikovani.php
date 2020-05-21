@@ -108,7 +108,7 @@ class Verifikovani extends BaseController
 			'naslov' => 'required|max_length[40]',
 			'opis' => 'required|min_length[5]|max_length[200]',
 			'autor' => 'required|max_length[50]',
-			'cena' => 'required|numeric'
+			'cena' => 'required|regex_match[/^[0-9]{1,8}(\.[0-9]{2,2})?$/]'
 		],
 		[
 			'naslovnica' => [
@@ -131,7 +131,7 @@ class Verifikovani extends BaseController
 			],
 			'cena' => [
 				'required' => 'Potrebno je uneti cenu!',
-				'numeric' => 'Cena sadrži samo cifre!'
+				'regex_match' => 'Cena je ceo broj do 8 cifara ili broj na dve decimalne cifre!'
 			]
 		]))
 			return $this->pozovi(
@@ -467,7 +467,82 @@ class Verifikovani extends BaseController
 		$this->pozovi('nalog/nalog_izmena',$data);
 	}
 
-	public function nalog_izmena_action(){
+	public function nalog_izmena_action()
+	{
+
+		if (!$this->validate([
+			'ime' => 'required',
+			'prezime' => 'required',
+			'sifra' =>  'required',
+			'adresa' => 'required',
+			'grad' => 'required',
+			'drzava' => 'required',
+			'postBroj' => 'required',
+		])
+		){
+			$korisnik = $this->session->get("korisnik");
+			$id = $korisnik->IdK;
+			$data['ime'] = $korisnik->Ime;
+			$data['prezime'] = $korisnik->Prezime;
+			$data['imejl'] = $korisnik->Imejl;
+			$data['grad'] = $korisnik->Grad;
+			$data['sifra'] = $korisnik->Sifra;
+			$data['adresa'] = $korisnik->Adresa;
+			$data['drzava'] = $korisnik->Drzava;
+			$data['postBroj'] = $korisnik->PostBroj;
+			$data['rola'] = 'Verifikovani';
+			$data['errors'] = ['Sva polja su obavezna!'];
+			return $this->pozovi('nalog/nalog_izmena', $data);
+		}
+		else if (!$this->validate([
+			'ime' => 'max_length[30]',
+			'prezime' => 'max_length[30]',
+			'sifra' =>  'max_length[30]',
+			'adresa' => 'max_length[30]',
+			'grad' => 'max_length[30]',
+			'drzava' => 'max_length[30]',
+			'postBroj' => 'max_length[9]|numeric',
+		],
+		[
+			'ime' => [
+				'max_length' => 'Maksimalna dužina polja Ime je 30 karaktera!'
+			],
+			'prezime' => [
+				'max_length' => 'Maksimalna dužina polja Prezime je 30 karaktera!'
+			],
+			'sifra' => [
+				'max_length' => 'Maksimalna dužina polja Šifra je 30 karaktera!'
+			],
+			'adresa' => [
+				'max_length' => 'Maksimalna dužina polja Adresa je 30 karaktera!'
+			],
+			'grad' => [
+				'max_length' => 'Maksimalna dužina polja Grad je 30 karaktera!'
+			],
+			'drzava' => [
+				'max_length' => 'Maksimalna dužina polja Država je 30 karaktera!'
+			],
+			'postBroj' => [
+				'max_length' => 'Maksimalna dužina polja Poštanski broj je 9 karaktera!',
+				'numeric' => 'Poštanski broj sadrži samo cifre!'
+			]
+		])
+		){
+			$korisnik = $this->session->get("korisnik");
+			$id = $korisnik->IdK;
+			$data['ime'] = $korisnik->Ime;
+			$data['prezime'] = $korisnik->Prezime;
+			$data['imejl'] = $korisnik->Imejl;
+			$data['grad'] = $korisnik->Grad;
+			$data['sifra'] = $korisnik->Sifra;
+			$data['adresa'] = $korisnik->Adresa;
+			$data['drzava'] = $korisnik->Drzava;
+			$data['postBroj'] = $korisnik->PostBroj;
+			$data['rola'] = 'Verifikovani';
+			$data['errors'] =  $this->validator->getErrors();
+			return $this->pozovi('nalog/nalog_izmena', $data);
+		}
+
 		$ime = $_POST['ime'];
 		$sifra = $_POST['sifra'];
 		$prezime = $_POST['prezime'];
@@ -478,7 +553,7 @@ class Verifikovani extends BaseController
 
 		$korisnik = $this->session->get("korisnik");
 		$korisnikModel = new ModelKorisnik();
-		
+
 		$data = [
 			'Ime' => $ime,
 			'Prezime'  => $prezime,
@@ -487,11 +562,11 @@ class Verifikovani extends BaseController
 			'Grad'  => $grad,
 			'Drzava'  => $drzava,
 			'PostBroj'  => $postBroj,
-			];
+		];
 
 		$id = $korisnik->IdK;
-		$save = $korisnikModel->update($id,$data);
-		
+		$save = $korisnikModel->update($id, $data);
+
 		$korisnik = $korisnikModel->find($id);
 		$this->session->set("korisnik", $korisnik);
 
@@ -504,7 +579,6 @@ class Verifikovani extends BaseController
 		$data['drzava'] = $korisnik->Drzava;
 		$data['postBroj'] = $korisnik->PostBroj;
 		$data['rola'] = 'Verifikovani';
-		$this->pozovi('nalog/nalog',$data);	
+		$this->pozovi('nalog/nalog', $data);
 	}
-
 }
