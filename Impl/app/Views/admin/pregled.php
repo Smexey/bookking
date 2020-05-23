@@ -221,7 +221,7 @@
         $N = 7;
         $datumi = []; $kupovine = []; $oglasi = []; $korisnici = []; $logovanja = [];
         foreach ($pregledi as $pregled) {
-            $datum = date('N', strtotime($pregled->Datum));
+            $datum = (date('N', strtotime($pregled->Datum))) % $N;
             array_unshift($datumi, $datum);
             array_unshift($kupovine, $pregled->BrKupovina);
             array_unshift($oglasi, $pregled->BrOglasa);
