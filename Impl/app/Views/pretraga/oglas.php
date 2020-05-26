@@ -95,7 +95,7 @@
         }
         ?>
     </form>
-    <form name="obisanje_oglasa" method="get" action="<?= site_url("$controller/obisanje_oglasa/$oglas->IdO") ?>">
+    <form name="obisanje_oglasa" method="get" action="<?= site_url("$controller/brisanje_oglasa") ?>">
         <?php
         if (isset($trenutni_korisnik)) {
             if (

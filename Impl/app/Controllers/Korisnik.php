@@ -313,35 +313,54 @@ class Korisnik extends BaseController
 	/**
 	 * Funkcija za pozivanje view-a za brisanje oglasa
 	 *
-	 * @param int $id id-oglasa
 	 * @return void
 	 */
-	public function obisanje_oglasa($id)
+	public function brisanje_oglasa()
 	{
-		$this->pozovi('pretraga/brisanje', ['IdO' => $id]);
+		$oglas = $this->session->get('oglas');
+		if ($oglas == null){
+			return redirect()->to(site_url('/'));
+		}
+
+		$trenutniKorisnik = session()->get('korisnik');
+
+		if ($trenutniKorisnik->IdK != $oglas->IdK){
+			return redirect()->to(site_url('/'));
+		}
+
+		$stanjeModel = new ModelStanje();
+		$stanje = $stanjeModel->find($oglas->IdS);
+
+		if ($stanje->Opis !== 'Okacen'){
+			return redirect()->to(site_url('/'));
+		}
+
+		$this->pozovi('pretraga/brisanje', ['IdO' => $oglas->IdO]);
 	}
 	//Rade
 	/**
 	 * Funkcija za brisanje oglasa
 	 *
-	 * @param int $id id-oglasa
 	 * @return redirekcija_na_pretragu
 	 */
-	public function obrisi($id)
+	public function obrisi()
 	{
+		$oglas = $this->session->get('oglas');
+		if ($oglas == null){
+			return redirect()->to(site_url('/'));
+		}
+		
 		$oglasModel = new ModelOglas();
 		$stanjeModel = new ModelStanje(); 
 		$stanje = $stanjeModel->where('Opis', 'Korisnik uklonio')->first(); 
 		$data = [
 			'IdS' => $stanje->IdS 
 		]; 
-		$oglasModel->update($id, $data);
+		$oglasModel->update($oglas->IdO, $data);
 
-		$oglas = $oglasModel->find($id);
-		$korisnikModel = new ModelKorisnik();
-		$prodavac = $korisnikModel->find($oglas->IdK);
+		$this->session->remove('oglas');
 
-		return redirect()->to(site_url("/bookking/Impl/public/Admin/pretraga/"));
+		return redirect()->to(site_url("Korisnik/pretraga"));
 	}
 	//Rade
 	/**

@@ -21,6 +21,7 @@ use App\Models\ModelStanje;
 use App\Models\ModelPoruka;
 use App\Models\ModelRazgovor;
 use App\Models\ModelKorisnik;
+use App\Models\ModelRola;
 
 class BaseController extends Controller
 {
@@ -105,6 +106,23 @@ class BaseController extends Controller
 	{
 		$oglasModel = new ModelOglas();
 		$oglas = $oglasModel->find($id);
+
+		$stanjeModel = new ModelStanje();
+		$stanje = $stanjeModel->find($oglas->IdS);
+
+		$jeAdmin = false;
+		if ($this->session->has('korisnik')){
+			$korisnik = $this->session->get('korisnik');
+			$rolaModel = new ModelRola();
+			$rola = $rolaModel->find($korisnik->IdR);
+			if ($rola->Opis === 'Admin'){
+				$jeAdmin = true;
+			}
+		}
+				
+		if ($stanje->Opis !== 'Okacen' && (!$jeAdmin)){
+			return redirect()->to(site_url('/'));
+		}
 
 		$this->session->set('oglas', $oglas);
 
