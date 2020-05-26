@@ -34,6 +34,11 @@ class BaseController extends Controller
 	 */
 
 	//Rade
+	/**
+	 * Helperi za lakse upravljanje formom, urlom i htmlom
+	 *
+	 * @var array helpers Helperi
+	 */
 	protected $helpers = ['form', 'url', 'html'];
 
 	/**
@@ -58,6 +63,11 @@ class BaseController extends Controller
 	}
 
 	//Rade
+	/**
+	 * Funkcija za pretragu oglasa
+	 *
+	 * @return void
+	 */
 	public function pretraga()
 	{
 		$oglasModel = new ModelOglas();
@@ -85,6 +95,12 @@ class BaseController extends Controller
 		]);
 	}
 	//Rade
+	/**
+	 * Funkcija za prikaz odredjenog oglasa
+	 *
+	 * @param int $id id-oglasa-za-prikaz
+	 * @return void
+	 */
 	public function oglas($id)
 	{
 		$oglasModel = new ModelOglas();

@@ -149,6 +149,11 @@ class Korisnik extends BaseController
 	}
 
 	//Rade
+	/**
+	 * Funkcija za prikaz sopstvenih oglasa
+	 *
+	 * @return void
+	 */
 	public function moji_oglasi()
 	{
 		$korisnik = $this->session->get("korisnik");
@@ -178,12 +183,22 @@ class Korisnik extends BaseController
 	}
 
 	//Rade
+	/**
+	 * Funkcija za prikaz form za dodavanje novog oglalsa
+	 *
+	 * @return void
+	 */
 	public function dodaj_oglas()
 	{
 		$this->pozovi('pretraga/dodajOglas');
 	}
 
 	//Rade
+	/**
+	 * Funkcija za proveru i dodavanje novog oglasa
+	 *
+	 * @return redirekt_na_taj_oglas
+	 */
 	public function nova_vest()
 	{
 		if (!$this->validate([
@@ -295,11 +310,23 @@ class Korisnik extends BaseController
 		return redirect()->to(site_url("Korisnik/oglas/{$lastOglasID}"));
 	}
 	//Rade
+	/**
+	 * Funkcija za pozivanje view-a za brisanje oglasa
+	 *
+	 * @param int $id id-oglasa
+	 * @return void
+	 */
 	public function obisanje_oglasa($id)
 	{
 		$this->pozovi('pretraga/brisanje', ['IdO' => $id]);
 	}
 	//Rade
+	/**
+	 * Funkcija za brisanje oglasa
+	 *
+	 * @param int $id id-oglasa
+	 * @return redirekcija_na_pretragu
+	 */
 	public function obrisi($id)
 	{
 		$oglasModel = new ModelOglas();
@@ -317,12 +344,22 @@ class Korisnik extends BaseController
 		return redirect()->to(site_url("/bookking/Impl/public/Admin/pretraga/"));
 	}
 	//Rade
+	/**
+	 * Funkcija za prikaz forme za kupovinu
+	 *
+	 * @return void
+	 */
 	public function kupovina()
 	{
 		$oglas = $this->session->get('oglas');
 		$this->pozovi("kupovina/nacin_placanja", ['oglas' => $oglas]);
 	}
 	//Rade
+	/**
+	 * Funkcija za prikaz nacina odavira kupovine
+	 *
+	 * @return void
+	 */
 	public function kupovina_dalje()
 	{
 		$oglas = $this->session->get('oglas');
@@ -340,6 +377,11 @@ class Korisnik extends BaseController
 		}
 	}
 	//Rade
+	/**
+	 * Funkcija za proveru i kupovinu oglasa
+	 *
+	 * @return void
+	 */
 	public function provera()
 	{
 		$oglas = $this->session->get('oglas');
@@ -374,7 +416,7 @@ class Korisnik extends BaseController
 					'regex_match' => 'CVV/CVC nije u željenom formatu!'
 				]
 			]) 
-		) //srediti ove provere
+		)  
 			return $this->pozovi(
 				'kupovina/forma',
 				['oglas' => $oglas, 'errors' => $this->validator->getErrors()]
@@ -478,17 +520,32 @@ class Korisnik extends BaseController
 	}
 
 	//Rade
+	/**
+	 * Funkcija za redirekciju na pretragu nakon uspesne kupovine
+	 *
+	 * @return redirekt_na_pretragu
+	 */
 	public function uspesna_kupovina()
 	{
 		return redirect()->to(site_url("Korisnik/pretraga"));
 	}
 
 	//Rade
+	/**
+	 * Funkcija za prikaz forme za prijavu
+	 *
+	 * @return void
+	 */
 	public function prijava_forma()
 	{
 		$this->pozovi('prijava/forma_prijave', []);
 	}
 	//Rade
+	/**
+	 * Funkcija za prijavu oglasa
+	 *
+	 * @return redirekt_na_pretragu
+	 */
 	public function prijava()
 	{
 		$prijavaModel = new ModelPrijava();

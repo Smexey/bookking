@@ -155,10 +155,22 @@ class Moderator extends BaseController
 	}
 
 	//Rade
+	/**
+	 * Funkcija za pozivanje view-a za brisanje oglasa
+	 *
+	 * @param int $id id-oglasa
+	 * @return void
+	 */
 	public function obisanje_oglasa($id){
 		$this->pozovi('pretraga/brisanje', ['IdO'=>$id]);
 	}
 	//Rade
+	/**
+	 * Funkcija za brisanje oglasa
+	 *
+	 * @param int $id id-oglasa
+	 * @return redirekcija_na_pretragu
+	 */
 	public function obrisi($id){
 		$oglasModel = new ModelOglas();
 		$stanjeModel = new ModelStanje(); 
