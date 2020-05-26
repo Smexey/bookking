@@ -371,22 +371,45 @@ class Korisnik extends BaseController
 	public function kupovina()
 	{
 		$oglas = $this->session->get('oglas');
+		if ($oglas == null){
+			return redirect()->to(site_url('/'));
+		}
+
+		$stanjeModel = new ModelStanje();
+		$stanje = $stanjeModel->find($oglas->IdS);
+
+		if ($stanje->Opis !== 'Okacen'){
+			return redirect()->to(site_url('/'));
+		}
+
 		$this->pozovi("kupovina/nacin_placanja", ['oglas' => $oglas]);
 	}
 	//Rade
 	/**
-	 * Funkcija za prikaz nacina odavira kupovine
+	 * Funkcija za prikaz nacina odabira kupovine
 	 *
 	 * @return void
 	 */
 	public function kupovina_dalje()
 	{
 		$oglas = $this->session->get('oglas');
+		if ($oglas == null){
+			return redirect()->to(site_url('/'));
+		}
+
+		$stanjeModel = new ModelStanje();
+		$stanje = $stanjeModel->find($oglas->IdS);
+
+		if ($stanje->Opis !== 'Okacen'){
+			return redirect()->to(site_url('/'));
+		}
+
 		$this->session->set('nacin', $this->request->getVar('a'));
 		if ("poruka" == $this->request->getVar('a')) {
 			//redirect na prodavca 
 			$_POST['knjiga'] = "Zdravo, želim da kupim knjigu \"" . $oglas->Naslov ."\"";
 			$_POST['primalac'] = $oglas->IdK;
+			$this->session->remove('oglas');
 			$this->zapocniKonverzaciju();
 		} else {
 			$this->pozovi('kupovina/forma', [
@@ -404,6 +427,17 @@ class Korisnik extends BaseController
 	public function provera()
 	{
 		$oglas = $this->session->get('oglas');
+		if ($oglas == null){
+			return redirect()->to(site_url('/'));
+		}
+
+		$stanjeModel = new ModelStanje();
+		$stanje = $stanjeModel->find($oglas->IdS);
+
+		if ($stanje->Opis !== 'Okacen'){
+			return redirect()->to(site_url('/'));
+		}
+
 		$korisnikModel = new ModelKorisnik();
 		$prodavac = $korisnikModel->find($oglas->IdK);
 
@@ -530,7 +564,9 @@ class Korisnik extends BaseController
 			]);
 			
 			$message = "Usesno obavljena kupovina! Očekujte dalja obavestenja preko email-a";
-			
+
+			$this->session->remove('oglas');
+
 			$this->pozovi(
 				'kupovina/kupljeno',
 				['message' => $message]
@@ -557,6 +593,10 @@ class Korisnik extends BaseController
 	 */
 	public function prijava_forma()
 	{
+		$oglas = $this->session->get('oglas');
+		if ($oglas == null){
+			return redirect()->to(site_url('/'));
+		}
 		$this->pozovi('prijava/forma_prijave', []);
 	}
 	//Rade
@@ -571,6 +611,20 @@ class Korisnik extends BaseController
 
 		$korisnik = $this->session->get("korisnik");
 		$oglas = $this->session->get("oglas");
+		if ($oglas == null){
+			return redirect()->to(site_url('/'));
+		}
+		if (!$this->validate([
+			'opisPrijave' => 'required|max_length[50]'
+		],
+		[
+			'opisPrijave' => [
+				'required' => 'Potrebno je uneti opis prijave!',
+				'max_length' => 'Maksimalna dužina polja opisa prijave je 50 karaktera!'
+			]
+		])){
+			return $this->pozovi('prijava/forma_prijave', ['errors' => $this->validator->getErrors()]);
+		}
 		$opis = $this->request->getVar('opisPrijave');
 
 		$prijavaModel->insert([
@@ -578,6 +632,7 @@ class Korisnik extends BaseController
 			'Opis' => $opis,
 			'IdO'  => $oglas->IdO
 		]);
+		$this->session->remove('oglas');
 		return redirect()->to(site_url("Korisnik/pretraga"));
 	}
 
