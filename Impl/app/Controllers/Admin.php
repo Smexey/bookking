@@ -136,19 +136,27 @@ class Admin extends BaseController
 	public function prikaz_zahtev($IdZ){
 		$zahtevVerModel = new ModelZahtevVer();
 		$zahtev = $zahtevVerModel->find($IdZ);
+		if ($zahtev == null){
+			return redirect()->to(site_url('/Admin'));
+		}
+		$this->session->set('zahtev', $zahtev);
 		$this->pozovi('zahtev_ver/prikaz_zahtev', ['zahtev' => $zahtev]);
 	}
 
-	public function prikaz_zahtev_fajl($IdZ){
-		$zahtevVerModel = new ModelZahtevVer();
-		$zahtev= $zahtevVerModel->find($IdZ);
+	public function prikaz_zahtev_fajl(){
+		$zahtev = $this->session->get('zahtev');
+		if($zahtev == null){
+			return redirect()->to(site_url('/Admin'));
+		}
 		echo view('zahtev_ver/prikaz_zahtev_fajl', ['zahtev'=>$zahtev]);
 	}
 
-	public function razmotri_zahtev($IdZ){
+	public function razmotri_zahtev(){
+		$zahtev = $this->session->get('zahtev');
+		if($zahtev == null || $zahtev->Stanje !== 'podnet'){
+			return redirect()->to(site_url('/Admin'));
+		}
 		$akcija = $_POST['zahtev_dugme'];
-		$zahtevVerModel = new ModelZahtevVer();
-		$zahtev= $zahtevVerModel->find($IdZ);
 
 		$moderator = $this->session->get("korisnik");
 		$odobrio = $moderator->IdK;
@@ -200,8 +208,10 @@ class Admin extends BaseController
 
 			$result = $email->send();
 		}
+		$zahtevVerModel = new ModelZahtevVer();
+		$zahtevVerModel->update($zahtev->IdZ, ['Stanje' => $stanje, 'Odobrio' => $odobrio]);
 
-		$zahtevVerModel->update($IdZ, ['Stanje' => $stanje, 'Odobrio' => $odobrio]);
+		$this->session->remove('zahtev');
 		return $this->pozovi('zahtev_ver/prikaz_zahtev_success', ['zahtev'=>$zahtev, 'stanje' => $stanje]);
 	}
 
@@ -274,6 +284,9 @@ class Admin extends BaseController
 	public function nalog_pregled($IdK){
 		$korisnikModel = new ModelKorisnik();
 		$korisnik = $korisnikModel->find($IdK);
+		if($korisnik == null){
+			return redirect()->to(site_url("Admin"));
+		}
 		$rolaModel = new ModelRola();
 		$rola = $rolaModel->find($korisnik->IdR);
 		$data['ime'] = $korisnik->Ime;
@@ -289,17 +302,32 @@ class Admin extends BaseController
 		else 
 			$data['rola'] = 'Pregled';
 		$data['IdK'] = $IdK;
+		if ($korisnik->Stanje === 'Vazeci'){
+			$this->session->set('AIdK', $IdK);
+		}
+		if($korisnik->Stanje === 'Vazeci' && $rola->Opis !== 'Moderator' && $korisnik->IdMod == null){
+			$this->session->set('PIdK', $IdK);
+		}
 		$data['IdMod'] = $korisnik->IdMod;
 		$data['opisRole'] = $rola->Opis;
 		$this->pozovi('nalog/nalog',$data);
 	}
 
-	public function nalog_brisanje($IdK){
+	public function nalog_brisanje(){
+		$IdK = $this->session->get('AIdK');
+		if ($IdK == null){
+			return redirect()->to(site_url("Admin"));
+		}
 		$this->pozovi('nalog/brisanje', ['IdK'=>$IdK]);
 	}
 
 	/* Doraditi sve u ostalim kontrolerima kada je nalog uklonjen*/
-	public function nalog_brisanje_action($IdK){
+	public function nalog_brisanje_action(){
+		$IdK = $this->session->get('AIdK');
+		if ($IdK == null){
+			return redirect()->to(site_url("Admin"));
+		}
+
 		$korisnikModel = new ModelKorisnik();
 		$korisnikModel->update($IdK, ['Stanje' => 'Uklonjen', 'IdMod' => null]);
 
@@ -366,6 +394,8 @@ class Admin extends BaseController
 		$email->setMessage($message);
 
 		$result = $email->send();
+		$this->session->remove('AIdK');
+
 		return redirect()->to(site_url("/bookking/Impl/public/Admin/"));
 	}
 
@@ -401,11 +431,23 @@ class Admin extends BaseController
 		return $this->pozovi('nalog/nalog_svi', $data);
 	}
 
-	public function nalog_promocija($IdK){
+	public function nalog_promocija(){
+		$IdK = $this->session->get('PIdK');
+		if ($IdK == null){
+			return redirect()->to(site_url("Admin"));
+		}
+
+		$rolaModel = new ModelRola();
+		$rola = $rolaModel->where('Opis', 'Moderator')->first();
 		$this->pozovi('nalog/promocija', ['IdK'=>$IdK]);
 	}
 
-	public function nalog_promocija_action($IdK){
+	public function nalog_promocija_action(){
+		$IdK = $this->session->get('PIdK');
+		if ($IdK == null){
+			return redirect()->to(site_url("Admin"));
+		}
+
 		$korisnikModel = new ModelKorisnik();
 		$brModeratora = count($korisnikModel->like('Imejl', 'moderator')->findAll()) + 1;
 		$imejl = "moderator".$brModeratora."@bookking.com";
@@ -449,6 +491,7 @@ class Admin extends BaseController
 
 		$result = $email->send();
 
+		$this->session->remove('PIdK');
 		return redirect()->to(site_url("/bookking/Impl/public/Admin/"));
 	}
 	

@@ -106,6 +106,9 @@ class BaseController extends Controller
 	{
 		$oglasModel = new ModelOglas();
 		$oglas = $oglasModel->find($id);
+		if ($oglas == null){
+			return redirect()->to(site_url('/'));
+		}
 
 		$stanjeModel = new ModelStanje();
 		$stanje = $stanjeModel->find($oglas->IdS);

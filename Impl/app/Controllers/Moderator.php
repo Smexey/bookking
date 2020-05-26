@@ -85,19 +85,27 @@ class Moderator extends BaseController
 	public function prikaz_zahtev($IdZ){
 		$zahtevVerModel = new ModelZahtevVer();
 		$zahtev = $zahtevVerModel->find($IdZ);
+		if ($zahtev == null || $zahtev->Stanje !== 'podnet'){
+			return redirect()->to(site_url('/Moderator'));
+		}
+		$this->session->set('zahtev', $zahtev);
 		$this->pozovi('zahtev_ver/prikaz_zahtev', ['zahtev' => $zahtev]);
 	}
 
-	public function prikaz_zahtev_fajl($IdZ){
-		$zahtevVerModel = new ModelZahtevVer();
-		$zahtev= $zahtevVerModel->find($IdZ);
-		echo view('zahtev_ver/prikaz_zahtev_fajl', ['zahtev' => $zahtev]);
+	public function prikaz_zahtev_fajl(){
+		$zahtev = $this->session->get('zahtev');
+		if($zahtev == null || $zahtev->Stanje !== 'podnet'){
+			return redirect()->to(site_url('/Moderator'));
+		}
+		echo view('zahtev_ver/prikaz_zahtev_fajl', ['zahtev'=>$zahtev]);
 	}
 
-	public function razmotri_zahtev($IdZ){
+	public function razmotri_zahtev(){
+		$zahtev = $this->session->get('zahtev');
+		if($zahtev == null){
+			return redirect()->to(site_url('/Moderator'));
+		}
 		$akcija = $_POST['zahtev_dugme'];
-		$zahtevVerModel = new ModelZahtevVer();
-		$zahtev= $zahtevVerModel->find($IdZ);
 
 		$moderator = $this->session->get("korisnik");
 		$odobrio = $moderator->IdK;
@@ -149,11 +157,13 @@ class Moderator extends BaseController
 
 			$result = $email->send();
 		}
+		$zahtevVerModel = new ModelZahtevVer();
+		$zahtevVerModel->update($zahtev->IdZ, ['Stanje' => $stanje, 'Odobrio' => $odobrio]);
 
-		$zahtevVerModel->update($IdZ, ['Stanje' => $stanje, 'Odobrio' => $odobrio]);
+		$this->session->remove('zahtev');
 		return $this->pozovi('zahtev_ver/prikaz_zahtev_success', ['zahtev'=>$zahtev, 'stanje' => $stanje]);
 	}
-
+	
 	//Rade
 	/**
 	 * Funkcija za pozivanje view-a za brisanje oglasa

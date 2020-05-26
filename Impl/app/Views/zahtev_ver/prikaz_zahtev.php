@@ -2,7 +2,7 @@
     <body>
         <div class="container text-center">
             
-            <form action="<?php echo site_url("$controller/razmotri_zahtev/{$zahtev->IdZ}"); ?>" method="POST">
+            <form action="<?php echo site_url("$controller/razmotri_zahtev"); ?>" method="POST">
                 <br><br><br>
 
                 <div class="justify-content-center">
@@ -18,7 +18,7 @@
                         );
                         echo "<h3>Podnosilac zahteva za verifikaciju:<br>{$podneo->Imejl}</h3><br>";
                         echo "<h3>Verifikacioni fajl sa dokazom:</h3><br>";
-                        echo "<h2>".anchor_popup("$controller/prikaz_zahtev_fajl/{$zahtev->IdZ}", img($img))."</h2>";
+                        echo "<h2>".anchor_popup("$controller/prikaz_zahtev_fajl", img($img))."</h2>";
                         
                     ?>
                     <br><br>

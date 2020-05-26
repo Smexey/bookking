@@ -19,6 +19,12 @@ class KorisnikFilter implements FilterInterface
                 $session->destroy();
                 return redirect()->to(site_url('Gost'));
             }
+            // ako postane verifikovani
+            if ($korisnik->IdR != $korisnikUBazi->IdR){
+                $korisnik->IdR = $korisnikUBazi->IdR;
+                $session->remove('korisnik');
+                $session->set('korisnik', $korisnik);
+            }
             $rolaModel = new ModelRola();
             $rola = $rolaModel->where('IdR', $korisnik->IdR)->first();
             if ($rola->Opis != 'Korisnik')

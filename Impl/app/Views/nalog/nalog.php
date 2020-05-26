@@ -78,18 +78,18 @@
                         <?php elseif($rola === 'Admin'):?>
                             <?php if (($opisRole ==='Korisnik' || $opisRole ==='Verifikovani') && $IdMod==null):?>
                                 <td class="text-center">
-                                    <form action="<?php echo site_url("$controller/nalog_brisanje/{$IdK}"); ?>" method="POST">
+                                    <form action="<?php echo site_url("$controller/nalog_brisanje"); ?>" method="POST">
                                         <button class="btn btn-primarly">Ukloni</button>
                                     </form>
                                 </td>
                                 <td class="text-center">
-                                    <form action="<?php echo site_url("$controller/nalog_promocija/{$IdK}"); ?>" method="POST">
+                                    <form action="<?php echo site_url("$controller/nalog_promocija"); ?>" method="POST">
                                         <button class="btn btn-primarly">Postavi za moderatora</button>
                                     </form>
                                 </td>
                             <?php else:?>
                                 <td colspan=2 class="text-center">
-                                    <form action="<?php echo site_url("$controller/nalog_brisanje/{$IdK}"); ?>" method="POST">
+                                    <form action="<?php echo site_url("$controller/nalog_brisanje"); ?>" method="POST">
                                         <button class="btn btn-primarly">Ukloni</button>
                                     </form>
                                 </td>
