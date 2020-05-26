@@ -263,6 +263,14 @@ class Moderator extends BaseController
 	public function nalog_pregled($IdK){
 		$korisnikModel = new ModelKorisnik();
 		$korisnik = $korisnikModel->find($IdK);
+		if ($korisnik == null || $korisnik->Stanje !== 'Vazeci'){
+			return redirect()->to(site_url("Moderator"));
+		}
+		$rolaModel = new ModelRola();
+		$rola = $rolaModel->find($korisnik->IdR);
+		if ($rola->Opis !== 'Korisnik' && $rola->Opis !== 'Verifikovani'){
+			return redirect()->to(site_url("Moderator"));
+		}
 		$data['ime'] = $korisnik->Ime;
 		$data['prezime'] = $korisnik->Prezime;
 		$data['imejl'] = $korisnik->Imejl;

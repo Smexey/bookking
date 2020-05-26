@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\ModelZahtevVer;
 use App\Models\ModelKorisnik;
+use App\Models\ModelRola;
 use App\Models\ModelOglas;
 use App\Models\ModelOglasTag;
 use App\Models\ModelPrijava;
@@ -642,6 +643,14 @@ class Korisnik extends BaseController
 
 		$korisnikModel = new ModelKorisnik();
 		$korisnik = $korisnikModel->find($IdK);
+		if ($korisnik == null || $korisnik->Stanje !== 'Vazeci'){
+			return redirect()->to(site_url("Korisnik"));
+		}
+		$rolaModel = new ModelRola();
+		$rola = $rolaModel->find($korisnik->IdR);
+		if ($rola->Opis !== 'Korisnik' && $rola->Opis !== 'Verifikovani'){
+			return redirect()->to(site_url("Korisnik"));
+		}
 		$data['ime'] = $korisnik->Ime;
 		$data['prezime'] = $korisnik->Prezime;
 		$data['imejl'] = $korisnik->Imejl;

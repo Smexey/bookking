@@ -289,6 +289,9 @@ class Admin extends BaseController
 		}
 		$rolaModel = new ModelRola();
 		$rola = $rolaModel->find($korisnik->IdR);
+		if ($rola->Opis === 'Admin'){
+			return redirect()->to(site_url("Admin"));
+		}
 		$data['ime'] = $korisnik->Ime;
 		$data['prezime'] = $korisnik->Prezime;
 		$data['imejl'] = $korisnik->Imejl;
