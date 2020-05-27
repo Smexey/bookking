@@ -541,4 +541,51 @@ class Admin extends BaseController
 		];
 		$this->pozovi('admin/pregled', $data);
 	}
+
+	public function admin_pregled_azuiranje(){
+		$pregledUkupnoModel = new ModelPregledUkupno();
+		$generalniPregled = $pregledUkupnoModel->find(1);
+		$pregledModel = new ModelPregled();
+		$dnevniPregledi = $pregledModel->orderBy('IdPr', 'DESC')->FindAll(7, 0);
+
+		$generalniPregled->BrKupovina += $dnevniPregledi[0]->BrKupovina;
+		$generalniPregled->BrOglasa += $dnevniPregledi[0]->BrOglasa;
+		$generalniPregled->BrKorisnika += $dnevniPregledi[0]->BrKorisnika;
+		$generalniPregled->BrLogovanja += $dnevniPregledi[0]->BrLogovanja;
+
+		$korisnikModel = new ModelKorisnik();
+		$najKupac = $korisnikModel->find($dnevniPregledi[0]->NajKupac);
+		//find vraca findall ako je parametar-id jednak null ili ako ga nema
+		if (is_array($najKupac)){
+			$najKupacImejl = 'Nema';
+			$najKupacIdK = null;
+		}
+		else{
+			$najKupacImejl = $najKupac->Imejl;
+			$najKupacIdK = $najKupac->IdK;
+		}
+		$najProdavac = $korisnikModel->find($dnevniPregledi[0]->NajProdavac);
+		if (is_array($najProdavac)){
+			$najProdavacImejl = 'Nema';
+			$najProdavacIdK = null;
+		}
+		else{
+			$najProdavacImejl = $najProdavac->Imejl;
+			$najProdavacIdK = $najProdavac->IdK;
+		}
+		$data = [
+			'generalniPregled' => $generalniPregled,
+			'pregledi' => $dnevniPregledi,
+			'najKupacImejl' => $najKupacImejl,
+			'najKupacIdK' => $najKupacIdK,
+			'najProdavacImejl' => $najProdavacImejl,
+			'najProdavacIdK' => $najProdavacIdK
+		];
+		
+		//header('Content-Type: application/json');
+		//echo json_encode($data);
+		$this->response->setContentType('Content-Type: application/json');
+		echo json_encode($data);
+		return; 
+	}
 }

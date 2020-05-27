@@ -1,10 +1,8 @@
-<head>
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/css/adminp.css'); ?>">
-</head>
+
 
 <body>
-    
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/css/adminp.css'); ?>">
 
     <div class="container">
         <br><br>
@@ -30,7 +28,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-teal panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-shopping-cart color-blue"></em>
-                            <div class="large"><?=$pregledi[0]->BrKupovina?></div>
+                            <div class="large" id="kupovineDnevno"><?=$pregledi[0]->BrKupovina?></div>
                             <div class="text-muted">Kupovine</div>
                         </div>
                     </div>
@@ -38,7 +36,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-blue panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-book color-orange"></em>
-                            <div class="large"><?=$pregledi[0]->BrOglasa?></div>
+                            <div class="large" id="oglasiDnevno"><?=$pregledi[0]->BrOglasa?></div>
                             <div class="text-muted">Oglasi</div>
                         </div>
                     </div>
@@ -46,7 +44,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-orange panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-users color-teal"></em>
-                            <div class="large"><?=$pregledi[0]->BrKorisnika?></div>
+                            <div class="large" id="korisniciDnevno"><?=$pregledi[0]->BrKorisnika?></div>
                             <div class="text-muted">Novi korisnici</div>
                         </div>
                     </div>
@@ -54,7 +52,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-red panel-widget ">
                         <div class="row no-padding"><em class="fa fa-xl fa-search color-red"></em>
-                            <div class="large"><?=$pregledi[0]->BrLogovanja?></div>
+                            <div class="large" id="logovanjaDnevno"><?=$pregledi[0]->BrLogovanja?></div>
                             <div class="text-muted">Logovanja</div>
                         </div>
                     </div>
@@ -137,12 +135,12 @@
                                     'style' => 'height: 50px'
                                 );
                                 if ($najKupacIdK != null){
-                                    echo "<span>".anchor("$controller/nalog_pregled/{$najKupacIdK}", img($imgkupac))."</span>";
+                                    echo "<span id ='najKupacLink'>".anchor("$controller", img($imgkupac))."</span>";
                                 }
                             ?>
                             <div class="text-muted"><br>&nbsp;Kupac dana</div>
                         </div>
-                        <div class="color-gray" style="font-size: 26px; color: #373b45;"><?=$najKupacImejl?></div>
+                        <div class="color-gray" style="font-size: 26px; color: #373b45;" id="najKupacImejl"></div>
                     </div>
                 </div>
                 <div class="col-sm-6 no-padding">
@@ -156,13 +154,13 @@
                                     'style' => 'height: 50px'
                                 );
                                 if ($najProdavacIdK != null){
-                                    echo "<span>".anchor("$controller/nalog_pregled/{$najProdavacIdK}", img($imgprodavac))."</span>";
+                                    echo "<span id ='najProdavacLink'>".anchor("$controller", img($imgprodavac))."</span>";
                                 }
                                 
                             ?>
                             <div class="text-muted"><br>&nbsp;Prodavac dana</div>
                         </div>
-                        <div class="color-gray" style="font-size: 26px; color: #373b45;"><?=$najProdavacImejl?></div>
+                        <div class="color-gray" style="font-size: 26px; color: #373b45;" id="najProdavacImejl"></div>
                     </div>
                 </div>
                
@@ -182,7 +180,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-teal panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-shopping-cart color-blue"></em>
-                            <div class="large"><?=$generalniPregled->BrKupovina?></div>
+                            <div class="large" id="kupovineZbirno"><?=$generalniPregled->BrKupovina?></div>
                             <div class="text-muted">Kupovine</div>
                         </div>
                     </div>
@@ -190,7 +188,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-blue panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-book color-orange"></em>
-                            <div class="large"><?=$generalniPregled->BrOglasa?></div>
+                            <div class="large" id="oglasiZbirno"><?=$generalniPregled->BrOglasa?></div>
                             <div class="text-muted">Oglasi</div>
                         </div>
                     </div>
@@ -198,7 +196,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-orange panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-users color-teal"></em>
-                            <div class="large"><?=$generalniPregled->BrKorisnika?></div>
+                            <div class="large" id="korisniciZbirno"><?=$generalniPregled->BrKorisnika?></div>
                             <div class="text-muted">Svi korisnici</div>
                         </div>
                     </div>
@@ -206,7 +204,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-red panel-widget ">
                         <div class="row no-padding"><em class="fa fa-xl fa-search color-red"></em>
-                            <div class="large"><?=$generalniPregled->BrLogovanja?></div>
+                            <div class="large" id="logovanjaZbirno"><?=$generalniPregled->BrLogovanja?></div>
                             <div class="text-muted">Logovanja</div>
                         </div>
                     </div>
@@ -242,12 +240,8 @@
         }
    
     ?>
-
     <script src="<?php echo base_url('/assets/js/chart.min.js'); ?>"></script>
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-	<script>
+    <script>
         var data0 = {
             label: "Kupovine",
             fillColor : "rgba(22, 105, 122, 0.2)",
@@ -302,15 +296,79 @@
             datasets : toShow
 	    }
 
-	window.onload = function () {
-        var chart1 = document.getElementById("line-chart").getContext("2d");
-        window.myLine = new Chart(chart1).Line(lineChartData, {
-            responsive: true,
-            scaleLineColor: "rgba(0,0,0,.2)",
-            scaleGridLineColor: "rgba(0,0,0,.05)",
-            scaleFontColor: "#c5c7cc"
+        function update(){
+            $.ajax({
+                url: "<?php echo site_url('Admin/admin_pregled_azuiranje')?>",
+                success: function(response){
+                    let pregledi = response['pregledi'];
+                    
+                    let dnevniPregled = pregledi[0];
+                    $("#kupovineDnevno").text(dnevniPregled['BrKupovina']);
+                    $("#oglasiDnevno").text(dnevniPregled['BrOglasa']);
+                    $("#korisniciDnevno").text(dnevniPregled['BrKorisnika']);
+                    $("#logovanjaDnevno").text(dnevniPregled['BrLogovanja']);
+                    
+                    let najKupacIdK = response['najKupacIdK'];
+                    if (najKupacIdK == null){
+                        $("#najKupacLink").hide();
+                    }
+                    else {
+                        najKupacIdK = String(response['najKupacIdK']);
+                        $("#najKupacLink a").attr("href", "<?php echo site_url("$controller/nalog_pregled/")?>" + najKupacIdK);
+                        $("#najKupacLink").show();
+                    }
+                    let najKupacImejl = response['najKupacImejl'];
+
+                    $("#najKupacImejl").text(najKupacImejl);
+
+                    let najProdavacIdK = response['najProdavacIdK'];
+                    if (najProdavacIdK == null){
+                        $("#najProdavacLink").hide();
+                    }
+                    else {
+                        najProdavacIdK = String(response['najProdavacIdK']);
+                        $("#najProdavacLink a").attr("href", "<?php echo site_url("$controller/nalog_pregled/")?>" + najProdavacIdK);
+                        $("#najProdavacLink").show();
+                    }
+                    let najProdavacImejl = response['najProdavacImejl'];
+                    
+                    $("#najProdavacImejl").text(najProdavacImejl);
+
+                    let zbirniPregled = response['generalniPregled'];
+                    $("#kupovineZbirno").text(zbirniPregled['BrKupovina']);
+                    $("#oglasiZbirno").text(zbirniPregled['BrOglasa']);
+                    $("#korisniciZbirno").text(zbirniPregled['BrKorisnika']);
+                    $("#logovanjaZbirno").text(zbirniPregled['BrLogovanja']);
+
+
+                    lineChartData['datasets'] = toShow;
+                    myLine = new Chart(chart1).Line(lineChartData, {
+                        responsive: true,
+                        scaleLineColor: "rgba(0,0,0,.2)",
+                        scaleGridLineColor: "rgba(0,0,0,.05)",
+                        scaleFontColor: "#c5c7cc"
+                    });
+                    console.log(myLine['datasets']);
+                }
+            });
+        }
+        var chart1;
+        var myLine;
+        $(document).ready(function () {
+            chart1 = document.getElementById("line-chart").getContext("2d");
+            myLine = new Chart(chart1).Line(lineChartData, {
+                responsive: true,
+                scaleLineColor: "rgba(0,0,0,.2)",
+                scaleGridLineColor: "rgba(0,0,0,.05)",
+                scaleFontColor: "#c5c7cc"
+            });
+            console.log('az');
+            
+            //update();
+            
+            setInterval(update, 5000);
         });
-    };
+
     </script>
     
 </body>
