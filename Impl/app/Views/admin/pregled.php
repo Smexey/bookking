@@ -273,7 +273,6 @@
         }
         
         function showChart(chartNum){
-            console.log(chartNum);
             $.ajax({
                 url: "<?php echo site_url('Admin/admin_pregled_chart')?>",
                 success: function(response){
@@ -304,7 +303,7 @@
                         scaleGridLineColor: "rgba(0,0,0,.05)",
                         scaleFontColor: "#c5c7cc"
                     });
-                    console.log(myLine['datasets']);
+
                 }
             });
         }
@@ -354,15 +353,6 @@
                     $("#korisniciZbirno").text(zbirniPregled['BrKorisnika']);
                     $("#logovanjaZbirno").text(zbirniPregled['BrLogovanja']);
 
-
-                    lineChartData['datasets'] = toShow;
-                    myLine = new Chart(chart1).Line(lineChartData, {
-                        responsive: true,
-                        scaleLineColor: "rgba(0,0,0,.2)",
-                        scaleGridLineColor: "rgba(0,0,0,.05)",
-                        scaleFontColor: "#c5c7cc"
-                    });
-                    console.log(myLine['datasets']);
                 }
             });
         }
@@ -375,12 +365,22 @@
                 scaleGridLineColor: "rgba(0,0,0,.05)",
                 scaleFontColor: "#c5c7cc"
             });
-            console.log('az');
             
             update();
             showChart(0);
             
             setInterval(update, 5000);
+
+            var now = new Date();
+            var millisTillMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 1, 0) - now;
+            if (millisTillMidnight < 0) {
+                millisTillMidnight += 86400000; // it's after 10am, try 10am tomorrow.
+            }
+            setTimeout(function azurirajDnevno(){
+                showChart(0);
+                setTimeout(azurirajDnevno, 86400000);
+            }
+            , millisTillMidnight);
         });
 
     </script>

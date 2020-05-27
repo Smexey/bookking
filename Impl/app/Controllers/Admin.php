@@ -153,7 +153,7 @@ class Admin extends BaseController
 
 	public function razmotri_zahtev(){
 		$zahtev = $this->session->get('zahtev');
-		if($zahtev == null || $zahtev->Stanje !== 'podnet'){
+		if($zahtev === null || $zahtev->Stanje !== 'podnet'){
 			return redirect()->to(site_url('/Admin'));
 		}
 		$akcija = $_POST['zahtev_dugme'];
@@ -224,7 +224,7 @@ class Admin extends BaseController
 	public function brisanje_oglasa()
 	{
 		$oglas = $this->session->get('oglas');
-		if ($oglas == null){
+		if ($oglas === null){
 			return redirect()->to(site_url('/'));
 		}
 
@@ -246,7 +246,7 @@ class Admin extends BaseController
 	public function obrisi()
 	{
 		$oglas = $this->session->get('oglas');
-		if ($oglas == null){
+		if ($oglas === null){
 			return redirect()->to(site_url('/'));
 		}
 
@@ -284,7 +284,7 @@ class Admin extends BaseController
 	public function nalog_pregled($IdK){
 		$korisnikModel = new ModelKorisnik();
 		$korisnik = $korisnikModel->find($IdK);
-		if($korisnik == null){
+		if($korisnik === null){
 			return redirect()->to(site_url("Admin"));
 		}
 		$rolaModel = new ModelRola();
