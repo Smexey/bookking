@@ -28,7 +28,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-teal panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-shopping-cart color-blue"></em>
-                            <div class="large" id="kupovineDnevno"><?=$pregledi[0]->BrKupovina?></div>
+                            <div class="large" id="kupovineDnevno"></div>
                             <div class="text-muted">Kupovine</div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-blue panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-book color-orange"></em>
-                            <div class="large" id="oglasiDnevno"><?=$pregledi[0]->BrOglasa?></div>
+                            <div class="large" id="oglasiDnevno"></div>
                             <div class="text-muted">Oglasi</div>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-orange panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-users color-teal"></em>
-                            <div class="large" id="korisniciDnevno"><?=$pregledi[0]->BrKorisnika?></div>
+                            <div class="large" id="korisniciDnevno"></div>
                             <div class="text-muted">Novi korisnici</div>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-red panel-widget ">
                         <div class="row no-padding"><em class="fa fa-xl fa-search color-red"></em>
-                            <div class="large" id="logovanjaDnevno"><?=$pregledi[0]->BrLogovanja?></div>
+                            <div class="large" id="logovanjaDnevno"></div>
                             <div class="text-muted">Logovanja</div>
                         </div>
                     </div>
@@ -78,23 +78,23 @@
 								<ul class="dropdown-menu dropdown-menu-right">
 									<li>
 										<ul class="dropdown-settings">
-                                            <li><a href="<?= site_url("$controller/admin_pregled") ?>"> 
+                                            <li><a style="cursor: pointer;" onclick="showChart(0);"> 
 												<em class="fa fa-cog"></em> Sve
 											</a></li>
 											<li class="divider"></li>
-											<li><a href="<?= site_url("$controller/admin_pregled/0") ?>"> 
+											<li><a style="cursor: pointer;" onclick="showChart(1);"> 
 												<em class="fa fa-cog"></em> Kupovine
 											</a></li>
 											<li class="divider"></li>
-											<li><a href="<?= site_url("$controller/admin_pregled/1") ?>"> 
+											<li><a style="cursor: pointer;" onclick="showChart(2);"> 
 												<em class="fa fa-cog"></em> Oglasi
 											</a></li>
 											<li class="divider"></li>
-											<li><a href="<?= site_url("$controller/admin_pregled/2") ?>"> 
+											<li><a style="cursor: pointer;" onclick="showChart(3);"> 
 												<em class="fa fa-cog"></em> Korisnici
 											</a></li>
                                             <li class="divider"></li>
-											<li><a href="<?= site_url("$controller/admin_pregled/3") ?>"> 
+											<li><a style="cursor: pointer;" onclick="showChart(4);"> 
 												<em class="fa fa-cog"></em> Logovanja
 											</a></li>
 										</ul>
@@ -134,9 +134,9 @@
                                     'alt' => 'Nalog',
                                     'style' => 'height: 50px'
                                 );
-                                if ($najKupacIdK != null){
-                                    echo "<span id ='najKupacLink'>".anchor("$controller", img($imgkupac))."</span>";
-                                }
+                                
+                                echo "<span id ='najKupacLink'>".anchor("$controller", img($imgkupac))."</span>";
+                                
                             ?>
                             <div class="text-muted"><br>&nbsp;Kupac dana</div>
                         </div>
@@ -153,9 +153,8 @@
                                     'alt' => 'Nalog',
                                     'style' => 'height: 50px'
                                 );
-                                if ($najProdavacIdK != null){
-                                    echo "<span id ='najProdavacLink'>".anchor("$controller", img($imgprodavac))."</span>";
-                                }
+                                
+                                echo "<span id ='najProdavacLink'>".anchor("$controller", img($imgprodavac))."</span>";
                                 
                             ?>
                             <div class="text-muted"><br>&nbsp;Prodavac dana</div>
@@ -180,7 +179,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-teal panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-shopping-cart color-blue"></em>
-                            <div class="large" id="kupovineZbirno"><?=$generalniPregled->BrKupovina?></div>
+                            <div class="large" id="kupovineZbirno"></div>
                             <div class="text-muted">Kupovine</div>
                         </div>
                     </div>
@@ -188,7 +187,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-blue panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-book color-orange"></em>
-                            <div class="large" id="oglasiZbirno"><?=$generalniPregled->BrOglasa?></div>
+                            <div class="large" id="oglasiZbirno"></div>
                             <div class="text-muted">Oglasi</div>
                         </div>
                     </div>
@@ -196,7 +195,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-orange panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-users color-teal"></em>
-                            <div class="large" id="korisniciZbirno"><?=$generalniPregled->BrKorisnika?></div>
+                            <div class="large" id="korisniciZbirno"></div>
                             <div class="text-muted">Svi korisnici</div>
                         </div>
                     </div>
@@ -204,7 +203,7 @@
                 <div class="col-xs-6 col-md-3 col-lg-3 no-padding">
                     <div class="panel panel-red panel-widget ">
                         <div class="row no-padding"><em class="fa fa-xl fa-search color-red"></em>
-                            <div class="large" id="logovanjaZbirno"><?=$generalniPregled->BrLogovanja?></div>
+                            <div class="large" id="logovanjaZbirno"></div>
                             <div class="text-muted">Logovanja</div>
                         </div>
                     </div>
@@ -214,34 +213,16 @@
         <br><br>
     </div>
 
-
-    <?php 
-        $N = 7;
-        $datumi = []; $kupovine = []; $oglasi = []; $korisnici = []; $logovanja = [];
-        foreach ($pregledi as $pregled) {
-            $datum = (date('N', strtotime($pregled->Datum))) % $N;
-            array_unshift($datumi, $datum);
-            array_unshift($kupovine, $pregled->BrKupovina);
-            array_unshift($oglasi, $pregled->BrOglasa);
-            array_unshift($korisnici, $pregled->BrKorisnika);
-            array_unshift($logovanja, $pregled->BrLogovanja);
-        }
-        for ($i = count($pregledi) ; $i < $N; $i++) { 
-            $datumi[$i] = ($datumi[$i-1] + 1) % $N;
-            $kupovine[$i] = 0; 
-            $oglasi[$i] = 0;
-            $korisnici[$i] = 0;
-            $logovanja[$i] = 0;
-        }
-
-        $dani = ['Nedelja', 'Ponedeljak', 'Utorak', 'Sreda', 'Cetvrtak', 'Petak', 'Subota'];
-        for ($i = 0; $i < $N; $i++){
-            $datumi[$i] = $dani[$datumi[$i]];
-        }
-   
-    ?>
     <script src="<?php echo base_url('/assets/js/chart.min.js'); ?>"></script>
     <script>
+        var chart1;
+        var myLine;
+
+        var kupovine = [0, 0, 0, 0, 0, 0, 0];
+        var oglasi = [0, 0, 0, 0, 0, 0, 0];
+        var korisnici = [0, 0, 0, 0, 0, 0, 0];
+        var logovanja = [0, 0, 0, 0, 0, 0, 0];
+        var datumi = [0, 0, 0, 0, 0, 0, 0];
         var data0 = {
             label: "Kupovine",
             fillColor : "rgba(22, 105, 122, 0.2)",
@@ -250,8 +231,9 @@
             pointStrokeColor : "#fff",
             pointHighlightFill : "#fff",
             pointHighlightStroke : "rgba(22, 105, 122, 1)",
-            data : <?php echo json_encode($kupovine); ?>
+            data : kupovine
         };
+
         var data1 = {
             label: "Oglasi",
             fillColor : "rgba(255, 166, 43, 0.2)",
@@ -260,7 +242,7 @@
             pointStrokeColor : "#fff",
             pointHighlightFill : "#fff",
             pointHighlightStroke : "rgba(255, 166, 43, 1)",
-            data : <?php echo json_encode($oglasi); ?>
+            data : oglasi
         };
         var data2 = {
             label: "Novi korisnici",
@@ -270,7 +252,7 @@
             pointStrokeColor : "#fff",
             pointHighlightFill : "#fff",
             pointHighlightStroke : "rgba(97, 242, 194, 1)",
-            data : <?php echo json_encode($korisnici); ?>
+            data : korisnici
         };
         var data3 = {
             label: "Logovanja",
@@ -280,27 +262,59 @@
             pointStrokeColor : "#fff",
             pointHighlightFill : "#fff",
             pointHighlightStroke : "rgba(249, 36, 63, 1)",
-            data : <?php echo json_encode($logovanja); ?>
+            data : logovanja
         };
+
         var datas = [data0, data1, data2, data3];
-        let toShow = datas;
-        let prikaz = <?php echo json_encode($zaPrikaz); ?>;
-        if (prikaz == null){
-            toShow = datas;
-        }
-        else {
-            toShow = [datas[prikaz]];
-        }
+
         var lineChartData = {
-            labels : <?php echo json_encode($datumi); ?>,
-            datasets : toShow
-	    }
+            labels : datumi,
+            datasets : datas
+        }
+        
+        function showChart(chartNum){
+            console.log(chartNum);
+            $.ajax({
+                url: "<?php echo site_url('Admin/admin_pregled_chart')?>",
+                success: function(response){
+                    datumi = response['datumi'];
+                    kupovine = response['kupovine'];
+                    oglasi = response['oglasi'];
+                    korisnici = response['korisnici'];
+                    logovanja = response['logovanja'];
+
+                    data0['data'] = kupovine;
+                    data1['data'] = oglasi;
+                    data2['data'] = korisnici;
+                    data3['data'] = logovanja;
+                    datas = [data0, data1, data2, data3];
+
+                    if (chartNum > 0){
+                        datas = [datas[chartNum-1]];
+                    }
+
+                    lineChartData['datasets'] = datas;
+                    lineChartData['labels'] = datumi;
+                    if (myLine != null){
+                        myLine.destroy();
+                    }
+                    myLine = new Chart(chart1).Line(lineChartData, {
+                        responsive: true,
+                        scaleLineColor: "rgba(0,0,0,.2)",
+                        scaleGridLineColor: "rgba(0,0,0,.05)",
+                        scaleFontColor: "#c5c7cc"
+                    });
+                    console.log(myLine['datasets']);
+                }
+            });
+        }
 
         function update(){
             $.ajax({
                 url: "<?php echo site_url('Admin/admin_pregled_azuiranje')?>",
                 success: function(response){
                     let pregledi = response['pregledi'];
+                    
                     
                     let dnevniPregled = pregledi[0];
                     $("#kupovineDnevno").text(dnevniPregled['BrKupovina']);
@@ -352,8 +366,7 @@
                 }
             });
         }
-        var chart1;
-        var myLine;
+
         $(document).ready(function () {
             chart1 = document.getElementById("line-chart").getContext("2d");
             myLine = new Chart(chart1).Line(lineChartData, {
@@ -364,7 +377,8 @@
             });
             console.log('az');
             
-            //update();
+            update();
+            showChart(0);
             
             setInterval(update, 5000);
         });

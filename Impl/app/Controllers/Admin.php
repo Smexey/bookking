@@ -499,47 +499,8 @@ class Admin extends BaseController
 	}
 	
 	//Janko
-	public function admin_pregled($zaPrikaz = null){
-		$pregledUkupnoModel = new ModelPregledUkupno();
-		$generalniPregled = $pregledUkupnoModel->find(1);
-		$pregledModel = new ModelPregled();
-		$dnevniPregledi = $pregledModel->orderBy('IdPr', 'DESC')->FindAll(7, 0);
-
-		$generalniPregled->BrKupovina += $dnevniPregledi[0]->BrKupovina;
-		$generalniPregled->BrOglasa += $dnevniPregledi[0]->BrOglasa;
-		$generalniPregled->BrKorisnika += $dnevniPregledi[0]->BrKorisnika;
-		$generalniPregled->BrLogovanja += $dnevniPregledi[0]->BrLogovanja;
-
-		$korisnikModel = new ModelKorisnik();
-		$najKupac = $korisnikModel->find($dnevniPregledi[0]->NajKupac);
-		//find vraca findall ako je parametar-id jednak null ili ako ga nema
-		if (is_array($najKupac)){
-			$najKupacImejl = 'Nema';
-			$najKupacIdK = null;
-		}
-		else{
-			$najKupacImejl = $najKupac->Imejl;
-			$najKupacIdK = $najKupac->IdK;
-		}
-		$najProdavac = $korisnikModel->find($dnevniPregledi[0]->NajProdavac);
-		if (is_array($najProdavac)){
-			$najProdavacImejl = 'Nema';
-			$najProdavacIdK = null;
-		}
-		else{
-			$najProdavacImejl = $najProdavac->Imejl;
-			$najProdavacIdK = $najProdavac->IdK;
-		}
-		$data = [
-			'generalniPregled' => $generalniPregled,
-			'pregledi' => $dnevniPregledi,
-			'zaPrikaz' => $zaPrikaz,
-			'najKupacImejl' => $najKupacImejl,
-			'najKupacIdK' => $najKupacIdK,
-			'najProdavacImejl' => $najProdavacImejl,
-			'najProdavacIdK' => $najProdavacIdK
-		];
-		$this->pozovi('admin/pregled', $data);
+	public function admin_pregled(){
+		$this->pozovi('admin/pregled', []);
 	}
 
 	public function admin_pregled_azuiranje(){
@@ -584,6 +545,44 @@ class Admin extends BaseController
 		
 		//header('Content-Type: application/json');
 		//echo json_encode($data);
+		$this->response->setContentType('Content-Type: application/json');
+		echo json_encode($data);
+		return; 
+	}
+
+	public function admin_pregled_chart(){
+		$pregledModel = new ModelPregled();
+		$pregledi = $pregledModel->orderBy('IdPr', 'DESC')->FindAll(8, 1);
+		$N = 7;
+        $datumi = []; $kupovine = []; $oglasi = []; $korisnici = []; $logovanja = [];
+        foreach ($pregledi as $pregled) {
+            $datum = (date('N', strtotime($pregled->Datum))) % $N;
+            array_unshift($datumi, $datum);
+            array_unshift($kupovine, $pregled->BrKupovina);
+            array_unshift($oglasi, $pregled->BrOglasa);
+            array_unshift($korisnici, $pregled->BrKorisnika);
+            array_unshift($logovanja, $pregled->BrLogovanja);
+        }
+        for ($i = count($pregledi) ; $i < $N; $i++) { 
+            $datumi[$i] = ($datumi[$i-1] + 1) % $N;
+            $kupovine[$i] = 0; 
+            $oglasi[$i] = 0;
+            $korisnici[$i] = 0;
+            $logovanja[$i] = 0;
+        }
+
+        $dani = ['Nedelja', 'Ponedeljak', 'Utorak', 'Sreda', 'Cetvrtak', 'Petak', 'Subota'];
+        for ($i = 0; $i < $N; $i++){
+            $datumi[$i] = $dani[$datumi[$i]];
+		}
+		
+		$data = [
+			'datumi' => $datumi,
+			'kupovine' => $kupovine,
+			'oglasi' => $oglasi,
+			'korisnici' => $korisnici,
+			'logovanja' => $logovanja
+		];
 		$this->response->setContentType('Content-Type: application/json');
 		echo json_encode($data);
 		return; 
