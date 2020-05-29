@@ -22,10 +22,10 @@ class Moderator extends BaseController
 	/**
 	* Funkcija koju ostale funkcije pozivaju zbog ucitavanja odgovarajuce stranice
 	*
-	* @param String $akcija, String[] $data
-	*
+	* @param String $akcija
+	* @param String[] $data
 	* @return void
- 	*/
+	*/
 	protected function pozovi($akcija, $data = [])
 	{
 		$data['controller'] = 'Moderator';
@@ -35,7 +35,7 @@ class Moderator extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje pocetne stranice 
+	* Funkcija koju kontoler poziva za ucitavanje pocetne stranice 
 	*
 	* @return void
  	*/
@@ -45,7 +45,7 @@ class Moderator extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje logout stranice 
+	* Funkcija koju kontoler poziva za ucitavanje logout stranice 
 	*
 	* @return void
  	*/
@@ -55,7 +55,7 @@ class Moderator extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za prelazak u rezim gosta 
+	* Funkcija koju kontoler poziva za prelazak u rezim gosta 
 	*
 	* @return void
  	*/
@@ -66,7 +66,7 @@ class Moderator extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje o_nama stranice 
+	* Funkcija koju kontoler poziva za ucitavanje o_nama stranice 
 	*
 	* @return void
  	*/
@@ -76,8 +76,8 @@ class Moderator extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva pri pritisku dugmeta na stranici o nama 
-	*Salje mejl sa porukom na adresu bookkingPSI@gmail.com
+	* Funkcija koju kontoler poziva pri pritisku dugmeta na stranici o nama 
+	* Salje mejl sa porukom na adresu bookkingPSI@gmail.com
 	*
 	* @return void
  	*/
@@ -102,7 +102,12 @@ class Moderator extends BaseController
 		}
 	}
 
-	
+	/**
+	 * Funkcija za pretragu svih zahteva za verifikaciju koji su podneti i neobradjeni
+	 * Zahtevi se mogu pretraziti po imejlu, imenu i prezimenu podnosioca zahteva
+	 *
+	 * @return void
+	 */	
 	public function prikaz_zahtevi(){
 		$zahtevVerModel = new ModelZahtevVer();
 		$tekst = $this->request->getVar('pretraga');
@@ -121,6 +126,12 @@ class Moderator extends BaseController
 		$this->pozovi('zahtev_ver/prikaz_zahtevi', $data);
 	}
 
+	/**
+	 * Funkcija koja poziva stranicu za detaljniji prikaz pojedinacnog zahteva  
+	 *
+	 * @param int $IdZ id zahteva za prikaz
+	 * @return void
+	 */
 	public function prikaz_zahtev($IdZ){
 		$zahtevVerModel = new ModelZahtevVer();
 		$zahtev = $zahtevVerModel->find($IdZ);
@@ -131,6 +142,11 @@ class Moderator extends BaseController
 		$this->pozovi('zahtev_ver/prikaz_zahtev', ['zahtev' => $zahtev]);
 	}
 
+	/**
+	 * Funkcija za prikaz dokaza verifikacije - pdf dokumenta
+	 *
+	 * @return void
+	 */	
 	public function prikaz_zahtev_fajl(){
 		$zahtev = $this->session->get('zahtev');
 		if($zahtev == null || $zahtev->Stanje !== 'podnet'){
@@ -139,6 +155,12 @@ class Moderator extends BaseController
 		echo view('zahtev_ver/prikaz_zahtev_fajl', ['zahtev'=>$zahtev]);
 	}
 
+	/**
+	 * Funkcija za odobravanje ili odbijanje zahteva za verifikaciju korisnika
+	 * Funkcija salje mejl na adresu korisnika sa obavestenjem o odluci razmatranja
+	 *
+	 * @return void
+	 */	
 	public function razmotri_zahtev(){
 		$zahtev = $this->session->get('zahtev');
 		if($zahtev == null){
@@ -225,11 +247,13 @@ class Moderator extends BaseController
 
 		$this->pozovi('pretraga/brisanje', ['IdO' => $oglas->IdO]);
 	}
+
 	//Rade
 	/**
 	 * Funkcija za brisanje oglasa
+	 * Funkcija salje mejl na adresu korisnika sa obavestenjem da je oglas obrisan
 	 *
-	 * @return redirekcija_na_pretragu
+	 * @return void
 	 */
 	public function obrisi()
 	{
@@ -270,6 +294,12 @@ class Moderator extends BaseController
 
 
 	//Janko
+	/**
+	 * Funkcija za pretragu malicioznih oglasa (oglasi koji imaju makar jednu prijavu)
+	 * Oglasi se mogu pretraziti po naslovu, autoru i opisu ili po tagu (#)
+	 * 
+	 * @return void
+	 */
 	public function pretraga(){
 		$oglasModel = new ModelOglas(); 
 		$stanjeModel = new ModelStanje();
@@ -299,6 +329,12 @@ class Moderator extends BaseController
 		]);
 	}
 	
+	/**
+	 * Funkcija koja poziva stranicu za pregled naloga korisnika
+	 *
+	 * @param int $IdK id korisnika
+	 * @return void
+	 */
 	public function nalog_pregled($IdK){
 		$korisnikModel = new ModelKorisnik();
 		$korisnik = $korisnikModel->find($IdK);

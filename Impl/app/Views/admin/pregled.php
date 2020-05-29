@@ -215,7 +215,7 @@
 
     <script src="<?php echo base_url('/assets/js/chart.min.js'); ?>"></script>
     <script>
-        var chart1;
+        var myChart;
         var myLine;
 
         var kupovine = [0, 0, 0, 0, 0, 0, 0];
@@ -233,7 +233,6 @@
             pointHighlightStroke : "rgba(22, 105, 122, 1)",
             data : kupovine
         };
-
         var data1 = {
             label: "Oglasi",
             fillColor : "rgba(255, 166, 43, 0.2)",
@@ -264,17 +263,43 @@
             pointHighlightStroke : "rgba(249, 36, 63, 1)",
             data : logovanja
         };
-
         var datas = [data0, data1, data2, data3];
+        var chartNum = 0; 
 
         var lineChartData = {
             labels : datumi,
             datasets : datas
         }
+
+        function showChart(num){
+            if (num == chartNum) return;
+            chartNum = num;
+            data0['data'] = kupovine;
+            data1['data'] = oglasi;
+            data2['data'] = korisnici;
+            data3['data'] = logovanja;
+            datas = [data0, data1, data2, data3];
+
+            if (chartNum > 0){
+                datas = [datas[chartNum-1]];
+            }
+
+            lineChartData['datasets'] = datas;
+            lineChartData['labels'] = datumi;
+            if (myLine != null){
+                myLine.destroy();
+            }
+            myLine = new Chart(myChart).Line(lineChartData, {
+                responsive: true,
+                scaleLineColor: "rgba(0,0,0,.2)",
+                scaleGridLineColor: "rgba(0,0,0,.05)",
+                scaleFontColor: "#c5c7cc"
+            });
+        }
         
-        function showChart(chartNum){
+        function updateWeek(){
             $.ajax({
-                url: "<?php echo site_url('Admin/admin_pregled_chart')?>",
+                url: "<?php echo site_url('Admin/admin_pregled_azuriranje_sedmica')?>",
                 success: function(response){
                     datumi = response['datumi'];
                     kupovine = response['kupovine'];
@@ -297,30 +322,13 @@
                     if (myLine != null){
                         myLine.destroy();
                     }
-                    myLine = new Chart(chart1).Line(lineChartData, {
+                    myLine = new Chart(myChart).Line(lineChartData, {
                         responsive: true,
                         scaleLineColor: "rgba(0,0,0,.2)",
                         scaleGridLineColor: "rgba(0,0,0,.05)",
                         scaleFontColor: "#c5c7cc"
                     });
 
-                }
-            });
-        }
-
-        function update(){
-            $.ajax({
-                url: "<?php echo site_url('Admin/admin_pregled_azuiranje')?>",
-                success: function(response){
-                    let pregledi = response['pregledi'];
-                    
-                    
-                    let dnevniPregled = pregledi[0];
-                    $("#kupovineDnevno").text(dnevniPregled['BrKupovina']);
-                    $("#oglasiDnevno").text(dnevniPregled['BrOglasa']);
-                    $("#korisniciDnevno").text(dnevniPregled['BrKorisnika']);
-                    $("#logovanjaDnevno").text(dnevniPregled['BrLogovanja']);
-                    
                     let najKupacIdK = response['najKupacIdK'];
                     if (najKupacIdK == null){
                         $("#najKupacLink").hide();
@@ -347,6 +355,24 @@
                     
                     $("#najProdavacImejl").text(najProdavacImejl);
 
+                }
+            });
+        }
+
+        function updateToday(){
+            $.ajax({
+                url: "<?php echo site_url('Admin/admin_pregled_azuiranje_danas')?>",
+                success: function(response){
+                    let dnevniPregled = response['dnevniPregled'];
+                    
+
+                    $("#kupovineDnevno").text(dnevniPregled['BrKupovina']);
+                    $("#oglasiDnevno").text(dnevniPregled['BrOglasa']);
+                    $("#korisniciDnevno").text(dnevniPregled['BrKorisnika']);
+                    $("#logovanjaDnevno").text(dnevniPregled['BrLogovanja']);
+                    
+                    
+
                     let zbirniPregled = response['generalniPregled'];
                     $("#kupovineZbirno").text(zbirniPregled['BrKupovina']);
                     $("#oglasiZbirno").text(zbirniPregled['BrOglasa']);
@@ -358,27 +384,23 @@
         }
 
         $(document).ready(function () {
-            chart1 = document.getElementById("line-chart").getContext("2d");
-            myLine = new Chart(chart1).Line(lineChartData, {
-                responsive: true,
-                scaleLineColor: "rgba(0,0,0,.2)",
-                scaleGridLineColor: "rgba(0,0,0,.05)",
-                scaleFontColor: "#c5c7cc"
-            });
+            myChart = document.getElementById("line-chart").getContext("2d");
             
-            update();
-            showChart(0);
+            updateToday();
+            updateWeek();
             
-            setInterval(update, 5000);
+            const updatePeriod = 5000;
+            setInterval(updateToday, updatePeriod);
 
+            const dayMilis = 86400000;
             var now = new Date();
             var millisTillMidnight = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 1, 0) - now;
             if (millisTillMidnight < 0) {
-                millisTillMidnight += 86400000; // it's after 10am, try 10am tomorrow.
+                millisTillMidnight += dayMilis;
             }
             setTimeout(function azurirajDnevno(){
-                showChart(0);
-                setTimeout(azurirajDnevno, 86400000);
+                updateWeek();
+                setTimeout(azurirajDnevno, dayMilis);
             }
             , millisTillMidnight);
         });

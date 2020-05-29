@@ -21,10 +21,10 @@ class Admin extends BaseController
 	/**
 	* Funkcija koju ostale funkcije pozivaju zbog ucitavanja odgovarajuce stranice
 	*
-	* @param String $akcija, String[] $data
-	*
+	* @param String $akcija
+	* @param String[] $data
 	* @return void
- 	*/
+	*/
 	protected function pozovi($akcija, $data=[])
 	{
 		$data['controller'] = 'Admin';
@@ -34,7 +34,7 @@ class Admin extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje pocetne stranice 
+	* Funkcija koju kontoler poziva za ucitavanje pocetne stranice 
 	*
 	* @return void
  	*/
@@ -44,7 +44,7 @@ class Admin extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje logout stranice 
+	* Funkcija koju kontoler poziva za ucitavanje logout stranice 
 	*
 	* @return void
  	*/
@@ -54,7 +54,7 @@ class Admin extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za prelazak u rezim gosta 
+	* Funkcija koju kontoler poziva za prelazak u rezim gosta 
 	*
 	* @return void
  	*/
@@ -65,7 +65,7 @@ class Admin extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje o_nama stranice 
+	* Funkcija koju kontoler poziva za ucitavanje o_nama stranice 
 	*
 	* @return void
  	*/
@@ -75,8 +75,8 @@ class Admin extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva pri pritisku dugmeta na stranici o nama 
-	*Salje mejl sa porukom na adresu bookkingPSI@gmail.com
+	* Funkcija koju kontoler poziva pri pritisku dugmeta na stranici o nama 
+	* Salje mejl sa porukom na adresu bookkingPSI@gmail.com
 	*
 	* @return void
  	*/
@@ -102,6 +102,13 @@ class Admin extends BaseController
 	}
 
 	//Janko
+	/**
+	 * Funkcija za pretragu oglasa
+	 * Oglasi se mogu pretraziti po naslovu, autoru i opisu ili po tagu (#)
+	 * Admin moze da bira i oglase prema stanju
+	 * 
+	 * @return void
+	 */
 	public function pretraga()
 	{
 		$oglasModel = new ModelOglas();
@@ -149,6 +156,13 @@ class Admin extends BaseController
 		]);
 	}
 	
+	/**
+	 * Funkcija za pretragu svih zahteva za verifikaciju koji su ikada podneti
+	 * Zahtevi se mogu pretraziti po imejlu, imenu i prezimenu podnosioca zahteva
+	 * Admin moze da bira i zahteve prema stanju
+	 *
+	 * @return void
+	 */
 	public function prikaz_zahtevi(){
 		$zahtevVerModel = new ModelZahtevVer();
 		$tekst = $this->request->getVar('pretraga');
@@ -168,6 +182,12 @@ class Admin extends BaseController
 		$this->pozovi('zahtev_ver/prikaz_zahtevi', $data);
 	}
 
+	/**
+	 * Funkcija koja poziva stranicu za detaljniji prikaz pojedinacnog zahteva  
+	 *
+	 * @param int $IdZ id zahteva za prikaz
+	 * @return void
+	 */
 	public function prikaz_zahtev($IdZ){
 		$zahtevVerModel = new ModelZahtevVer();
 		$zahtev = $zahtevVerModel->find($IdZ);
@@ -178,6 +198,11 @@ class Admin extends BaseController
 		$this->pozovi('zahtev_ver/prikaz_zahtev', ['zahtev' => $zahtev]);
 	}
 
+	/**
+	 * Funkcija za prikaz dokaza verifikacije - pdf dokumenta
+	 *
+	 * @return void
+	 */
 	public function prikaz_zahtev_fajl(){
 		$zahtev = $this->session->get('zahtev');
 		if($zahtev == null){
@@ -186,6 +211,12 @@ class Admin extends BaseController
 		echo view('zahtev_ver/prikaz_zahtev_fajl', ['zahtev'=>$zahtev]);
 	}
 
+	/**
+	 * Funkcija za odobravanje ili odbijanje zahteva za verifikaciju korisnika
+	 * Funkcija salje mejl na adresu korisnika sa obavestenjem o odluci razmatranja
+	 *
+	 * @return void
+	 */
 	public function razmotri_zahtev(){
 		$zahtev = $this->session->get('zahtev');
 		if($zahtev === null || $zahtev->Stanje !== 'podnet'){
@@ -275,8 +306,9 @@ class Admin extends BaseController
 	//Rade
 	/**
 	 * Funkcija za brisanje oglasa
+	 * Funkcija salje mejl na adresu korisnika sa obavestenjem da je oglas obrisan
 	 *
-	 * @return redirekcija_na_pretragu
+	 * @return void
 	 */
 	public function obrisi()
 	{
@@ -315,7 +347,12 @@ class Admin extends BaseController
 		return redirect()->to(site_url("Admin/pretraga"));
 	}
 
-
+	/**
+	 * Funkcija koja poziva stranicu za pregled naloga korisnika
+	 *
+	 * @param int $IdK id korisnika
+	 * @return void
+	 */
 	public function nalog_pregled($IdK){
 		$korisnikModel = new ModelKorisnik();
 		$korisnik = $korisnikModel->find($IdK);
@@ -351,6 +388,11 @@ class Admin extends BaseController
 		$this->pozovi('nalog/nalog',$data);
 	}
 
+	/**
+	 * Funkcija koja poziva stranicu za potvrdu brisanja naloga koji se pregleda
+	 *
+	 * @return void
+	 */
 	public function nalog_brisanje(){
 		$IdK = $this->session->get('AIdK');
 		if ($IdK == null){
@@ -359,7 +401,12 @@ class Admin extends BaseController
 		$this->pozovi('nalog/brisanje', ['IdK'=>$IdK]);
 	}
 
-	/* Doraditi sve u ostalim kontrolerima kada je nalog uklonjen*/
+	/**
+	 * Funkcija za brisanje naloga koji se pregleda
+	 * Funkcija salje mejl na adresu korisnika sa obavestenjem da je nalog obrisan
+	 *
+	 * @return void
+	 */
 	public function nalog_brisanje_action(){
 		$IdK = $this->session->get('AIdK');
 		if ($IdK == null){
@@ -437,6 +484,13 @@ class Admin extends BaseController
 		return redirect()->to(site_url("/bookking/Impl/public/Admin/"));
 	}
 
+	/**
+	 * Funkcija za pretragu svih vazecih naloga korisnika koji nisu administratori
+	 * Nalozi se mogu pretraziti po imejlu, imenu i prezimenu korisnika
+	 * Admin moze da bira i naloge prema opisu role korisnika
+	 *
+	 * @return void
+	 */
 	public function svi_nalozi(){
 		$rolaModel = new ModelRola();
 		$role = $rolaModel->where('Opis !=', 'Admin')->findAll();
@@ -469,6 +523,11 @@ class Admin extends BaseController
 		return $this->pozovi('nalog/nalog_svi', $data);
 	}
 
+	/**
+	 * Funkcija koja poziva stranicu za potvrdu promocije korisnika u moderatora
+	 *
+	 * @return void
+	 */
 	public function nalog_promocija(){
 		$IdK = $this->session->get('PIdK');
 		if ($IdK == null){
@@ -480,6 +539,12 @@ class Admin extends BaseController
 		$this->pozovi('nalog/promocija', ['IdK'=>$IdK]);
 	}
 
+	/**
+	 * Funkcija za promociju korisnika u moderatora
+	 * Funkcija salje mejl na adresu korisnika sa informacijama o novom moderatorskom nalogu
+	 *
+	 * @return void
+	 */
 	public function nalog_promocija_action(){
 		$IdK = $this->session->get('PIdK');
 		if ($IdK == null){
@@ -534,92 +599,119 @@ class Admin extends BaseController
 	}
 	
 	//Janko
+	/**
+	 * Funkcija koja poziva stranicu za administratorski pregled
+	 * Stranica koja se poziva koristi ajax tehnologiju azuriranja podataka za prikaz
+	 *
+	 * @return void
+	 */
 	public function admin_pregled(){
 		$this->pozovi('admin/pregled', []);
 	}
 
-	public function admin_pregled_azuiranje(){
-		$pregledUkupnoModel = new ModelPregledUkupno();
-		$generalniPregled = $pregledUkupnoModel->find(1);
-		$pregledModel = new ModelPregled();
-		$dnevniPregledi = $pregledModel->orderBy('IdPr', 'DESC')->FindAll(7, 0);
+	/**
+	 * Funkcija za trenutni prikaz pregleda najbitnijih podataka za danasnji dan
+	 * Funkcija se poziva putem ajax requesta
+	 *
+	 * @return void
+	 */
+	public function admin_pregled_azuiranje_danas(){
+		if ($this->request->isAjax()){
+			$pregledUkupnoModel = new ModelPregledUkupno();
+			$generalniPregled = $pregledUkupnoModel->find(1);
+			$pregledModel = new ModelPregled();
+			$dnevniPregled = $pregledModel->orderBy('IdPr', 'DESC')->findAll(1, 0);
 
-		$generalniPregled->BrKupovina += $dnevniPregledi[0]->BrKupovina;
-		$generalniPregled->BrOglasa += $dnevniPregledi[0]->BrOglasa;
-		$generalniPregled->BrKorisnika += $dnevniPregledi[0]->BrKorisnika;
-		$generalniPregled->BrLogovanja += $dnevniPregledi[0]->BrLogovanja;
+			$generalniPregled->BrKupovina += $dnevniPregled[0]->BrKupovina;
+			$generalniPregled->BrOglasa += $dnevniPregled[0]->BrOglasa;
+			$generalniPregled->BrKorisnika += $dnevniPregled[0]->BrKorisnika;
+			$generalniPregled->BrLogovanja += $dnevniPregled[0]->BrLogovanja;
 
-		$korisnikModel = new ModelKorisnik();
-		$najKupac = $korisnikModel->find($dnevniPregledi[0]->NajKupac);
-		//find vraca findall ako je parametar-id jednak null ili ako ga nema
-		if (is_array($najKupac)){
-			$najKupacImejl = 'Nema';
-			$najKupacIdK = null;
+			$data = [
+				'generalniPregled' => $generalniPregled,
+				'dnevniPregled' => $dnevniPregled[0]
+			];
+			
+			$this->response->setContentType('Content-Type: application/json');
+			echo json_encode($data);
+			return; 
 		}
 		else{
-			$najKupacImejl = $najKupac->Imejl;
-			$najKupacIdK = $najKupac->IdK;
+			return redirect()->to(site_url('Admin'));
 		}
-		$najProdavac = $korisnikModel->find($dnevniPregledi[0]->NajProdavac);
-		if (is_array($najProdavac)){
-			$najProdavacImejl = 'Nema';
-			$najProdavacIdK = null;
-		}
-		else{
-			$najProdavacImejl = $najProdavac->Imejl;
-			$najProdavacIdK = $najProdavac->IdK;
-		}
-		$data = [
-			'generalniPregled' => $generalniPregled,
-			'pregledi' => $dnevniPregledi,
-			'najKupacImejl' => $najKupacImejl,
-			'najKupacIdK' => $najKupacIdK,
-			'najProdavacImejl' => $najProdavacImejl,
-			'najProdavacIdK' => $najProdavacIdK
-		];
-		
-		//header('Content-Type: application/json');
-		//echo json_encode($data);
-		$this->response->setContentType('Content-Type: application/json');
-		echo json_encode($data);
-		return; 
 	}
 
-	public function admin_pregled_chart(){
-		$pregledModel = new ModelPregled();
-		$pregledi = $pregledModel->orderBy('IdPr', 'DESC')->FindAll(8, 1);
-		$N = 7;
-        $datumi = []; $kupovine = []; $oglasi = []; $korisnici = []; $logovanja = [];
-        foreach ($pregledi as $pregled) {
-            $datum = (date('N', strtotime($pregled->Datum))) % $N;
-            array_unshift($datumi, $datum);
-            array_unshift($kupovine, $pregled->BrKupovina);
-            array_unshift($oglasi, $pregled->BrOglasa);
-            array_unshift($korisnici, $pregled->BrKorisnika);
-            array_unshift($logovanja, $pregled->BrLogovanja);
-        }
-        for ($i = count($pregledi) ; $i < $N; $i++) { 
-            $datumi[$i] = ($datumi[$i-1] + 1) % $N;
-            $kupovine[$i] = 0; 
-            $oglasi[$i] = 0;
-            $korisnici[$i] = 0;
-            $logovanja[$i] = 0;
-        }
+	/**
+	 * Funkcija za prikaz pregleda najbitnijih podataka za proteklu sedmicu i jucerasnji dan
+	 * Funkcija se poziva putem ajax requesta
+	 *
+	 * @return void
+	 */
+	public function admin_pregled_azuriranje_sedmica(){
+		if ($this->request->isAjax()){
+			$pregledModel = new ModelPregled();
+			$nedeljniPregled = $pregledModel->orderBy('IdPr', 'DESC')->FindAll(8, 1);
+			$N = 7;
+			$datumi = []; $kupovine = []; $oglasi = []; $korisnici = []; $logovanja = [];
+			foreach ($nedeljniPregled as $pregled) {
+				$datum = (date('N', strtotime($pregled->Datum))) % $N;
+				array_unshift($datumi, $datum);
+				array_unshift($kupovine, $pregled->BrKupovina);
+				array_unshift($oglasi, $pregled->BrOglasa);
+				array_unshift($korisnici, $pregled->BrKorisnika);
+				array_unshift($logovanja, $pregled->BrLogovanja);
+			}
+			for ($i = count($nedeljniPregled) ; $i < $N; $i++) { 
+				$datumi[$i] = ($datumi[$i-1] + 1) % $N;
+				$kupovine[$i] = 0; 
+				$oglasi[$i] = 0;
+				$korisnici[$i] = 0;
+				$logovanja[$i] = 0;
+			}
 
-        $dani = ['Nedelja', 'Ponedeljak', 'Utorak', 'Sreda', 'Cetvrtak', 'Petak', 'Subota'];
-        for ($i = 0; $i < $N; $i++){
-            $datumi[$i] = $dani[$datumi[$i]];
+			$dani = ['Nedelja', 'Ponedeljak', 'Utorak', 'Sreda', 'Cetvrtak', 'Petak', 'Subota'];
+			for ($i = 0; $i < $N; $i++){
+				$datumi[$i] = $dani[$datumi[$i]];
+			}
+
+			$korisnikModel = new ModelKorisnik();
+			$najKupac = $korisnikModel->find($nedeljniPregled[0]->NajKupac);
+			//find vraca findall ako je parametar-id jednak null ili ako ga nema
+			if (is_array($najKupac)){
+				$najKupacImejl = 'Nema';
+				$najKupacIdK = null;
+			}
+			else{
+				$najKupacImejl = $najKupac->Imejl;
+				$najKupacIdK = $najKupac->IdK;
+			}
+			$najProdavac = $korisnikModel->find($nedeljniPregled[0]->NajProdavac);
+			if (is_array($najProdavac)){
+				$najProdavacImejl = 'Nema';
+				$najProdavacIdK = null;
+			}
+			else{
+				$najProdavacImejl = $najProdavac->Imejl;
+				$najProdavacIdK = $najProdavac->IdK;
+			}
+			
+			$data = [
+				'datumi' => $datumi,
+				'kupovine' => $kupovine,
+				'oglasi' => $oglasi,
+				'korisnici' => $korisnici,
+				'logovanja' => $logovanja,
+				'najKupacImejl' => $najKupacImejl,
+				'najKupacIdK' => $najKupacIdK,
+				'najProdavacImejl' => $najProdavacImejl,
+				'najProdavacIdK' => $najProdavacIdK
+			];
+			$this->response->setContentType('Content-Type: application/json');
+			echo json_encode($data);
+			return; 
 		}
-		
-		$data = [
-			'datumi' => $datumi,
-			'kupovine' => $kupovine,
-			'oglasi' => $oglasi,
-			'korisnici' => $korisnici,
-			'logovanja' => $logovanja
-		];
-		$this->response->setContentType('Content-Type: application/json');
-		echo json_encode($data);
-		return; 
+		else{
+			return redirect()->to(site_url('Admin'));
+		}
 	}
 }

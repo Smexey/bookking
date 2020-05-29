@@ -38,7 +38,7 @@ class BaseController extends Controller
 	/**
 	 * Helperi za lakse upravljanje formom, urlom i htmlom
 	 *
-	 * @var array helpers Helperi
+	 * @var array helper Helperi
 	 */
 	protected $helpers = ['form', 'url', 'html'];
 
@@ -95,11 +95,12 @@ class BaseController extends Controller
 			'stanja' => []
 		]);
 	}
+	
 	//Rade
 	/**
 	 * Funkcija za prikaz odredjenog oglasa
 	 *
-	 * @param int $id id-oglasa-za-prikaz
+	 * @param int $id id oglasa za prikaz
 	 * @return void
 	 */
 	public function oglas($id)
@@ -136,8 +137,13 @@ class BaseController extends Controller
 	}
 
 
-
-	public function getNizKorisnika($IdK)
+	/**
+	 * Pomocna funkcija za dohvatanje potrebnih podataka o porukama sa korisnicima sa kojima postoje razgovori
+	 *
+	 * @param int $IdK
+	 * @return array niz korisnika
+	 */
+	private function getNizKorisnika($IdK)
 	{
 		$modelRazg = new ModelRazgovor();
 		$modelKorisnik = new ModelKorisnik();
@@ -167,7 +173,7 @@ class BaseController extends Controller
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za stranicu sa konverzacijama 
+	* Funkcija koju kontoler poziva za stranicu sa konverzacijama 
 	*
 	* @return void
  	*/
@@ -194,7 +200,7 @@ class BaseController extends Controller
 
 
 	/**
-	*Funkcija koju kontoler poziva za prikaz poruka 
+	* Funkcija koju kontoler poziva za prikaz poruka 
 	*
 	* @return void
  	*/
@@ -211,7 +217,7 @@ class BaseController extends Controller
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za stranicu sa porukama 
+	* Funkcija koju kontoler poziva za stranicu sa porukama 
 	*
 	* @return void
  	*/
@@ -221,7 +227,7 @@ class BaseController extends Controller
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za slanje poruke
+	* Funkcija koju kontoler poziva za slanje poruke
 	*
 	* @return void
  	*/
@@ -248,7 +254,7 @@ class BaseController extends Controller
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za zapocinjanje konverazije 
+	* Funkcija koju kontoler poziva za zapocinjanje konverazije 
 	*
 	* @return void
  	*/

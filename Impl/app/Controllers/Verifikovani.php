@@ -26,10 +26,10 @@ class Verifikovani extends BaseController
 	/**
 	* Funkcija koju ostale funkcije pozivaju zbog ucitavanja odgovarajuce stranice
 	*
-	* @param String $akcija, String[] $data
-	*
+	* @param String $akcija
+	* @param String[] $data
 	* @return void
- 	*/
+	*/
 	protected function pozovi($akcija, $data=[])
 	{
 		$data['controller'] = 'Verifikovani';
@@ -39,7 +39,7 @@ class Verifikovani extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje pocetne stranice 
+	* Funkcija koju kontoler poziva za ucitavanje pocetne stranice 
 	*
 	* @return void
  	*/
@@ -49,7 +49,7 @@ class Verifikovani extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje logout stranice 
+	* Funkcija koju kontoler poziva za ucitavanje logout stranice 
 	*
 	* @return void
  	*/
@@ -59,7 +59,7 @@ class Verifikovani extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za prelazak u rezim gosta 
+	* Funkcija koju kontoler poziva za prelazak u rezim gosta 
 	*
 	* @return void
  	*/
@@ -70,7 +70,7 @@ class Verifikovani extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje o_nama stranice 
+	* Funkcija koju kontoler poziva za ucitavanje o_nama stranice 
 	*
 	* @return void
  	*/
@@ -80,8 +80,8 @@ class Verifikovani extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva pri pritisku dugmeta na stranici o nama 
-	*Salje mejl sa porukom na adresu bookkingPSI@gmail.com
+	* Funkcija koju kontoler poziva pri pritisku dugmeta na stranici o nama 
+	* Salje mejl sa porukom na adresu bookkingPSI@gmail.com
 	*
 	* @return void
  	*/
@@ -153,8 +153,9 @@ class Verifikovani extends BaseController
 	//Rade
 	/**
 	 * Funkcija za proveru i dodavanje novog oglasa
+	 * Ukoliko se ne prodju sve provere funkcija poziva ispis gresaka
 	 *
-	 * @return redirekt_na_taj_oglas
+	 * @return void
 	 */
 	public function nova_vest()
 	{
@@ -266,6 +267,7 @@ class Verifikovani extends BaseController
 		}
 		return redirect()->to(site_url("Verifikovani/oglas/{$lastOglasID}"));
 	}
+
 	//Rade
 	/**
 	 * Funkcija za pozivanje view-a za brisanje oglasa
@@ -294,11 +296,12 @@ class Verifikovani extends BaseController
 
 		$this->pozovi('pretraga/brisanje', ['IdO' => $oglas->IdO]);
 	}
+
 	//Rade
 	/**
 	 * Funkcija za brisanje oglasa
 	 *
-	 * @return redirekcija_na_pretragu
+	 * @return void
 	 */
 	public function obrisi()
 	{
@@ -319,6 +322,7 @@ class Verifikovani extends BaseController
 
 		return redirect()->to(site_url("Verifikovani/pretraga"));
 	}
+	
 	//Rade
 	/**
 	 * Funkcija za prikaz forme za kupovinu
@@ -341,6 +345,7 @@ class Verifikovani extends BaseController
 
 		$this->pozovi("kupovina/nacin_placanja", ['oglas' => $oglas]);
 	}
+
 	//Rade
 	/**
 	 * Funkcija za prikaz nacina odabira kupovine
@@ -375,9 +380,12 @@ class Verifikovani extends BaseController
 			]);
 		}
 	}
+
 	//Rade
 	/**
 	 * Funkcija za proveru i kupovinu oglasa
+	 * Ukoliko se ne prodju sve provere funkcija poziva ispis gresaka
+	 * U suptotnom, funkcija salje mejlove sa daljim uputstvima i koracima na adrese kupca i prodavca
 	 *
 	 * @return void
 	 */
@@ -534,7 +542,7 @@ class Verifikovani extends BaseController
 	/**
 	 * Funkcija za redirekciju na pretragu nakon uspesne kupovine
 	 *
-	 * @return redirekt_na_pretragu
+	 * @return void
 	 */
 	public function uspesna_kupovina(){
 		return redirect()->to(site_url("Verifikovani/pretraga"));
@@ -553,11 +561,12 @@ class Verifikovani extends BaseController
 		}
 		$this->pozovi('prijava/forma_prijave',[]);
 	}
+
 	//Rade
 	/**
 	 * Funkcija za prijavu oglasa
 	 *
-	 * @return redirekt_na_pretragu
+	 * @return void
 	 */
 	public function prijava(){
 		$prijavaModel = new ModelPrijava();
@@ -589,6 +598,12 @@ class Verifikovani extends BaseController
 		return redirect()->to(site_url("Verifikovani/pretraga"));
 	}
 
+	/**
+	 * Funkcija koja poziva stranicu za pregled naloga korisnika
+	 *
+	 * @param int $IdK id korisnika
+	 * @return void
+	 */
 	public function nalog_pregled($IdK){
 		$korisnikKojiPregleda = $this->session->get("korisnik");
 		
@@ -619,6 +634,11 @@ class Verifikovani extends BaseController
 		$this->pozovi('nalog/nalog',$data);
 	}
 
+	/**
+	 * Funkcija koja poziva stranicu za prikaz podataka o sopstvenom nalogu korisnika
+	 *
+	 * @return void
+	 */
 	public function nalog(){
 		$korisnik = $this->session->get("korisnik");
 		$data['ime'] = $korisnik->Ime;
@@ -633,6 +653,11 @@ class Verifikovani extends BaseController
 		$this->pozovi('nalog/nalog',$data);
 	}
 
+	/**
+	 * Funkcija koja poziva stranicu sa formom za promenu podataka o sopstvenom nalogu korisnika
+	 *
+	 * @return void
+	 */
 	public function nalog_izmena(){
 		$korisnik = $this->session->get("korisnik");
 		$data['ime'] = $korisnik->Ime;
@@ -647,6 +672,11 @@ class Verifikovani extends BaseController
 		$this->pozovi('nalog/nalog_izmena',$data);
 	}
 
+	/**
+	 * Funkcija za promenu podataka o sopstvenom nalogu korisnika
+	 *
+	 * @return void
+	 */
 	public function nalog_izmena_action()
 	{
 

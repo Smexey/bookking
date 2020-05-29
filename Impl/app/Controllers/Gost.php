@@ -13,13 +13,14 @@ use App\Models\ModelPregled;
 */
 class Gost extends BaseController
 {
+
 	/**
 	* Funkcija koju ostale funkcije pozivaju zbog ucitavanja odgovarajuce stranice
 	*
-	* @param String $akcija, String[] $data
-	*
+	* @param String $akcija
+	* @param String[] $data
 	* @return void
- 	*/
+	*/
 	protected function pozovi($akcija, $data=[])
 	{
 		$data['controller'] = 'Gost';
@@ -29,7 +30,7 @@ class Gost extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje pocetne stranice 
+	* Funkcija koju kontoler poziva za ucitavanje pocetne stranice 
 	*
 	* @return void
  	*/
@@ -39,7 +40,7 @@ class Gost extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje login stranice 
+	* Funkcija koju kontoler poziva za ucitavanje login stranice 
 	*
 	* @return void
  	*/
@@ -50,8 +51,8 @@ class Gost extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za proveru podatak pri pritisku dugmeta u login formi 
-	*Funkcija proverava da li postoji korisnik sa zadatim imejlom i sifrom i preusmerava ga
+	* Funkcija koju kontoler poziva za proveru podatak pri pritisku dugmeta u login formi 
+	* Funkcija proverava da li postoji korisnik sa zadatim imejlom i sifrom i preusmerava ga
 	*
 	* @return void
  	*/
@@ -88,7 +89,7 @@ class Gost extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje stranice za oporavak 
+	* Funkcija koju kontoler poziva za ucitavanje stranice za oporavak 
 	*
 	* @return void
  	*/
@@ -99,8 +100,8 @@ class Gost extends BaseController
 
 
 	/**
-	*Funkcija koju kontoler poziva prilikom pritiska na dugme na stranici za oporavak  
-	*Funkcija salje mejl u slucaju da je username dobro unet u suprotnom ispisuje poruku o gresci
+	* Funkcija koju kontoler poziva prilikom pritiska na dugme na stranici za oporavak  
+	* Funkcija salje mejl u slucaju da je username dobro unet u suprotnom ispisuje poruku o gresci
 	*
 	* @return void
  	*/
@@ -133,7 +134,7 @@ class Gost extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje stranice za registraciju 
+	* Funkcija koju kontoler poziva za ucitavanje stranice za registraciju 
 	*
 	* @return void
  	*/
@@ -144,7 +145,7 @@ class Gost extends BaseController
 	}
 	
 	/**
-	*Funkcija koju kontoler poziva prilikom sumbita sifra pri slanju zahteva za registraciju 
+	* Funkcija koju kontoler poziva prilikom sumbita sifra pri slanju zahteva za registraciju 
 	*
 	* @return void
  	*/
@@ -202,9 +203,9 @@ class Gost extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva pri submitu podataka sa stranice za registraciju 
-	*Funkcija proverava ulazne podatke ispitujuci ogranicenja
-	*Salje kod za potvrdu na mejl
+	* Funkcija koju kontoler poziva pri submitu podataka sa stranice za registraciju 
+	* Funkcija proverava ulazne podatke ispitujuci ogranicenja
+	* Salje kod za potvrdu na mejl
 	*
 	* @return void
  	*/
@@ -334,7 +335,7 @@ class Gost extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje nalog stranice 
+	* Funkcija koju kontoler poziva za ucitavanje nalog stranice 
 	*
 	* @return void
  	*/
@@ -344,7 +345,7 @@ class Gost extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva za ucitavanje o_nama stranice 
+	* Funkcija koju kontoler poziva za ucitavanje o_nama stranice 
 	*
 	* @return void
  	*/
@@ -354,8 +355,8 @@ class Gost extends BaseController
 	}
 
 	/**
-	*Funkcija koju kontoler poziva pri pritisku dugmeta na stranici o nama 
-	*Salje mejl sa porukom na adresu bookkingPSI@gmail.com
+	* Funkcija koju kontoler poziva pri pritisku dugmeta na stranici o nama 
+	* Salje mejl sa porukom na adresu bookkingPSI@gmail.com
 	*
 	* @return void
  	*/
