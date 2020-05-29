@@ -166,7 +166,11 @@ class BaseController extends Controller
 		return $ret;
 	}
 
-
+	/**
+	*Funkcija koju kontoler poziva za stranicu sa konverzacijama 
+	*
+	* @return void
+ 	*/
 	public function otvoriKonverzaciju_action()
 	{
 		$korisnik = $this->session->get("korisnik");
@@ -189,6 +193,11 @@ class BaseController extends Controller
 	}
 
 
+	/**
+	*Funkcija koju kontoler poziva za prikaz poruka 
+	*
+	* @return void
+ 	*/
 	public function otvoriPoruke_action()
 	{
 		$korisnik = $this->session->get("korisnik");
@@ -201,11 +210,21 @@ class BaseController extends Controller
 		]);
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za stranicu sa porukama 
+	*
+	* @return void
+ 	*/
 	public function poruke()
 	{
 		$this->otvoriPoruke_action();
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za slanje poruke
+	*
+	* @return void
+ 	*/
 	public function posaljiPor_action()
 	{
 		$text = $_POST['text'];
@@ -228,6 +247,11 @@ class BaseController extends Controller
 		else $this->otvoriPoruke_action();
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za zapocinjanje konverazije 
+	*
+	* @return void
+ 	*/
 	public function zapocniKonverzaciju()
 	{
 		$text = $_POST['knjiga'];

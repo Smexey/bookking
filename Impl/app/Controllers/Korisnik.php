@@ -13,9 +13,23 @@ use App\Models\ModelTag;
 use App\Models\ModelKupovina;
 use App\Models\ModelNacinKupovine;
 
+
+/**
+* Korisnik – klasa koja predstavlja rolu korisnik
+*
+* @version 1.0
+*/
+
 class Korisnik extends BaseController
 {
 
+	/**
+	* Funkcija koju ostale funkcije pozivaju zbog ucitavanja odgovarajuce stranice
+	*
+	* @param String $akcija, String[] $data
+	*
+	* @return void
+ 	*/
 	protected function pozovi($akcija, $data = [])
 	{
 		$data['controller'] = 'Korisnik';
@@ -24,22 +38,42 @@ class Korisnik extends BaseController
 		echo view('pocetna/footer.php', $data);
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za ucitavanje pocetne stranice 
+	*
+	* @return void
+ 	*/
 	public function index()
 	{
 		$this->pozovi('pocetna/pocetna');
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za ucitavanje logout stranice 
+	*
+	* @return void
+ 	*/
 	public function logout()
 	{
 		$this->pozovi('login/logout');
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za prelazak u rezim gosta 
+	*
+	* @return void
+ 	*/
 	public function logout_action()
 	{
 		$this->session->destroy();
 		return redirect()->to(site_url('Gost'));
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za login stranicu 
+	*
+	* @return void
+ 	*/
 	public function login_action()
 	{
 		$imejl = $_POST['imejl'];
@@ -51,11 +85,22 @@ class Korisnik extends BaseController
 		else $this->pozovi('login/login_error');
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za ucitavanje o_nama stranice 
+	*
+	* @return void
+ 	*/
 	public function o_nama()
 	{
 		$this->pozovi('o_nama/o_nama');
 	}
 
+	/**
+	*Funkcija koju kontoler poziva pri pritisku dugmeta na stranici o nama 
+	*Salje mejl sa porukom na adresu bookkingPSI@gmail.com
+	*
+	* @return void
+ 	*/
 	public function o_nama_action()
 	{
 		$imejl = $_POST['imejl'];

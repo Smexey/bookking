@@ -6,9 +6,20 @@ use App\Models\ModelKorisnik;
 use App\Models\ModelRola;
 use App\Models\ModelPregled;
 
+/**
+* Gost – klasa koja predstavlja rolu gosta tj. korisnika pre nego sto se loginuje
+*
+* @version 1.0
+*/
 class Gost extends BaseController
 {
-
+	/**
+	* Funkcija koju ostale funkcije pozivaju zbog ucitavanja odgovarajuce stranice
+	*
+	* @param String $akcija, String[] $data
+	*
+	* @return void
+ 	*/
 	protected function pozovi($akcija, $data=[])
 	{
 		$data['controller'] = 'Gost';
@@ -17,17 +28,33 @@ class Gost extends BaseController
 		echo view('pocetna/footer.php', $data);
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za ucitavanje pocetne stranice 
+	*
+	* @return void
+ 	*/
 	public function index()
 	{
 		$this->pozovi('pocetna/pocetna');
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za ucitavanje login stranice 
+	*
+	* @return void
+ 	*/
 	public function login()
 	{
 		$data['loginNeuspesan'] = '';
 		$this->pozovi('login/login', $data);
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za proveru podatak pri pritisku dugmeta u login formi 
+	*Funkcija proverava da li postoji korisnik sa zadatim imejlom i sifrom i preusmerava ga
+	*
+	* @return void
+ 	*/
 	public function login_action()
 	{
 		$imejl = $_POST['imejl'];
@@ -60,11 +87,23 @@ class Gost extends BaseController
 		}
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za ucitavanje stranice za oporavak 
+	*
+	* @return void
+ 	*/
 	public function oporavak()
 	{
 		$this->pozovi('oporavak/oporavak');
 	}
 
+
+	/**
+	*Funkcija koju kontoler poziva prilikom pritiska na dugme na stranici za oporavak  
+	*Funkcija salje mejl u slucaju da je username dobro unet u suprotnom ispisuje poruku o gresci
+	*
+	* @return void
+ 	*/
 	public function oporavak_action()
 	{
 		$imejl = $_POST["imejl"];
@@ -93,12 +132,22 @@ class Gost extends BaseController
 		} else $this->pozovi('oporavak/oporavak_error');
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za ucitavanje stranice za registraciju 
+	*
+	* @return void
+ 	*/
 	public function registracija()
 	{
 
 		$this->pozovi('registracija/registracija');
 	}
-
+	
+	/**
+	*Funkcija koju kontoler poziva prilikom sumbita sifra pri slanju zahteva za registraciju 
+	*
+	* @return void
+ 	*/
 	public function registracija_confirme_action()
 	{
 		$ime = $_POST['ime'];
@@ -152,6 +201,13 @@ class Gost extends BaseController
 		return redirect()->to(site_url('Korisnik'));
 	}
 
+	/**
+	*Funkcija koju kontoler poziva pri submitu podataka sa stranice za registraciju 
+	*Funkcija proverava ulazne podatke ispitujuci ogranicenja
+	*Salje kod za potvrdu na mejl
+	*
+	* @return void
+ 	*/
 	public function registracija_action()
 	{
 		
@@ -277,16 +333,32 @@ class Gost extends BaseController
 		$this->pozovi('registracija/registracija_confirme');
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za ucitavanje nalog stranice 
+	*
+	* @return void
+ 	*/
 	public function nalog()
 	{
 		$this->pozovi('nalog/nalog_onemogucen');
 	}
 
+	/**
+	*Funkcija koju kontoler poziva za ucitavanje o_nama stranice 
+	*
+	* @return void
+ 	*/
 	public function o_nama()
 	{
 		$this->pozovi('o_nama/o_nama');
 	}
 
+	/**
+	*Funkcija koju kontoler poziva pri pritisku dugmeta na stranici o nama 
+	*Salje mejl sa porukom na adresu bookkingPSI@gmail.com
+	*
+	* @return void
+ 	*/
 	public function o_nama_action()
 	{
 		$imejl = $_POST['imejl'];
