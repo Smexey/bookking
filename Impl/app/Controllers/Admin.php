@@ -6,7 +6,6 @@ use App\Models\ModelKorisnik;
 use App\Models\ModelZahtevVer;
 use App\Models\ModelRola;
 use App\Models\ModelOglas;
-use App\Models\ModelPrijava;
 use App\Models\ModelStanje;
 use App\Models\ModelPregled;
 use App\Models\ModelPregledUkupno;
@@ -650,11 +649,11 @@ class Admin extends BaseController
 	public function admin_pregled_azuriranje_sedmica(){
 		if ($this->request->isAjax()){
 			$pregledModel = new ModelPregled();
-			$nedeljniPregled = $pregledModel->orderBy('IdPr', 'DESC')->FindAll(8, 1);
+			$nedeljniPregled = $pregledModel->orderBy('IdPr', 'DESC')->findAll(7, 1);
 			$N = 7;
 			$datumi = []; $kupovine = []; $oglasi = []; $korisnici = []; $logovanja = [];
 			foreach ($nedeljniPregled as $pregled) {
-				$datum = (date('N', strtotime($pregled->Datum))) % $N;
+				$datum = date('N', strtotime($pregled->Datum));
 				array_unshift($datumi, $datum);
 				array_unshift($kupovine, $pregled->BrKupovina);
 				array_unshift($oglasi, $pregled->BrOglasa);
@@ -669,9 +668,9 @@ class Admin extends BaseController
 				$logovanja[$i] = 0;
 			}
 
-			$dani = ['Nedelja', 'Ponedeljak', 'Utorak', 'Sreda', 'Cetvrtak', 'Petak', 'Subota'];
+			$dani = ['Ponedeljak', 'Utorak', 'Sreda', 'Cetvrtak', 'Petak', 'Subota', 'Nedelja'];
 			for ($i = 0; $i < $N; $i++){
-				$datumi[$i] = $dani[$datumi[$i]];
+				$datumi[$i] = $dani[$datumi[$i] - 1];
 			}
 
 			$korisnikModel = new ModelKorisnik();

@@ -1,10 +1,7 @@
 <html>
 
-<head>
-    <link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/css/poruke.css'); ?>">
-</head>
-
 <body>
+    <link rel="stylesheet" type="text/css" href="<?php echo base_url('/assets/css/poruke.css'); ?>">
     <div class="container">
 
         <br><br>
