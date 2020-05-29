@@ -9,7 +9,7 @@ img {
 
 .inbox_people {
     background: #f8f8f8 none repeat scroll 0 0;
-    float: center;
+    float: left;
     overflow: hidden;
     width: 40%;
     border-right: 1px solid #c4c4c4;
