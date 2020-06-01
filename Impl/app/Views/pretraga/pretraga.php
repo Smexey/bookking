@@ -5,14 +5,15 @@
         <div class="offset-sm-2 col-sm-8">
             <?php if ($mojiOglasi == true):?>
                 <form name="pretragavesti" method="get" action="<?= site_url("$controller/moji_oglasi") ?>">
-                    Pretraga: <input type="text" name="pretraga">
-                    <input class='btn' value='Traži' type="submit"><br>
+                    Pretraga: <input type="text" name="pretraga"> 
+                    <input class='btn btn-primarly' value='Traži' type="submit" style="margin-top: -5px"><br>
                 </form>
             <?php else: ?>
                 <form name="pretragavesti" method="get" action="<?= site_url("$controller/pretraga") ?>">
                     Pretraga: <input type="text" name="pretraga">
-                    <input class='btn' value='Traži' type="submit"><br>          
+                    <input class='btn btn-primarly' value='Traži' type="submit" style="margin-top: -5px;"><br>          
                 <?php if (count($stanja) > 0): ?>
+                    <div style="margin-top: 10px"></div>
                     Stanje oglasa:
                     <select name='stanje'>
                         <option></option>
@@ -46,7 +47,7 @@
                             <th>Naslov</th>
                             <th>Autor</th>
                             <?php if ($controller !== 'Gost') : ?>
-                                <th>Profil korisnika</th>
+                                <th>Nalog prodavca</th>
                             <?php endif; ?>
                         </tr>
                     </thead>
@@ -58,7 +59,7 @@
                             $korisnikModel = new App\Models\ModelKorisnik();
                             $korisnik = $korisnikModel->find($oglas->IdK);
                             echo "<tr><td>" . anchor("$controller/oglas/{$oglas->IdO}", '<img src="data:image/jpeg;base64,'
-                                . base64_encode($oglas->Naslovnica) . '" height=100 width=100>') . "</td>";
+                                . base64_encode($oglas->Naslovnica) . '" height=100 width=80>') . "</td>";
 
                             echo "<td style='display: table-cell;vertical-align: middle;'>{$oglas->Naslov}</td>";
                             echo "<td style='display: table-cell;vertical-align: middle;'>{$oglas->Autor}</td>";

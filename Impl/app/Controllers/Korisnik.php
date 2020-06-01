@@ -627,7 +627,7 @@ class Korisnik extends BaseController
 				'IdN' => $nacinKupovine->IdN
 			]);
 			
-			$message = "Usesno obavljena kupovina! Očekujte dalja obavestenja preko email-a";
+			$message = "Uspešno obavljena kupovina! Očekujte dalja obavestenja preko imejla";
 
 			$this->session->remove('oglas');
 

@@ -1,5 +1,6 @@
 <!-- Rade -->
 <div class="container">
+    <br>
     <div class="row">
         <?php
 
@@ -19,10 +20,10 @@
         ?>
     </div>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-4 mb-3 text-center">
             <?php
             echo '<img src="data:image/jpeg;base64,'
-                . base64_encode($oglas->Naslovnica) . '" height=200 width=200 style="margin-left:50">';
+                . base64_encode($oglas->Naslovnica) . '" height=200 width=160>';
             ?>
         </div>
         <div class="col-sm-8">
@@ -70,7 +71,8 @@
             ?>
         </div>
     </div>
-
+    <div class="row">
+        <div class="col-sm-4 text-center">
     <form name="kupovina" method="get" action="<?= site_url("$controller/kupovina") ?>">
         <?php
         if (isset($trenutni_korisnik)) {
@@ -79,7 +81,7 @@
                 $trenutni_korisnik->IdK != $oglas->IdK
             ) //provera korisnik
                 echo '<input class="btn btn-primarly" type="submit" 
-                        value=\'Kupi\' style="margin-left:100">';
+                        value=\'Kupi\' >';
         }
         ?>
     </form>
@@ -91,7 +93,7 @@
                 $trenutni_korisnik->IdK != $oglas->IdK
             ) //provera korisnik
                 echo '<input class="btn btn-primarly" type="submit" 
-                        value=\'Prijavi\' style="margin-left:100">';
+                        value=\'Prijavi\' >';
         }
         ?>
     </form>
@@ -104,11 +106,13 @@
                 || $trenutni_korisnik->IdK == $oglas->IdK
             ) //provera mod ili admin
                 echo '<input class="btn btn-primarly" type="submit" 
-                        value=\'Ukloni\' style="margin-left:100">';
+                        value=\'Ukloni\' >';
         }
         ?>
     </form>
-
+        </div>
+    </div>
+    
     <!-- Janko -->
     <?php if(isset($trenutni_korisnik) && 
     ($rola->Opis == "Admin" || $rola->Opis == "Moderator")
@@ -148,5 +152,6 @@
             </div>
         </div>
     <?php endif; ?>
+    
     
 </div> <!-- end of content right -->

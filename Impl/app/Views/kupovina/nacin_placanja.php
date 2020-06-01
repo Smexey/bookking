@@ -19,6 +19,7 @@
                 </td></tr>';
                 }
             ?> 
+            <h3>Odaberite način kupovine</h3>
             <tr><td>
                 <input type="radio" name="a" id="" value="poruka"> Preko sistema poruka
             </td></tr>

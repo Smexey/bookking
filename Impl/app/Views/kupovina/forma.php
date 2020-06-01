@@ -14,11 +14,11 @@
     <form action="<?php echo site_url("$controller/provera"); ?>" method="POST">
         <table width = "100%" border = 0>
             <tr><td></td>
-                <font size="6">Cena: 
+                <h3>Cena: 
                     <?php
                     echo $oglas->Cena
-                    ?> dinara</font>
-                <br /><br />
+                    ?> dinara</h3>
+                <br />
                 <p>Odaberite način plaćanja:</p>
                 <input type="radio" id="Kartica" name="placanje" value="Kartica"
                 <?php echo (set_value('placanje') == 'Kartica') ?  "checked" : "" ;  ?>>

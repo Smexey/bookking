@@ -9,10 +9,6 @@
                 <h1>Ups!</h1>
                 
                 <p>Prvo se morate ulogovati za pregled svog naloga.</p>
-                
-                <br><br><br><br><br>
-                <br><br><br><br><br>
-                <br><br><br><br><br>
 
             </form>
         </div>

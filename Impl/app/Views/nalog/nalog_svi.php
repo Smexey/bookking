@@ -7,7 +7,8 @@
     <div class="offset-sm-2 col-sm-8">
         <form name="pretraganalozi" method="get" action="<?= site_url("$controller/svi_nalozi") ?>">
             Pretraga: <input type="text" name="pretraga">
-            <input class='btn' value='Traži' type="submit"><br>
+            <input class='btn' value='Traži' type="submit" style="margin-top: -5px"><br>
+            <div style="margin-top: 10px"></div>
             Rola korisnika:
             <select name='rola'>
                 <option></option>

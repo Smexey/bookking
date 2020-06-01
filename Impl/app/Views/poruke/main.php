@@ -12,7 +12,7 @@
                     <div class="row">
                         <div class="headind_srch">
                             <div class="recent_heading">
-                                <h4>&nbsp;&nbsp;&nbsp;&nbsp;Messages</h4>
+                                <h4>&nbsp;&nbsp;&nbsp;&nbsp;Poruke</h4>
                             </div>
                         </div>
                     </div>
@@ -114,7 +114,7 @@
                                                                             }
                                                                             ?>>
 
-                                <input autofocus type="text" name="text" class="write_msg" placeholder="Type a message" />
+                                <input autofocus type="text" name="text" class="write_msg" placeholder="Unesite poruku" />
 
                                 <button class="msg_send_btn" type="submit"><i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                             </div>

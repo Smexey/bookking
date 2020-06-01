@@ -7,8 +7,9 @@
         <div class="offset-sm-2 col-sm-8">
             <form name="pretraganalozi" method="get" action="<?= site_url("$controller/prikaz_zahtevi") ?>">
                 Pretraga: <input type="text" name="pretraga">
-                <input class='btn' value='Traži' type="submit"><br>
+                <input class='btn' value='Traži' type="submit" style="margin-top: -5px"><br>
                 <?php if($trenutni_korisnik == 'Admin'): ?>
+                    <div style="margin-top: 10px"></div>
                     Stanje zahteva:
                     <select name='stanje'>
                         <option></option>
@@ -39,7 +40,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th>Podnosilac zahteva</th>
-                        <th>Pregled profila</th> 
+                        <th>Pregled naloga</th> 
                         <th>Detaljniji prikaz zahteva</th> 
                     </tr>
                 </thead>
