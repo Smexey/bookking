@@ -95,7 +95,7 @@ class BaseController extends Controller
 			'stanja' => []
 		]);
 	}
-	
+
 	//Rade
 	/**
 	 * Funkcija za prikaz odredjenog oglasa
@@ -107,7 +107,7 @@ class BaseController extends Controller
 	{
 		$oglasModel = new ModelOglas();
 		$oglas = $oglasModel->find($id);
-		if ($oglas == null){
+		if ($oglas == null) {
 			return redirect()->to(site_url('/'));
 		}
 
@@ -115,16 +115,16 @@ class BaseController extends Controller
 		$stanje = $stanjeModel->find($oglas->IdS);
 
 		$jeAdmin = false;
-		if ($this->session->has('korisnik')){
+		if ($this->session->has('korisnik')) {
 			$korisnik = $this->session->get('korisnik');
 			$rolaModel = new ModelRola();
 			$rola = $rolaModel->find($korisnik->IdR);
-			if ($rola->Opis === 'Admin'){
+			if ($rola->Opis === 'Admin') {
 				$jeAdmin = true;
 			}
 		}
-				
-		if ($stanje->Opis !== 'Okacen' && (!$jeAdmin)){
+
+		if ($stanje->Opis !== 'Okacen' && (!$jeAdmin)) {
 			return redirect()->to(site_url('/'));
 		}
 
@@ -173,10 +173,10 @@ class BaseController extends Controller
 	}
 
 	/**
-	* Funkcija koju kontoler poziva za stranicu sa konverzacijama 
-	*
-	* @return void
- 	*/
+	 * Funkcija koju kontoler poziva za stranicu sa konverzacijama 
+	 *
+	 * @return void
+	 */
 	public function otvoriKonverzaciju_action()
 	{
 		$korisnik = $this->session->get("korisnik");
@@ -200,10 +200,10 @@ class BaseController extends Controller
 
 
 	/**
-	* Funkcija koju kontoler poziva za prikaz poruka 
-	*
-	* @return void
- 	*/
+	 * Funkcija koju kontoler poziva za prikaz poruka 
+	 *
+	 * @return void
+	 */
 	public function otvoriPoruke_action()
 	{
 		$korisnik = $this->session->get("korisnik");
@@ -217,23 +217,24 @@ class BaseController extends Controller
 	}
 
 	/**
-	* Funkcija koju kontoler poziva za stranicu sa porukama 
-	*
-	* @return void
- 	*/
+	 * Funkcija koju kontoler poziva za stranicu sa porukama 
+	 *
+	 * @return void
+	 */
 	public function poruke()
 	{
 		$this->otvoriPoruke_action();
 	}
 
 	/**
-	* Funkcija koju kontoler poziva za slanje poruke
-	*
-	* @return void
- 	*/
+	 * Funkcija koju kontoler poziva za slanje poruke
+	 *
+	 * @return void
+	 */
 	public function posaljiPor_action()
 	{
 		$text = $_POST['text'];
+		// TODO: if ($strlen >= 200){} 
 		$korisnik1 = $this->session->get("korisnik")->IdK;
 		$korisnik2 = $_POST['selected'];
 
@@ -254,10 +255,10 @@ class BaseController extends Controller
 	}
 
 	/**
-	* Funkcija koju kontoler poziva za zapocinjanje konverazije 
-	*
-	* @return void
- 	*/
+	 * Funkcija koju kontoler poziva za zapocinjanje konverazije 
+	 *
+	 * @return void
+	 */
 	public function zapocniKonverzaciju()
 	{
 		$text = $_POST['knjiga'];
