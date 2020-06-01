@@ -2,6 +2,11 @@
 
 use CodeIgniter\Model;
 
+/**
+* ModelStanje – klasa za rad sa tabelom stanjeoglasa
+*
+* @version 1.0
+ */
 class ModelStanje extends Model {
     protected $table      = 'stanjeoglasa';
     protected $primaryKey = 'IdS';

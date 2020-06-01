@@ -10,7 +10,6 @@
         </div>
     </footer>
 
-    <!-- SCRIPTS -->
 </body>
 
 </html>

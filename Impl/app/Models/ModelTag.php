@@ -2,6 +2,11 @@
 
 use CodeIgniter\Model;
 
+/**
+* ModelTag – klasa za rad sa tabelom tag
+*
+* @version 1.0
+ */
 class ModelTag extends Model {
     protected $table      = 'tag';
     protected $primaryKey = 'IdT';

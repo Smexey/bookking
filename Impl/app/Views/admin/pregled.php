@@ -37,7 +37,7 @@
                     <div class="panel panel-blue panel-widget border-right">
                         <div class="row no-padding"><em class="fa fa-xl fa-book color-orange"></em>
                             <div class="large" id="oglasiDnevno"></div>
-                            <div class="text-muted">Oglasi</div>
+                            <div class="text-muted">Novi Oglasi</div>
                         </div>
                     </div>
                 </div>

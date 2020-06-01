@@ -2,6 +2,11 @@
 
 use CodeIgniter\Model;
 
+/**
+* ModelOglasTag – klasa za rad sa tabelom oglastag
+*
+* @version 1.0
+ */
 class ModelOglasTag extends Model {
     protected $table      = 'oglastag';
     // protected $primaryKey = ['IdT', 'IdO'];

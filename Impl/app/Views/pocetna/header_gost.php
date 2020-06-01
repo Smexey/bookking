@@ -91,7 +91,10 @@
     <nav class="navbar navbar-expand-lg fixed-top  ">
 
 
-        <a class="navbar-brand" href="<?php echo site_url("Gost/index"); ?>">BookKing!</a>
+        <a class="navbar-brand" href="<?php echo site_url("Admin/index"); ?>">
+        <img src="<?php echo base_url('/assets/images/andric.png');?>" height="61px" style="margin-top: -10px; margin-bottom: -10px">
+        BookKing!
+        </a>
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
