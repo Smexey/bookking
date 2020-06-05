@@ -451,6 +451,488 @@
       ],
       "value": ""
     }]
+  }, {
+    "id": "72c16c88-ba10-436b-ac3f-206917b10711",
+    "name": "AdministracijaKorisnik",
+    "commands": [{
+      "id": "1b86ff9f-55a0-4d00-8c6e-e2159f55f4c8",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/bookking/Impl/public/Admin/admin_pregled",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "575057cf-d54f-44ea-a49a-9a5d2fe79c78",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1096",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b956e90e-de98-4fc4-932a-3948ee42e42e",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(3) > .nav-link",
+      "targets": [
+        ["css=.nav-item:nth-child(3) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Nalozi')]", "xpath:link"],
+        ["xpath=//div[@id='navbarNav']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost/bookking/Impl/public/Admin/svi_nalozi']", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "69c54f09-d4a6-412a-8604-f57d2f21c0cb",
+      "comment": "",
+      "command": "click",
+      "target": "name=rola",
+      "targets": [
+        ["name=rola", "name"],
+        ["css=select", "css:finder"],
+        ["xpath=//select[@name='rola']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "631bd70a-9d07-4600-b38a-27c708384373",
+      "comment": "",
+      "command": "select",
+      "target": "name=rola",
+      "targets": [],
+      "value": "label=Korisnik"
+    }, {
+      "id": "e170b81e-a19a-4598-90cb-f2909d07108e",
+      "comment": "",
+      "command": "click",
+      "target": "name=rola",
+      "targets": [
+        ["name=rola", "name"],
+        ["css=select", "css:finder"],
+        ["xpath=//select[@name='rola']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "c7d72489-89ea-4954-8593-abbe38c4ce26",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Traži']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "fe642c71-ee81-4add-b080-31d3c99d0564",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(1) img",
+      "targets": [
+        ["css=tr:nth-child(1) img", "css:finder"],
+        ["xpath=//img[@alt='Profil']", "xpath:img"],
+        ["xpath=//img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5f03b27b-5774-4253-8ca6-cb60fa79d322",
+      "comment": "",
+      "command": "click",
+      "target": "css=.text-center:nth-child(2) .btn",
+      "targets": [
+        ["css=.text-center:nth-child(2) .btn", "css:finder"],
+        ["xpath=//td[2]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Postavi za moderatora')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "a72402e5-5c84-4325-ad0a-e145e21253e5",
+    "name": "AdministracijaModerator",
+    "commands": [{
+      "id": "3da876e5-0ca4-4f73-a349-17db84e9b00e",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/bookking/Impl/public/Admin",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a647d496-4d93-4fd4-acb9-02122320c766",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1205x742",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "8d589013-6761-4b35-a661-9d3866ebc766",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(3) > .nav-link",
+      "targets": [
+        ["css=.nav-item:nth-child(3) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Nalozi')]", "xpath:link"],
+        ["xpath=//div[@id='navbarNav']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost/bookking/Impl/public/Admin/svi_nalozi']", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "dca2ec96-d80c-4e78-af1f-c3877fef9704",
+      "comment": "",
+      "command": "click",
+      "target": "name=rola",
+      "targets": [
+        ["name=rola", "name"],
+        ["css=select", "css:finder"],
+        ["xpath=//select[@name='rola']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "6e71449c-2259-4615-a1a2-f618f9283ff5",
+      "comment": "",
+      "command": "select",
+      "target": "name=rola",
+      "targets": [],
+      "value": "label=Moderator"
+    }, {
+      "id": "1d19bb1f-38fe-43c5-989d-d7ea69abbf61",
+      "comment": "",
+      "command": "click",
+      "target": "name=rola",
+      "targets": [
+        ["name=rola", "name"],
+        ["css=select", "css:finder"],
+        ["xpath=//select[@name='rola']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "de23dc75-e833-4127-ac13-62dbf36e2e55",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Ukloni')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "b3ca7ea8-a0c3-4bfc-a3ad-e9762b004d31",
+      "comment": "",
+      "command": "click",
+      "target": "css=tr:nth-child(1) img",
+      "targets": [
+        ["css=tr:nth-child(1) img", "css:finder"],
+        ["xpath=//img[@alt='Profil']", "xpath:img"],
+        ["xpath=//img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "08358373-992e-42f4-9871-8f5b2dbf4718",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Ukloni')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "8ff7347d-8409-4b72-9805-0d569f54bef5",
+    "name": "AdministracijaVerifikovani",
+    "commands": [{
+      "id": "86283dd2-9d03-4434-ad45-834b27c96ba9",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/bookking/Impl/public/Admin",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "1b175631-bbd1-43b6-b460-6cf3152f42d5",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1205x742",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "c9affd69-0e4e-44bd-87fc-1081005caf9d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(3) > .nav-link",
+      "targets": [
+        ["css=.nav-item:nth-child(3) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Nalozi')]", "xpath:link"],
+        ["xpath=//div[@id='navbarNav']/ul/li[3]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost/bookking/Impl/public/Admin/svi_nalozi']", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "5fc76a0d-f69e-4389-8b61-ccc5077cd38e",
+      "comment": "",
+      "command": "click",
+      "target": "name=rola",
+      "targets": [
+        ["name=rola", "name"],
+        ["css=select", "css:finder"],
+        ["xpath=//select[@name='rola']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7319e1f6-f041-42dc-b25f-5c73729a3f0b",
+      "comment": "",
+      "command": "select",
+      "target": "name=rola",
+      "targets": [],
+      "value": "label=Verifikovani"
+    }, {
+      "id": "d54970ed-a292-4f1a-b9c9-1f09d59afc3d",
+      "comment": "",
+      "command": "click",
+      "target": "name=rola",
+      "targets": [
+        ["name=rola", "name"],
+        ["css=select", "css:finder"],
+        ["xpath=//select[@name='rola']", "xpath:attributes"],
+        ["xpath=//select", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "0c3e2638-11ac-454e-90e8-3a1994880341",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//input[@value='Traži']", "xpath:attributes"],
+        ["xpath=//input[2]", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "08f0d061-89d1-47ec-8368-9f7470cef9c4",
+      "comment": "",
+      "command": "click",
+      "target": "css=td img",
+      "targets": [
+        ["css=td img", "css:finder"],
+        ["xpath=//img[@alt='Profil']", "xpath:img"],
+        ["xpath=//img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "7d78bcb8-e886-4932-9b76-aa9fee7a43ba",
+      "comment": "",
+      "command": "click",
+      "target": "css=.offset-sm-4 > table",
+      "targets": [
+        ["css=.offset-sm-4 > table", "css:finder"],
+        ["xpath=//table", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "b15e62ce-80e5-48eb-80af-1a1b4887813d",
+      "comment": "",
+      "command": "click",
+      "target": "css=.text-center:nth-child(2) .btn",
+      "targets": [
+        ["css=.text-center:nth-child(2) .btn", "css:finder"],
+        ["xpath=//td[2]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Postavi za moderatora')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "21d7447c-e0cb-4f65-b9d4-3fe087f745fa",
+    "name": "ModeracijaVerifikovanjeKorisnika",
+    "commands": [{
+      "id": "fd53553e-8daa-4f40-a823-ed262f752b12",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/bookking/Impl/public/Moderator",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "9d05235c-3557-4d33-9855-5d1c2b68204d",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1205x742",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "f56f9716-98cd-49d8-8cd7-317b53e451fa",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(2) > .nav-link",
+      "targets": [
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Zahtevi')]", "xpath:link"],
+        ["xpath=//div[@id='navbarNav']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost/bookking/Impl/public/Moderator/prikaz_zahtevi']", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "4e2da9ec-da83-4d47-be5c-9eddb15f16ef",
+      "comment": "",
+      "command": "click",
+      "target": "css=td:nth-child(3) img",
+      "targets": [
+        ["css=td:nth-child(3) img", "css:finder"],
+        ["xpath=//img[@alt='Detalji']", "xpath:img"],
+        ["xpath=//td[3]/a/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "febf54b4-5d05-435b-ac42-c1c7cca0df58",
+      "comment": "",
+      "command": "click",
+      "target": "name=zahtev_dugme",
+      "targets": [
+        ["name=zahtev_dugme", "name"],
+        ["css=.btn:nth-child(8)", "css:finder"],
+        ["xpath=//button[@name='zahtev_dugme']", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'   Odobri zahtev   ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "a1929d19-746c-4b4c-abd9-006d4db5d979",
+    "name": "KorisnikZahtevZaVerifikaciju",
+    "commands": [{
+      "id": "1adef65c-7baa-4077-b288-073db550f659",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/bookking/Impl/public/Korisnik",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "eb396670-aa74-4724-9de0-8e15c1858e76",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1205x742",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "b2a4f682-4a5c-4e58-8332-06a67011ab11",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(4) > .nav-link",
+      "targets": [
+        ["css=.nav-item:nth-child(4) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Moj nalog')]", "xpath:link"],
+        ["xpath=//div[@id='navbarNav']/ul/li[4]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost/bookking/Impl/public/Korisnik/nalog']", "xpath:href"],
+        ["xpath=//li[4]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e2dd9e0e-7345-4a46-bb9a-8946b81ce8e3",
+      "comment": "",
+      "command": "click",
+      "target": "css=td:nth-child(2) .btn",
+      "targets": [
+        ["css=td:nth-child(2) .btn", "css:finder"],
+        ["xpath=//td[2]/form/button", "xpath:position"],
+        ["xpath=//button[contains(.,'Zahtev za verifikaciju')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "0c6612eb-28a7-41d0-82d4-15f9812d7426",
+      "comment": "",
+      "command": "click",
+      "target": "name=zahtevFajl",
+      "targets": [
+        ["name=zahtevFajl", "name"],
+        ["css=input", "css:finder"],
+        ["xpath=//input[@name='zahtevFajl']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "70dc900a-e0f6-4799-ab4d-73c014d10a59",
+      "comment": "",
+      "command": "type",
+      "target": "name=zahtevFajl",
+      "targets": [
+        ["name=zahtevFajl", "name"],
+        ["css=input", "css:finder"],
+        ["xpath=//input[@name='zahtevFajl']", "xpath:attributes"],
+        ["xpath=//input", "xpath:position"]
+      ],
+      "value": "C:\\Desktop\\dummy.pdf"
+    }, {
+      "id": "1fd94c0d-87fd-4538-9ec4-fba2359cda27",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn",
+      "targets": [
+        ["css=.btn", "css:finder"],
+        ["xpath=//button[@type='submit']", "xpath:attributes"],
+        ["xpath=//div/button", "xpath:position"],
+        ["xpath=//button[contains(.,'   Pošalji   ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
+  }, {
+    "id": "9b9b4ef8-1ebc-428c-95c0-a1c0f80dc196",
+    "name": "ModeratorOdbijanje",
+    "commands": [{
+      "id": "90d20f22-ded4-4d61-89e5-0f01ed240abc",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost/bookking/Impl/public/Moderator",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "593f1454-b832-4969-a58c-a10b342c94d7",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1920x964",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e6921b79-dc10-4492-bc75-060b50dd757b",
+      "comment": "",
+      "command": "click",
+      "target": "css=.nav-item:nth-child(2) > .nav-link",
+      "targets": [
+        ["css=.nav-item:nth-child(2) > .nav-link", "css:finder"],
+        ["xpath=//a[contains(text(),'Zahtevi')]", "xpath:link"],
+        ["xpath=//div[@id='navbarNav']/ul/li[2]/a", "xpath:idRelative"],
+        ["xpath=//a[@href='http://localhost/bookking/Impl/public/Moderator/prikaz_zahtevi']", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "e82437f0-9d42-48ab-b64c-845c3e30f3cb",
+      "comment": "",
+      "command": "click",
+      "target": "css=td:nth-child(3) img",
+      "targets": [
+        ["css=td:nth-child(3) img", "css:finder"],
+        ["xpath=//img[@alt='Detalji']", "xpath:img"],
+        ["xpath=//td[3]/a/img", "xpath:position"]
+      ],
+      "value": ""
+    }, {
+      "id": "872d3b08-f542-43ef-9abf-2a15c6f5631f",
+      "comment": "",
+      "command": "click",
+      "target": "css=.btn:nth-child(9)",
+      "targets": [
+        ["css=.btn:nth-child(9)", "css:finder"],
+        ["xpath=(//button[@name='zahtev_dugme'])[2]", "xpath:attributes"],
+        ["xpath=//button[2]", "xpath:position"],
+        ["xpath=//button[contains(.,'   Odbij zahtev   ')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
   }],
   "suites": [{
     "id": "6fb2e780-7105-4a9f-9f22-de66e06e930b",
