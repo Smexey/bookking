@@ -234,18 +234,20 @@ class BaseController extends Controller
 	public function posaljiPor_action()
 	{
 		$text = $_POST['text'];
-		// TODO: if ($strlen >= 200){} 
+
 		$korisnik1 = $this->session->get("korisnik")->IdK;
 		$korisnik2 = $_POST['selected'];
 
-		if ($text != "" && $korisnik2 != null) {
-			$porModel = new ModelPoruka();
+		if (strlen($text) < 200) {
+			if ($text != "" && $korisnik2 != null) {
+				$porModel = new ModelPoruka();
 
-			$porModel->save([
-				'Korisnik1'  => $korisnik1,
-				'Korisnik2'  => $korisnik2,
-				'Tekst'  => $text
-			]);
+				$porModel->save([
+					'Korisnik1'  => $korisnik1,
+					'Korisnik2'  => $korisnik2,
+					'Tekst'  => $text
+				]);
+			}
 		}
 
 
