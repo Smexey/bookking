@@ -76,6 +76,7 @@ img {
     height: 560px;
     width: 100%;
     overflow-y: scroll;
+    padding-left: 15px;
 }
 
 .active_chat {
