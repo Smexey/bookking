@@ -65,7 +65,7 @@ img {
 }
 
 .chat_list {
-    border-bottom: 1px solid #c4c4c4;
+    border: 1px solid #c4c4c4;
     margin: 0;
     padding: 18px 18px 10px;
     width: 100%;
@@ -79,7 +79,8 @@ img {
 }
 
 .active_chat {
-    border-style: inset;
+    /* border-style: inset; */
+    border: 2px solid #16697a;
 }
 
 .received_msg {
